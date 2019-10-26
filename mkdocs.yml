@@ -1,1 +1,27 @@
 site_name: OPCAIC - Online Platform for Conducting AI Competitions
+repo_url: https://github.com/opcaic/
+strict: true
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_languages:
+    - json
+    - js
+    - csharp
+    - shell
+    - psql
+
+nav:
+  - 'Home': 'index.md'
+  - 'Getting started':
+      - 'intro/installation-instructions.md'
+      - 'intro/server-configuration.md'
+      - 'intro/worker-configuration.md'
+      - 'intro/adding-new-game-modules.md'
+
+plugins:
+  - search
+      
+markdown_extensions:
+  - smarty
+  - sane_lists

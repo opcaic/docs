@@ -1,3 +1,4 @@
+# Installation instructions
 This article describes how to install the OPCAIC platform on a new machine. This text assumes a Linux based hosts, however, it should be possible to adapt it for Windows hosts.
 
 The OPCAIC platform consists of three main components:
@@ -7,23 +8,23 @@ The OPCAIC platform consists of three main components:
 
 In this text, we will refer to these components simply as webapp, server and worker. It is recommended to deploy server and worker(s) on separate machines for performance reasons.
 
-# Prerequsites
+## Prerequsites
 
 Many of the steps required for deploying server and workers are the same. This text describes the scenario of deploying both components on the same machine, with additional notes on the difference when deploying the components separately.
 
-## User
+### User
 
 Create a dedicated user which will be used to run the platform binaries. Constrain the privileges for the user as you see fit. In this text, we will use user `opcaic`.
 
-## .NET Core 3.0 runtime
+### .NET Core 3.0 runtime
 
 Follow instructions on [official website](https://dotnet.microsoft.com/download/) for your system.
 
-## Setup PostgreSQL database (server only)
+### Setup PostgreSQL database (server only)
 
 The web backend requires SQL database for data persistence.
 
-### Install PostgreSQL
+#### Install PostgreSQL
 
 Download and install PostgreSQL database. For Linux distributions using `apt`, run following command
 as root:
@@ -35,19 +36,19 @@ After installation, start it by:
     systemctl enable postgresql
     systemctl start postgresql
 
-### Change default user password
+#### Change default user password
 
 Issue command:
 
     passwd postgres
 
-### Change PostgreSQL admin password
+#### Change PostgreSQL admin password
 
 Run `psql` as `postgres` user, and run 
 
     \password postgres;
 
-### Create a database for the server
+#### Create a database for the server
 
 Still in `psql` prompt, run:
 
@@ -57,7 +58,7 @@ Check that the database was created by:
 
     \l
 
-### Create a database user for the server
+#### Create a database user for the server
 
 Create user with same name as the dedicated linux user created earlier.
 
@@ -71,11 +72,11 @@ Grant user privileges to the created database
 
     grant all privileges on database opcaic_server_db to opcaic;
 
-# Deploying the server
+## Deploying the server
 
 Create `/var/opcaic/server` directory and copy the server files there. The server also needs a directory for storing user submissions. For this we recommend creating directory `/var/opcaic/server_storage`. Make sure that the `opcaic` user has access to these directories.
 
-## Configuring the server
+### Configuring the server
 
 The server requires additional configuration before starting. Namely the connection string to the database and the location of the storage folder. These can be provided either by writing their value into the `appsettings.json` configuration file, or through environment variables. Names of variable names are case insensitive. The environment variables take precedence over the configuration file, and their name is obtained by taking the JSON path and replacing any colons with two underscores (e.g. `Security:Key` becomes `Security__Key`). The list of required variables are: 
 
@@ -95,7 +96,7 @@ The server requires additional configuration before starting. Namely the connect
 
 Additional configuration variables are described in separate section.
 
-### First run of the server
+#### First run of the server
 
 On the very first startup, it is needed to provide additional configuration variables for creating the first admin account.
 
@@ -110,11 +111,11 @@ We recommend using command line parameters for the admin account credentials. Su
     dotnet OPCAIC.ApiService.dll \
         --Seed:AdminUsername=admin \
         --Seed:AdminEmail=admin@opcaic.com \
-        --Seed:AdminPassword=P4$$w0rd
+        --Seed:AdminPassword='P4$$w0rd'
 
 The application will immediately try to verify the email address by sending an email to it. Once the email is sent, you may terminate the application. Note that confirming the email address requires working `web-app` to be deployed. If the application has been misconfigured (e.g. invalid frontend address in the configuration), you need to drop the SQL database to be able to repeat the process.
 
-## Running the server as a service
+### Running the server as a service
 
 We recommend using some service management tool such as `systemd`. Example systemd unit file can be found below:
 
@@ -152,14 +153,14 @@ You can use
 
 to view latest logs from the server. For more information about `journalctl` see `man journalctl`
 
-For other configuration options, see [Server configuration](/Documentation/Server-Configuration) section.
+For other configuration options, see [Server configuration](server-configuration.md) section.
 
-## Exposing the server
+### Exposing the server
 
 The server component does not provide support for HTTPS, nor accepts HTTP connections from remote hosts by default. The expected scenario is exposing the server through a *reverse proxy* like Nginx or Apache, which will handle HTTPS redirection and other security measures. The server by default listens on `http://localhost:5000/` so the reverse proxy should be pointed there. All routes that server handles start with `/api/` or `/swagger/`, so we need to map only those. Example `nginx.conf` follows:
 
 ```nginx
-# beginning omitted
+## beginning omitted
 	location ~* /(api|swagger)/
 	{
  		# configure client_max_body_size to allow larger submission uploads
@@ -178,17 +179,17 @@ The server component does not provide support for HTTPS, nor accepts HTTP connec
 
 		# add other settings as required
 	}
-# rest of the file omitted
+## rest of the file omitted
 ```
 
 The server also needs to communicate with workers. If worker(s) are deployed on different machines, make sure they can make connection to the address specified by the `Broker.ListeningAddress` config variable.
 
-# Deploying the web application
+## Deploying the web application
 
 The web-app component is a typical javascript SPA application and can be deployed e.g. by Apache or Nginx. We will show how to serve the application using Nginx. Copy the web-app files to `/var/opcaic/web-app` folder and add following configuration to `nginx.conf`:
 
 ```nginx
-# beginning omitted
+## beginning omitted
 	location / {
 		# First attempt to serve request as file
 		# then attempt to redirect to /index.html and let app's client-side routing work it out,
@@ -196,10 +197,10 @@ The web-app component is a typical javascript SPA application and can be deploye
 		try_files $uri /index.html =404;
 		root /var/opcaic/web-app;
 	}
-# rest of the file omitted
+## rest of the file omitted
 ```
 
-# Deploying the worker
+## Deploying the worker
 
 Deploying the worker is done similarly to deploying the server. We recommend following directories inside `/var/opcaic`:
  - `worker` - worker binaries
@@ -253,9 +254,9 @@ As with server, you can see debug output by running
 
 The output should now display both server and worker logs.
 
-For information how to create your own game modules and deploy them, see [Adding a new game to the OPCAIC platform](/Documentation/Adding-a-new-game-to-the-OPCAIC-platform).
+For information how to create your own game modules and deploy them, see [Adding a new game module to the OPCAIC platform](adding-new-game-modules.md).
 
-# (Optional) Installing Graylog for log aggregation
+## (Optional) Installing Graylog for log aggregation
 
 Searching though the logs using `journalctl` is not very user friendly for inexperienced users. The OPCAIC platform can be configured to use [Graylog](https://www.graylog.org) which is a tool supporting log aggregation, structured log searching and even monitoring capabilities. Install graylog by following the [official installation guide](https://docs.graylog.org/en/3.1/pages/installation.html).
 

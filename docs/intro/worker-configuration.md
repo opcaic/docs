@@ -1,3 +1,5 @@
+# Worker configuration
+
 The worker component uses several configuration variables which can be used to customize the platform behavior. Variables can be set by command line parameters, `appsettings.json` configuration file or environment variables. The environment variables take precedence over the configuration file and command line parameters take precedence over environment variables.
 
 Names of the configuration variables are case insensitive. The name of the variable resembles a path in a tree of configuration variables, with `:` character as segment separator. Since environment variables may not contain `:` character, the corresponding environment variable can be obtained by replacing them by **double** underscores (`__`), e.g. `Emails:Port` becomes `Emails__Port`.
