@@ -14,72 +14,72 @@ From the OPCAIC platform's perspective, a *game module* is a black box component
 
 There are total 5 entry points: *checker*, *compiler*, *validator*, *executor* and *cleanup*. These are combined into two pipelines:
 
- - *Validation pipeline*: invoked to validate newly submitted solution to game's tournament
-     - checker
-     - compiler
-     - validator
-     - cleanup
- - *Execution pipeline* : invoked to execute individual matches between submissions
-     - compiler - invoked for all submissions separately
-     - executor
-     - cleanup
+- *Validation pipeline*: invoked to validate newly submitted solution to game's tournament
+  - checker
+  - compiler
+  - validator
+  - cleanup
+- *Execution pipeline* : invoked to execute individual matches between submissions
+  - compiler - invoked for all submissions separately
+  - executor
+  - cleanup
 
 #### Checker entry point
 
-- *Purpose:* Check that the submission submitted by the user contains all the files needed. This step is there explicitly to be able to provide meaningful error messages to users when there is something wrong with the submission.
+*Purpose:* Check that the submission submitted by the user contains all the files needed. This step is there explicitly to be able to provide meaningful error messages to users when there is something wrong with the submission.
 
-- *Arguments:*
-    - Path to additional files (specific for given tournament).
-    - Path to the folder with submission files.
+*Arguments:*
+ - Path to additional files (specific for given tournament).
+ - Path to the folder with submission files.
 
-- *Exit codes:*
-    - 0 - Submission is correct and may proceed to the next stage
-    - 200 - There is a problem with user's submission (user's fault)
-    - other - General error (module's fault)
+*Exit codes:*
+ - 0 - Submission is correct and may proceed to the next stage
+ - 200 - There is a problem with user's submission (user's fault)
+ - other - General error (module's fault)
 
 #### Compiler entry point
 
-- *Purpose:* Compile the submission files to a form which executor can accept. The most prominent example is compiling the submission files into an executable.
+*Purpose:* Compile the submission files to a form which executor can accept. The most prominent example is compiling the submission files into an executable.
 
-- *Arguments:*
-    - Path to additional files (specific for given tournament).
-    - Path to the folder with submission files.
-    - Path to the output folder
+*Arguments:*
+ - Path to additional files (specific for given tournament).
+ - Path to the folder with submission files.
+ - Path to the output folder
 
-- *Exit codes:*
-    - 0 - Compilation was successful
-    - 200 - Submission cannot be compiled (user's fault)
-    - other - General error (module's fault)
+*Exit codes:*
+ - 0 - Compilation was successful
+ - 200 - Submission cannot be compiled (user's fault)
+ - other - General error (module's fault)
 
 #### Validator entry point
 
-- *Purpose:* Smoke test the compiled submission, e.g. execute a testing match between to check that it does not crash.
+*Purpose:* Smoke test the compiled submission, e.g. execute a testing match between to check that it does not crash.
 
-- *Arguments:*
-    - Path to additional files (specific for given tournament).
-    - Path to the folder with compiled submission (output folder from the compiler entry point)
+*Arguments:*
+ - Path to additional files (specific for given tournament).
+ - Path to the folder with compiled submission (output folder from the compiler entry point)
 
-- *Exit codes:*
-    - 0 - Submission is valid and may participate in the tournament
-    - 200 - Submission is considered invalid (user's fault)
-    - other - General error (module's fault)
+*Exit codes:*
+ - 0 - Submission is valid and may participate in the tournament
+ - 200 - Submission is considered invalid (user's fault)
+ - other - General error (module's fault)
 
 #### Executor entry point
 
-- *Purpose:* Execute match between submissions.
+*Purpose:* Execute match between submissions.
 
-- *Arguments:*
-    - Path to additional files (specific for given tournament).
-    - [1 - N] Paths to folders with compiled submissions (products of the compile entry point)
-    - Path to folder where additional output can be stored
+*Arguments:*
+ - Path to additional files (specific for given tournament).
+ - [1 - N] Paths to folders with compiled submissions (products of the compile entry point)
+ - Path to folder where additional output can be stored
 
-- *Exit codes:*
-    - 0 - Match executed successfully
-    - other - General error (module's fault)
+*Exit codes:*
+ - 0 - Match executed successfully
+ - other - General error (module's fault)
 
 Additionally, the executor entry point must store match results in a `match-results.json` file inside the provided output folder. The output must have an array property 'results' containing objects with numeric 'score' property This property is used to determine the relative ordering between the submissions which participated in the match (and hence the winner). The result file can contain also additional statistics from the match. Example `match-results.json` file contents can be seen below:
 
-```json
+```js
 { 
     'results': [
         {
@@ -87,7 +87,7 @@ Additionally, the executor entry point must store match results in a `match-resu
             'hitRate': 0.7
         },
         {
-            'score' : 1
+            'score' : 1,
             'hitRate': 0.82
         }
     ],
@@ -108,7 +108,7 @@ Additionally, the executor entry point must store match results in a `match-resu
 
 Commands for individual entry points are specified in `entrypoints.json` file which should be located in module directory. Example file contents follow:
 
-```json
+```js
 {
     "Checker": {
         "Executable": "python",

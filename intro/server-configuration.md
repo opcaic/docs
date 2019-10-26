@@ -5,12 +5,13 @@ The server component uses several configuration variables which can be used to c
 Names of the configuration variables are case insensitive. The name of the variable resembles a path in a tree of configuration variables, with `:` character as segment separator. Since environment variables may not contain `:` character, the corresponding environment variable can be obtained by replacing them by **double** underscores (`__`), e.g. `Emails:Port` becomes `Emails__Port`.
 
 ## General
+
 | Name          | Description                                                                            |
 |---------------|----------------------------------------------------------------------------------------|
 | `FrontendUrl` | Address where the web application is accessible. Used for generating links for emails. |
 
 
-### Broker
+## Broker
 
 | Name                                           | Description                                                                                                                                                                                  |
 |------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -22,7 +23,7 @@ Names of the configuration variables are case insensitive. The name of the varia
 | `Broker:HeartbeatConfig:ReconnectIntervalInit` | How many milliseconds workers should wait before trying to reconnect to the broker for the first time after disconnecting.                                                                   |
 | `Broker:HeartbeatConfig:ReconnectIntervalMax`  | Upper bound for the exponential back off time for workers between reconnect attempts after disconnecting.                                                                                    |
 
-### Security
+## Security
 
 | Name                                    | Description                                                                                                                                                                                                                                  |
 |-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -31,13 +32,13 @@ Names of the configuration variables are case insensitive. The name of the varia
 | `Security:RefreshTokenExpirationDays`   | How many days should issued JWT refresh token be valid. Refresh tokens are used for requesting new access tokens and are invalidated on password change. After expiring, new tokens can be obtained by authenticating via email and password |
 | `Security:WorkerTokenExpirationMinutes` | How many minutes should access tokens issued to workers be valid. These tokens allow workers to download/upload files necessary for the task execution.                                                                                      |
 
-### Storage
+## Storage
 
 | Name                | Description                                                                                                          |
 |---------------------|----------------------------------------------------------------------------------------------------------------------|
 | `Storage:Directory` | Path to directory used as general file storage. Submissions, additional files and result files will be stored there. |
 
-### Emails
+## Emails
 
 | Name                   | Description                                                                        |
 |------------------------|------------------------------------------------------------------------------------|
@@ -48,7 +49,7 @@ Names of the configuration variables are case insensitive. The name of the varia
 | `Emails:UseSsl`        | Whether SSL connection should be enforced when communicating with the smtp server. |
 | `Emails:SenderAddress` | Email address to use as the sender address.                                        |
 
-### Limits
+## Limits
 
 Global limits for uploaded files sizes.
 
@@ -59,6 +60,6 @@ Global limits for uploaded files sizes.
 | `Limits:MaxResultFileSize`     | Maximum total size of task result files received from workers. |
 
 
-### Serilog
+## Serilog
 
 Used to configure the [Serilog](http://www.serilog.net) Logging library. See [official documentation](https://github.com/serilog/serilog-settings-configuration) for further details.

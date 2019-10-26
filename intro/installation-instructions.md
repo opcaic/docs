@@ -262,7 +262,7 @@ Searching though the logs using `journalctl` is not very user friendly for inexp
 
 For the actual Graylog setup for consuming OPCAIC platform logs, we recommend setting up an GELF HTTP input. Both opcaic server and worker binaries can be configured by editing the `Serilog` configuration section in `appsettings.json` file. It is also good idea to raise the minimum level for console logger when using Graylog. Example configuration follows:
 
-```json
+```js
 {
 	"Serilog": {
 		"Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.Graylog" ],

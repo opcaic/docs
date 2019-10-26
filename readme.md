@@ -2,8 +2,8 @@
 
 This repository contains source code for the online documentation of the OPCAIC platform. The web form is hosted on opcaic.readthedocs.io.
 
-To contribute, you need to have (MkDocs)[https://www.mkdocs.org] installed. You can use
+To build the documentation locally, you may need to install additional python libraries listed in the `requirements.txt` file
 
-    mkdocs serve
+    pip install -r requirements.txt
     
-to preview the resulting documentation before committing your changes.
+Then you can can use the `make html` command to build the web pages, the result will be put into the `_build` directory. You can achieve live preview via `make livehtml` on `localhost:8000`.
