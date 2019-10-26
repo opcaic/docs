@@ -1,2 +1,4 @@
 # ignore generated files
 site
+
+_build
