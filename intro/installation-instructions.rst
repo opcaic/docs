@@ -20,7 +20,7 @@ Many of the steps required for deploying server and workers are the same. This t
 User
 ====
 
-Create a dedicated user which will be used to run the platform binaries. Constrain the privileges for the user as you see fit. In this text, we will use user `opcaic`.
+Create a dedicated user which will be used to run the platform binaries. Constrain the privileges for the user as you see fit. In this text, we will use user ``opcaic``.
 
 .NET Core 3.0 runtime
 =====================
@@ -35,7 +35,7 @@ The web backend requires SQL database for data persistence.
 Install PostgreSQL
 ------------------
 
-Download and install PostgreSQL database. For Linux distributions using `apt`, run following command
+Download and install PostgreSQL database. For Linux distributions using ``apt``, run following command
 as root: ::
 
     apt-get install postgresql postgresql-contrib
@@ -55,14 +55,14 @@ Issue command: ::
 Change PostgreSQL admin password
 --------------------------------
 
-Run `psql` as `postgres` user, and run  ::
+Run ``psql`` as ``postgres`` user, and run  ::
 
     \password postgres;
 
 Create a database for the server
 --------------------------------
 
-Still in `psql` prompt, run: ::
+Still in ``psql`` prompt, run: ::
 
     create database opcaic_server_db;
 
@@ -89,26 +89,41 @@ Grant user privileges to the created database ::
 Deploying the server
 ********************
 
-Create `/var/opcaic/server` directory and copy the server files there. The server also needs a directory for storing user submissions. For this we recommend creating directory `/var/opcaic/server_storage`. Make sure that the `opcaic` user has access to these directories.
+Create ``/var/opcaic/server`` directory and copy the server files there. The server also needs a directory for storing user submissions. For this we recommend creating directory ``/var/opcaic/server_storage``. Make sure that the ``opcaic`` user has access to these directories.
 
 Configuring the server
 ======================
 
-The server requires additional configuration before starting. Namely the connection string to the database and the location of the storage folder. These can be provided either by writing their value into the `appsettings.json` configuration file, or through environment variables. Names of variable names are case insensitive. The environment variables take precedence over the configuration file, and their name is obtained by taking the JSON path and replacing any colons with two underscores (e.g. `Security:Key` becomes `Security__Key`). The list of required variables are: 
+The server requires additional configuration before starting. Namely the connection string to the database and the location of the storage folder. These can be provided either by writing their value into the ``appsettings.json`` configuration file, or through environment variables. Names of variable names are case insensitive. The environment variables take precedence over the configuration file, and their name is obtained by taking the JSON path and replacing any colons with two underscores (e.g. ``Security:Key`` becomes ``Security__Key``). The list of required variables are: 
 
-| **Variable name**               | **Description**                                                                    |
-| -----------------------------   | ---------------------------------------------------------------------              |
-| `FrontendUrl`                   | Url of the frontend application (to be used when generating links)                 |
-| `Security:Key`                  | Key for signing JWT tokens provided by the web server.                             |
-| `ConnectionStrings:DataContext` | Connection string to the PostgreSQL database                                       |
-| `Storage:Directory`             | Path to the storage folder, recomended `/var/opcaic/server_storage`                |
-| `Broker:ListeningAddress`       | Address to which worker processes will connect. Default is `tcp://localhost:6000`  |
-| `Emails:SmtpServerurl`          | Url (without port) of the server used for sending emails.                          |
-| `Emails:Port`                   | Port on smtp server to connect to.                                                 |
-| `Emails:Username`               | Username used to authenticate to the smtp server.                                  |
-| `Emails:Password`               | Password used to authenticate to the smtp server.                                  |
-| `Emails:UseSsl`                 | Whether SSL connection should be enforced when communicating with the smtp server. |
-| `Emails:SenderAddress`          | Email address to use as the sender address.                                        |
+.. list-table::
+   :widths: 20 80
+   :header-rows: 1
+
+   * - Variable
+     - Description
+   * - ``FrontendUrl``
+     - Url of the frontend application (to be used when generating links)
+   * - ``Security:Key``
+     - Key for signing JWT tokens provided by the web server.
+   * - ``ConnectionStrings:DataContext``
+     - Connection string to the PostgreSQL d
+   * - ``Storage:Directory``
+     - Path to the storage folder, recomended ``/var/opcaic/server_storage``
+   * - ``Broker:ListeningAddress``
+     - Address to which worker processes will connect. Default is ``tcp://localhost:6000``
+   * - ``Emails:SmtpServerurl``
+     - Url (without port) of the server used for sending emails.
+   * - ``Emails:Port``
+     - Port on smtp server to connect to.
+   * - ``Emails:Username``
+     - Username used to authenticate to the smtp server.
+   * - ``Emails:Password``
+     - Password used to authenticate to the smtp server.
+   * - ``Emails:UseSsl``
+     - Whether SSL connection should be enforced when communicating with the smtp server.
+   * - ``Emails:SenderAddress``
+     - Email address to use as the sender address.
 
 Additional configuration variables are described in separate section.
 
@@ -117,25 +132,32 @@ First run of the server
 
 On the very first startup, it is needed to provide additional configuration variables for creating the first admin account.
 
-| **Parameter**                 | **Description**                                                         |
-| ----------------------------- | ----------------------------------------------------------------------- |
-| `Seed:AdminUsername`          | The username under which the admin will be visible                      |
-| `Seed:AdminEmail`             | The email address used for admin login. This needs to be a valid email. |
-| `Seed:AdminPassword`          | Password which should be used for login.                                |
+.. list-table::
+   :widths: 20 80
+   :header-rows: 1
 
-We recommend using command line parameters for the admin account credentials. Supposing that correct values for other variables have been provided either in `appconfig.json` or environment variables, you can use following command line command: ::
+   * - Variable
+     - Description
+   * - ``Seed:AdminUsername``
+     - The username under which the admin will be visible.
+   * - ``Seed:AdminEmail``
+     - The email address used for admin login. This needs to be a valid email.
+   * - ``Seed:AdminPassword``
+     - Password which should be used for login.
+
+We recommend using command line parameters for the admin account credentials. Supposing that correct values for other variables have been provided either in ``appconfig.json`` or environment variables, you can use following command line command: ::
 
     dotnet OPCAIC.ApiService.dll \
         --Seed:AdminUsername=admin \
         --Seed:AdminEmail=admin@opcaic.com \
         --Seed:AdminPassword='P4$$w0rd'
 
-The application will immediately try to verify the email address by sending an email to it. Once the email is sent, you may terminate the application. Note that confirming the email address requires working `web-app` to be deployed. If the application has been misconfigured (e.g. invalid frontend address in the configuration), you need to drop the SQL database to be able to repeat the process.
+The application will immediately try to verify the email address by sending an email to it. Once the email is sent, you may terminate the application. Note that confirming the email address requires working ``web-app`` to be deployed. If the application has been misconfigured (e.g. invalid frontend address in the configuration), you need to drop the SQL database to be able to repeat the process.
 
 Running the server as a service
 ===============================
 
-We recommend using some service management tool such as `systemd`. Example systemd unit file can be found below:
+We recommend using some service management tool such as ``systemd``. Example systemd unit file can be found below:
 
 .. code-block:: cfg
 
@@ -160,7 +182,7 @@ We recommend using some service management tool such as `systemd`. Example syste
     [Install]
     WantedBy=multi-user.target
 
-Save this file as `/etc/systemd/system/opcaic.server.service` and issue following commands as root ::
+Save this file as ``/etc/systemd/system/opcaic.server.service`` and issue following commands as root ::
 
     systemctl enable opcaic.server.service
     systemctl start opcaic.server.service
@@ -169,14 +191,14 @@ You can use  ::
 
     sudo journalctl -fu *opcaic*
 
-to view latest logs from the server. For more information about `journalctl` see `man journalctl`
+to view latest logs from the server. For more information about ``journalctl`` see ``man journalctl``
 
 For other configuration options, see [Server configuration](server-configuration.md) section.
 
 Exposing the server
 ===================
 
-The server component does not provide support for HTTPS, nor accepts HTTP connections from remote hosts by default. The expected scenario is exposing the server through a *reverse proxy* like Nginx or Apache, which will handle HTTPS redirection and other security measures. The server by default listens on `http://localhost:5000/` so the reverse proxy should be pointed there. All routes that server handles start with `/api/` or `/swagger/`, so we need to map only those. Example `nginx.conf` excerpt follows:
+The server component does not provide support for HTTPS, nor accepts HTTP connections from remote hosts by default. The expected scenario is exposing the server through a *reverse proxy* like Nginx or Apache, which will handle HTTPS redirection and other security measures. The server by default listens on ``http://localhost:5000/`` so the reverse proxy should be pointed there. All routes that server handles start with ``/api/`` or ``/swagger/``, so we need to map only those. Example ``nginx.conf`` excerpt follows:
 
 .. code-block:: nginx
 
@@ -199,13 +221,13 @@ The server component does not provide support for HTTPS, nor accepts HTTP connec
             # add other settings as required
     }
 
-The server also needs to communicate with workers. If worker(s) are deployed on different machines, make sure they can make connection to the address specified by the `Broker.ListeningAddress` config variable.
+The server also needs to communicate with workers. If worker(s) are deployed on different machines, make sure they can make connection to the address specified by the ``Broker.ListeningAddress`` config variable.
 
 *****************************
 Deploying the web application
 *****************************
 
-The web-app component is a typical javascript SPA application and can be deployed e.g. by Apache or Nginx. We will show how to serve the application using Nginx. Copy the web-app files to `/var/opcaic/web-app` folder and add following configuration to `nginx.conf`:
+The web-app component is a typical javascript SPA application and can be deployed e.g. by Apache or Nginx. We will show how to serve the application using Nginx. Copy the web-app files to ``/var/opcaic/web-app`` folder and add following configuration to ``nginx.conf``:
 
 .. code-block:: nginx
 
@@ -221,18 +243,18 @@ The web-app component is a typical javascript SPA application and can be deploye
 Deploying the worker
 ********************
 
-Deploying the worker is done similarly to deploying the server. We recommend following directories inside `/var/opcaic`:
+Deploying the worker is done similarly to deploying the server. We recommend following directories inside ``/var/opcaic``:
 
- - `worker` - worker binaries
- - `worker_storage/work` - storing temporary data during match execution
- - `worker_storage/archive` - archive of executed matches for diagnostic purposes
- - `modules` - game modules handling execution of individual games.
+ - ``worker`` - worker binaries
+ - ``worker_storage/work`` - storing temporary data during match execution
+ - ``worker_storage/archive`` - archive of executed matches for diagnostic purposes
+ - ``modules`` - game modules handling execution of individual games.
 
-Copy the worker binaries to `/var/opcaic/worker` directory and wanted game modules to the `/var/opcaic/modules` directory. Give appropriate access rights to the `opcaic` user for all above directories. Worker also needs to be configured, following table describes variables which need to be configured eithre via `appsettings.json` or environment variables
+Copy the worker binaries to ``/var/opcaic/worker`` directory and wanted game modules to the ``/var/opcaic/modules`` directory. Give appropriate access rights to the ``opcaic`` user for all above directories. Worker also needs to be configured, following table describes variables which need to be configured eithre via ``appsettings.json`` or environment variables
 
 | **JSON configuration path**     | **Description**                                                                                       |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| ModulePath                      | Path to directory with game modules, recomended `/var/opcaic/modules`                                 |
+| ModulePath                      | Path to directory with game modules, recomended ``/var/opcaic/modules``                                 |
 | Execution:WorkingDirectoryRoot  | Path to dedicated working directory for in-process tasks                                              |
 | Execution:ArchiveDirectoryRoot  | Path to dedicated archiving directory for executed tasks                                              |
 | ConnectorConfig:BrokerAddress   | Address to which the worker should connect. Corresponds to Broker.ListeningAddress variable on server |
@@ -262,7 +284,7 @@ Example systemd unit file follows:
     [Install]
     WantedBy=multi-user.target
 
-Save this file as `/etc/systemd/system/opcaic.worker.service` and start the worker by following commands (as root)
+Save this file as ``/etc/systemd/system/opcaic.worker.service`` and start the worker by following commands (as root)
 
 .. code:: shell
 
@@ -281,9 +303,9 @@ For information how to create your own game modules and deploy them, see [Adding
 (Optional) Installing Graylog for log aggregation
 *************************************************
 
-Searching though the logs using `journalctl` is not very user friendly for inexperienced users. The OPCAIC platform can be configured to use [Graylog](https://www.graylog.org) which is a tool supporting log aggregation, structured log searching and even monitoring capabilities. Install graylog by following the [official installation guide](https://docs.graylog.org/en/3.1/pages/installation.html).
+Searching though the logs using ``journalctl`` is not very user friendly for inexperienced users. The OPCAIC platform can be configured to use [Graylog](https://www.graylog.org) which is a tool supporting log aggregation, structured log searching and even monitoring capabilities. Install graylog by following the [official installation guide](https://docs.graylog.org/en/3.1/pages/installation.html).
 
-For the actual Graylog setup for consuming OPCAIC platform logs, we recommend setting up an GELF HTTP input. Both opcaic server and worker binaries can be configured by editing the `Serilog` configuration section in `appsettings.json` file. It is also good idea to raise the minimum level for console logger when using Graylog. Example configuration follows:
+For the actual Graylog setup for consuming OPCAIC platform logs, we recommend setting up an GELF HTTP input. Both opcaic server and worker binaries can be configured by editing the ``Serilog`` configuration section in ``appsettings.json`` file. It is also good idea to raise the minimum level for console logger when using Graylog. Example configuration follows:
 
 .. code-block:: js
 

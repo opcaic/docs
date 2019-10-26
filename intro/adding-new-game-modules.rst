@@ -86,7 +86,7 @@ Executor entry point
  - 0 - Match executed successfully
  - other - General error (module's fault)
 
-Additionally, the executor entry point must store match results in a `match-results.json` file inside the provided output folder. The output must have an array property 'results' containing objects with numeric 'score' property This property is used to determine the relative ordering between the submissions which participated in the match (and hence the winner). The result file can contain also additional statistics from the match. Example `match-results.json` file contents can be seen below:
+Additionally, the executor entry point must store match results in a ``match-results.json`` file inside the provided output folder. The output must have an array property 'results' containing objects with numeric 'score' property This property is used to determine the relative ordering between the submissions which participated in the match (and hence the winner). The result file can contain also additional statistics from the match. Example ``match-results.json`` file contents can be seen below:
 
 .. code-block:: js
 
@@ -117,7 +117,7 @@ Cleanup entry point
 Specifying the entry points
 ===========================
 
-Commands for individual entry points are specified in `entrypoints.json` file which should be located in module directory. Example file contents follow:
+Commands for individual entry points are specified in ``entrypoints.json`` file which should be located in module directory. Example file contents follow:
 
 .. code-block:: js
 
@@ -158,7 +158,7 @@ Commands for individual entry points are specified in `entrypoints.json` file wh
         }
     }
 
-The `Executable` field should contain the name or path to the program to be executed, The `Arguments` field is an array of command line arguments which are passed to the executable. The arguments specified in `Arguments` are put *before* the entrypoints specific ones. The entry points are invoked in the module's directory, meaning that they can use relative path inside of the game module. This allows for using a wrapper script if more than one command needs to be invoked like in `Checker` in the example above.
+The ``Executable`` field should contain the name or path to the program to be executed, The ``Arguments`` field is an array of command line arguments which are passed to the executable. The arguments specified in ``Arguments`` are put *before* the entrypoints specific ones. The entry points are invoked in the module's directory, meaning that they can use relative path inside of the game module. This allows for using a wrapper script if more than one command needs to be invoked like in ``Checker`` in the example above.
 
 Logging
 =======
@@ -169,7 +169,7 @@ The game module can use both standard output and standard error output streams t
 Deploying the game module
 *************************
 
-Deploying of the game module is done simply by copying the game module directory to *modules directory* on worker machines (the `/var/opcaic/modules/` directory from [Installation instructions](installation-instructions.md)). The platform should detect existence of the new game module automatically.
+Deploying of the game module is done simply by copying the game module directory to *modules directory* on worker machines (the ``/var/opcaic/modules/`` directory from [Installation instructions](installation-instructions.md)). The platform should detect existence of the new game module automatically.
 
 If the game module requires additional software, make sure it is also installed on the worker machine and accessible to the user under which the worker process is running.
 
@@ -179,7 +179,7 @@ The OPCAIC platform does not require the game module to be present on all worker
 Configuring the game module
 ***************************
 
-Once the game module is deployed, the platform needs to be configured to use it properly. To do so, enter the administration section, and under `games` subsection, select `Create new game` and fill out the game's information. The `Key` property should be the name of the game module directory which was deployed to workers.
+Once the game module is deployed, the platform needs to be configured to use it properly. To do so, enter the administration section, and under ``games`` subsection, select ``Create new game`` and fill out the game's information. The ``Key`` property should be the name of the game module directory which was deployed to workers.
 
 Once the game is configured, new tournaments in this game can be created.
 
@@ -200,7 +200,7 @@ To allow such advanced tournament configuration, visit the Configuration tab in 
 Using the custom configuration
 ------------------------------
 
-The custom data will be provided by the game module in the additional files directory (first argument to the entry point) in a `config.json` file.
+The custom data will be provided by the game module in the additional files directory (first argument to the entry point) in a ``config.json`` file.
 
 Security and sandboxing
 =======================
