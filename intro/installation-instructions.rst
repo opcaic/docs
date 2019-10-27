@@ -96,34 +96,38 @@ Configuring the server
 
 The server requires additional configuration before starting. Namely the connection string to the database and the location of the storage folder. These can be provided either by writing their value into the ``appsettings.json`` configuration file, or through environment variables. Names of variable names are case insensitive. The environment variables take precedence over the configuration file, and their name is obtained by taking the JSON path and replacing any colons with two underscores (e.g. ``Security:Key`` becomes ``Security__Key``). The list of required variables are: 
 
-.. list-table::
-   :widths: 20 80
-   :header-rows: 1
+FrontendUrl
+  Url of the frontend application (to be used when generating links)
 
-   * - Variable
-     - Description
-   * - ``FrontendUrl``
-     - Url of the frontend application (to be used when generating links)
-   * - ``Security:Key``
-     - Key for signing JWT tokens provided by the web server.
-   * - ``ConnectionStrings:DataContext``
-     - Connection string to the PostgreSQL d
-   * - ``Storage:Directory``
-     - Path to the storage folder, recomended ``/var/opcaic/server_storage``
-   * - ``Broker:ListeningAddress``
-     - Address to which worker processes will connect. Default is ``tcp://localhost:6000``
-   * - ``Emails:SmtpServerurl``
-     - Url (without port) of the server used for sending emails.
-   * - ``Emails:Port``
-     - Port on smtp server to connect to.
-   * - ``Emails:Username``
-     - Username used to authenticate to the smtp server.
-   * - ``Emails:Password``
-     - Password used to authenticate to the smtp server.
-   * - ``Emails:UseSsl``
-     - Whether SSL connection should be enforced when communicating with the smtp server.
-   * - ``Emails:SenderAddress``
-     - Email address to use as the sender address.
+Security:Key
+  Key for signing JWT tokens provided by the web server.
+
+ConnectionStrings:DataContext
+  Connection string to the PostgreSQL d
+
+Storage:Directory
+  Path to the storage folder, recomended ``/var/opcaic/server_storage``
+
+Broker:ListeningAddress
+  Address to which worker processes will connect. Default is ``tcp://localhost:6000``
+
+Emails:SmtpServerurl
+  Url (without port) of the server used for sending emails.
+
+Emails:Port
+  Port on smtp server to connect to.
+
+Emails:Username
+  Username used to authenticate to the smtp server.
+
+Emails:Password
+  Password used to authenticate to the smtp server.
+
+Emails:UseSsl
+  Whether SSL connection should be enforced when communicating with the smtp server.
+
+Emails:SenderAddress
+  Email address to use as the sender address.
 
 Additional configuration variables are described in separate section.
 
@@ -132,18 +136,14 @@ First run of the server
 
 On the very first startup, it is needed to provide additional configuration variables for creating the first admin account.
 
-.. list-table::
-   :widths: 20 80
-   :header-rows: 1
+Seed:AdminUsername
+  The username under which the admin will be visible.
 
-   * - Variable
-     - Description
-   * - ``Seed:AdminUsername``
-     - The username under which the admin will be visible.
-   * - ``Seed:AdminEmail``
-     - The email address used for admin login. This needs to be a valid email.
-   * - ``Seed:AdminPassword``
-     - Password which should be used for login.
+Seed:AdminEmail
+  The email address used for admin login. This needs to be a valid email.
+
+Seed:AdminPassword
+  Password which should be used for login.
 
 We recommend using command line parameters for the admin account credentials. Supposing that correct values for other variables have been provided either in ``appconfig.json`` or environment variables, you can use following command line command: ::
 

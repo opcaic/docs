@@ -30,8 +30,6 @@ extensions = [
     'recommonmark',
 ]
 
-pdf_documents = [('index', u'rst2pdf', u'SampleDoc', u'MMMMM')]
-
 source_suffix = ['.rst', '.md']
 
 master_doc = 'index'
@@ -61,4 +59,16 @@ html_context = {
     'css_files': [
         '_static/theme_overrides.css' # override for wide tables
     ]
+}
+
+# -- Options for LaTeX output -------------------------------------------------
+
+latex_additional_files = [
+    '_templates/styleoverrides.sty'
+]
+
+latex_show_urls = 'footnote'
+
+latex_elements = {
+    'preamble': r'\usepackage{styleoverrides}'
 }

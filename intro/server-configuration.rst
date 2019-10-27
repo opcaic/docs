@@ -10,95 +10,79 @@ Names of the configuration variables are case insensitive. The name of the varia
 General
 *******
 
-.. list-table::
-   :widths: 20 80
-   :header-rows: 1
-
-   * - Variable
-     - Description
-   * - ``FrontendUrl``
-     - Address where the web application is accessible. Used for generating links for emails.
+FrontendUrl
+  Address where the web application is accessible. Used for generating links for emails.
 
 
 ******
 Broker
 ******
 
-.. list-table::
-   :widths: 20 80
-   :header-rows: 1
+Broker:Identity
+  String identifier of the server used when communicating with workers. The identifier must be different from the one used by all w
 
-   * - Variable
-     - Description
-   * - ``Broker:Identity``
-     - String identifier of the server used when communicating with workers. The identifier must be different from the one used by all w
-   * - ``Broker:ListeningAddress``
-     - Address used for listening for workers. Must be in form ``tcp://[host]:[port]``. For example, to allow connections from the ``168.192.*.*`` subnet on port ``6000``, use ``tcp://168.192.0.0:6000``
-   * - ``Broker:TaskRetentionSeconds``
-     - How many seconds to keep tasks for a certain game in a working queue when last worker who was capable of running given game disconnected. There is generally no need to change this setting.
-   * - ``Broker:HeartbeatConfig:HeartBeatInterval``
-     - How many milliseconds between individual heartbeats between worker and broker.
-   * - ``Broker:HeartbeatConfig:Liveness``
-     - How many heartbeats is a worker allowed to miss before being considered dead by the broker.
-   * - ``Broker:HeartbeatConfig:ReconnectIntervalInit``
-     - How many milliseconds workers should wait before trying to reconnect to the broker for the first time after disconnecting.
-   * - ``Broker:HeartbeatConfig:ReconnectIntervalMax``
-     - Upper bound for the exponential back off time for workers between reconnect attempts after disconnecting.
+Broker:ListeningAddress
+  Address used for listening for workers. Must be in form ``tcp://[host]:[port]``. For example, to allow connections from the ``168.192.*.*`` subnet on port ``6000``, use ``tcp://168.192.0.0:6000``
+
+Broker:TaskRetentionSeconds
+  How many seconds to keep tasks for a certain game in a working queue when last worker who was capable of running given game disconnected. There is generally no need to change this setting.
+
+Broker:HeartbeatConfig:HeartBeatInterval
+  How many milliseconds between individual heartbeats between worker and broker.
+
+Broker:HeartbeatConfig:Liveness
+  How many heartbeats is a worker allowed to miss before being considered dead by the broker.
+
+Broker:HeartbeatConfig:ReconnectIntervalInit
+  How many milliseconds workers should wait before trying to reconnect to the broker for the first time after disconnecting.
+
+Broker:HeartbeatConfig:ReconnectIntervalMax
+  Upper bound for the exponential back off time for workers between reconnect attempts after disconnecting.
 
 ********
 Security
 ********
 
-.. list-table::
-   :widths: 20 80
-   :header-rows: 1
+Security:Key
+  Symetric key used for creating JWT Bearer tokens for authentication.
 
-   * - Variable
-     - Description
-   * - ``Security:Key``
-     - Symetric key used for creating JWT Bearer tokens for authentication.
-   * - ``Security:AccessTokenExpirationMinutes``
-     - How many minutes should issued JWT access token be valid.
-   * - ``Security:RefreshTokenExpirationDays``
-     - How many days should issued JWT refresh token be valid. Refresh tokens are used for requesting new access tokens and are invalidated on password change. After expiring, new tokens can be obtained by authenticating via email and p
-   * - ``Security:WorkerTokenExpirationMinutes``
-     - How many minutes should access tokens issued to workers be valid. These tokens allow workers to download/upload files necessary for the task execution.
+Security:AccessTokenExpirationMinutes
+  How many minutes should issued JWT access token be valid.
+
+Security:RefreshTokenExpirationDays
+  How many days should issued JWT refresh token be valid. Refresh tokens are used for requesting new access tokens and are invalidated on password change. After expiring, new tokens can be obtained by authenticating via email and p
+
+Security:WorkerTokenExpirationMinutes
+  How many minutes should access tokens issued to workers be valid. These tokens allow workers to download/upload files necessary for the task execution.
 
 *******
 Storage
 *******
 
-.. list-table::
-   :widths: 20 80
-   :header-rows: 1
-
-   * - Variable
-     - Description
-   * - ``Storage:Directory``
-     - Path to directory used as general file storage. Submissions, additional files and result files will be stored there.
+Storage:Directory
+  Path to directory used as general file storage. Submissions, additional files and result files will be stored there.
 
 ******
 Emails
 ******
 
-.. list-table::
-   :widths: 20 80
-   :header-rows: 1
+Emails:SmtpServerurl
+  Url (without port) of the server used for sending emails.
 
-   * - Variable
-     - Description
-   * - ``Emails:SmtpServerurl``
-     - Url (without port) of the server used for sending emails.
-   * - ``Emails:Port``
-     - Port on smtp server to connect to.
-   * - ``Emails:Username``
-     - Username used to authenticate to the smtp server.
-   * - ``Emails:Password``
-     - Password used to authenticate to the smtp server.
-   * - ``Emails:UseSsl``
-     - Whether SSL connection should be enforced when communicating with the smtp server.
-   * - ``Emails:SenderAddress``
-     - Email address to use as the sender address.
+Emails:Port
+  Port on smtp server to connect to.
+
+Emails:Username
+  Username used to authenticate to the smtp server.
+
+Emails:Password
+  Password used to authenticate to the smtp server.
+
+Emails:UseSsl
+  Whether SSL connection should be enforced when communicating with the smtp server.
+
+Emails:SenderAddress
+  Email address to use as the sender address.
 
 ******
 Limits
@@ -106,18 +90,14 @@ Limits
 
 Global limits for uploaded files sizes.
 
-.. list-table::
-   :widths: 20 80
-   :header-rows: 1
+Limits:MaxTournamentFileSize
+  Maximum total size of additional files for a tournament.
 
-   * - Variable
-     - Description
-   * - ``Limits:MaxTournamentFileSize``
-     - Maximum total size of additional files for a tournament.
-   * - ``Limits:MaxSubmissionFileSize``
-     - Maximum total size of submission files.
-   * - ``Limits:MaxResultFileSize``
-     - Maximum total size of task result files received from workers.
+Limits:MaxSubmissionFileSize
+  Maximum total size of submission files.
+
+Limits:MaxResultFileSize
+  Maximum total size of task result files received from workers.
 
 *******
 Serilog
