@@ -1,3 +1,5 @@
+.. _installation-instructions:
+
 ###########################
  Installation instructions
 ###########################
@@ -25,7 +27,7 @@ Create a dedicated user which will be used to run the platform binaries. Constra
 .NET Core 3.0 runtime
 =====================
 
-Follow instructions on [official website](https://dotnet.microsoft.com/download/) for your system.
+Follow instructions on `official website <https://dotnet.microsoft.com/download/>`_ for your system.
 
 Setup PostgreSQL database (server only)
 =======================================
@@ -129,7 +131,7 @@ Emails:UseSsl
 Emails:SenderAddress
   Email address to use as the sender address.
 
-Additional configuration variables are described in separate section.
+For other configuration options, see :ref:`server-configuration`.
 
 First run of the server
 -----------------------
@@ -193,8 +195,6 @@ You can use  ::
 
 to view latest logs from the server. For more information about ``journalctl`` see ``man journalctl``
 
-For other configuration options, see [Server configuration](server-configuration.md) section.
-
 Exposing the server
 ===================
 
@@ -252,14 +252,19 @@ Deploying the worker is done similarly to deploying the server. We recommend fol
 
 Copy the worker binaries to ``/var/opcaic/worker`` directory and wanted game modules to the ``/var/opcaic/modules`` directory. Give appropriate access rights to the ``opcaic`` user for all above directories. Worker also needs to be configured, following table describes variables which need to be configured eithre via ``appsettings.json`` or environment variables
 
-| **JSON configuration path**     | **Description**                                                                                       |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| ModulePath                      | Path to directory with game modules, recomended ``/var/opcaic/modules``                                 |
-| Execution:WorkingDirectoryRoot  | Path to dedicated working directory for in-process tasks                                              |
-| Execution:ArchiveDirectoryRoot  | Path to dedicated archiving directory for executed tasks                                              |
-| ConnectorConfig:BrokerAddress   | Address to which the worker should connect. Corresponds to Broker.ListeningAddress variable on server |
+ModulePath
+  Path to directory with game modules, recomended ``/var/opcaic/modules``
+ 
+Execution:WorkingDirectoryRoot
+  Path to dedicated working directory for in-process tasks
 
-Example systemd unit file follows:
+Execution:ArchiveDirectoryRoot
+  Path to dedicated archiving directory for executed tasks
+
+ConnectorConfig:BrokerAddress
+  Address to which the worker should connect. Corresponds to ``Broker:ListeningAddress`` variable on server
+
+For other configuration options, see :ref:`worker-configuration`. Example systemd unit file follows:
 
 .. code-block:: cfg
 
@@ -297,13 +302,13 @@ As with server, you can see debug output by running ::
 
 The output should now display both server and worker logs.
 
-For information how to create your own game modules and deploy them, see [Adding a new game module to the OPCAIC platform](adding-new-game-modules.md).
+For information how to create your own game modules and deploy them, see :ref:`adding-new-games`.
 
 *************************************************
 (Optional) Installing Graylog for log aggregation
 *************************************************
 
-Searching though the logs using ``journalctl`` is not very user friendly for inexperienced users. The OPCAIC platform can be configured to use [Graylog](https://www.graylog.org) which is a tool supporting log aggregation, structured log searching and even monitoring capabilities. Install graylog by following the [official installation guide](https://docs.graylog.org/en/3.1/pages/installation.html).
+Searching though the logs using ``journalctl`` is not very user friendly for inexperienced users. The OPCAIC platform can be configured to use `Graylog <https://www.graylog.org>`_ which is a tool supporting log aggregation, structured log searching and even monitoring capabilities. Install graylog by following the `official installation guide <https://docs.graylog.org/en/3.1/pages/installation.html>`_.
 
 For the actual Graylog setup for consuming OPCAIC platform logs, we recommend setting up an GELF HTTP input. Both opcaic server and worker binaries can be configured by editing the ``Serilog`` configuration section in ``appsettings.json`` file. It is also good idea to raise the minimum level for console logger when using Graylog. Example configuration follows:
 

@@ -8,3 +8,9 @@
     max-width: 100%;
     overflow: visible;
 }
+
+/* get rid of the ugly vertical space after paragraph in LI */
+.rst-content .section ul p,
+.rst-content .section ol p {
+    margin-bottom: 0px;
+}

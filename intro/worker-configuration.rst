@@ -1,3 +1,5 @@
+.. _worker-configuration:
+
 ####################
 Worker configuration
 ####################
@@ -53,4 +55,4 @@ Execution:MaxTaskTimeoutSeconds
 Serilog
 *******
 
-Used to configure the [Serilog](http://www.serilog.net) Logging library. See [official documentation](https://github.com/serilog/serilog-settings-configuration) for further details.
+Used to configure the `Serilog <http://www.serilog.net>`_ Logging library. See `official documentation <https://github.com/serilog/serilog-settings-configuration>`_ for further details.

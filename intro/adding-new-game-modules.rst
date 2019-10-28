@@ -1,3 +1,5 @@
+.. _adding-new-games:
+
 ########################################
 Adding a new game module to the platform
 ########################################
@@ -19,12 +21,15 @@ Required entry points
 
 There are total 5 entry points: *checker*, *compiler*, *validator*, *executor* and *cleanup*. These are combined into two pipelines:
 
-- *Validation pipeline*: invoked to validate newly submitted solution to game's tournament
+* *Validation pipeline*: invoked to validate newly submitted solution to game's tournament
+
   - checker
   - compiler
   - validator
   - cleanup
-- *Execution pipeline* : invoked to execute individual matches between submissions
+
+* *Execution pipeline* : invoked to execute individual matches between submissions
+
   - compiler - invoked for all submissions separately
   - executor
   - cleanup
@@ -32,59 +37,52 @@ There are total 5 entry points: *checker*, *compiler*, *validator*, *executor* a
 Checker entry point
 -------------------
 
-*Purpose:* Check that the submission submitted by the user contains all the files needed. This step is there explicitly to be able to provide meaningful error messages to users when there is something wrong with the submission.
-
-*Arguments:*
- - Path to additional files (specific for given tournament).
- - Path to the folder with submission files.
-
-*Exit codes:*
- - 0 - Submission is correct and may proceed to the next stage
- - 200 - There is a problem with user's submission (user's fault)
- - other - General error (module's fault)
+:Purpose: Check that the submission submitted by the user contains all the files needed. This step is there explicitly to be able to provide meaningful error messages to users when there is something wrong with the submission.
+:Arguments:
+   - Path to additional files (specific for given tournament).
+   - Path to the folder with submission files.
+:Exit codes:
+   - 0 - Submission is correct and may proceed to the next stage
+   - 200 - There is a problem with user's submission (user's fault)
+   - other - General error (module's fault)
 
 Compiler entry point
 --------------------
 
-*Purpose:* Compile the submission files to a form which executor can accept. The most prominent example is compiling the submission files into an executable.
-
-*Arguments:*
- - Path to additional files (specific for given tournament).
- - Path to the folder with submission files.
- - Path to the output folder
-
-*Exit codes:*
- - 0 - Compilation was successful
- - 200 - Submission cannot be compiled (user's fault)
- - other - General error (module's fault)
+:Purpose: Compile the submission files to a form which executor can accept. The most prominent example is compiling the submission files into an executable.
+:Arguments:
+   - Path to additional files (specific for given tournament).
+   - Path to the folder with submission files.
+   - Path to the output folder where results of the compilation should be stored.
+:Exit codes:
+   - 0 - Compilation was successful
+   - 200 - Submission cannot be compiled (user's fault)
+   - other - General error (module's fault)
 
 Validator entry point
 ---------------------
 
-*Purpose:* Smoke test the compiled submission, e.g. execute a testing match between to check that it does not crash.
-
-*Arguments:*
- - Path to additional files (specific for given tournament).
- - Path to the folder with compiled submission (output folder from the compiler entry point)
-
-*Exit codes:*
- - 0 - Submission is valid and may participate in the tournament
- - 200 - Submission is considered invalid (user's fault)
- - other - General error (module's fault)
+:Purpose: Smoke test the compiled submission, e.g. execute a testing match between to check that it does not crash.
+:Arguments:
+   - Path to additional files (specific for given tournament).
+   - Path to the folder with compiled submission (output folder from the compiler entry point)
+:Exit codes:
+   - 0 - Submission is valid and may participate in the tournament
+   - 200 - Submission is considered invalid (user's fault)
+   - other - General error (module's fault)
 
 Executor entry point
 --------------------
 
-*Purpose:* Execute match between submissions.
+:Purpose: Execute a match between submissions.
 
-*Arguments:*
- - Path to additional files (specific for given tournament).
- - [1 - N] Paths to folders with compiled submissions (products of the compile entry point)
- - Path to folder where additional output can be stored
-
-*Exit codes:*
- - 0 - Match executed successfully
- - other - General error (module's fault)
+:Arguments:
+   - Path to additional files (specific for given tournament).
+   - [1 - N] Paths to folders with compiled submissions (products of the compile entry point)
+   - Path to folder where additional output can be stored
+:Exit codes:
+   - 0 - Match executed successfully
+   - other - General error (module's fault)
 
 Additionally, the executor entry point must store match results in a ``match-results.json`` file inside the provided output folder. The output must have an array property 'results' containing objects with numeric 'score' property This property is used to determine the relative ordering between the submissions which participated in the match (and hence the winner). The result file can contain also additional statistics from the match. Example ``match-results.json`` file contents can be seen below:
 
@@ -108,11 +106,12 @@ Additionally, the executor entry point must store match results in a ``match-res
 Cleanup entry point
 -------------------
 
-*purpose*: Perform cleanup of resources not controlled by the platform. For example killing hanging process of a game after failed match execution
-
-*Exit codes:*
- - 0 - Success
- - other - General error (module's fault)
+:Purpose: Perform cleanup of resources not controlled by the platform. For example killing hanging process of a game after failed match execution
+:Arguments:
+   - Path to additional files (specific for given tournament).
+:Exit codes:
+   - 0 - Success
+   - other - General error (module's fault)
 
 Specifying the entry points
 ===========================
@@ -169,7 +168,7 @@ The game module can use both standard output and standard error output streams t
 Deploying the game module
 *************************
 
-Deploying of the game module is done simply by copying the game module directory to *modules directory* on worker machines (the ``/var/opcaic/modules/`` directory from [Installation instructions](installation-instructions.md)). The platform should detect existence of the new game module automatically.
+Deploying of the game module is done simply by copying the game module directory to *modules directory* on worker machines (the ``/var/opcaic/modules/`` directory from :ref:`installation-instructions`). The platform should detect existence of the new game module automatically.
 
 If the game module requires additional software, make sure it is also installed on the worker machine and accessible to the user under which the worker process is running.
 
