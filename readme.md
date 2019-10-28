@@ -7,3 +7,5 @@ To build the documentation locally, you may need to install additional python li
     pip install -r requirements.txt
     
 Then you can can use the `make html` command to build the web pages, the result will be put into the `_build` directory. You can achieve live preview via `make livehtml` on `localhost:8000`.
+
+When contributing, please adhere to https://documentation-style-guide-sphinx.readthedocs.io/en/latest/style-guide.html.

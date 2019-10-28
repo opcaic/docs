@@ -28,6 +28,7 @@ author = 'OPCAIC Team'
 # ones.
 extensions = [
     'recommonmark',
+    'sphinx.ext.todo',
 ]
 
 source_suffix = ['.rst', '.md']
@@ -72,3 +73,5 @@ latex_show_urls = 'footnote'
 latex_elements = {
     'preamble': r'\usepackage{styleoverrides}'
 }
+
+todo_include_todos = True
