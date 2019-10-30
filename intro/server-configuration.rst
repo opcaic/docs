@@ -58,29 +58,61 @@ Broker:HeartbeatConfig:ReconnectIntervalMax
 Security
 ********
 
-Security:Key
-  Symetric key used for creating JWT Bearer tokens for authentication.
+Contains important configuration regarding platform security.
 
-Security:AccessTokenExpirationMinutes
+JWT Configuration
+=================
+
+Configuration of JWT bearer security mechanism used for user authentication.
+
+Security:JWT:Key
+  Symetric key used for creating the JWT Bearer tokens for authentication.
+
+Security:JWT:AccessTokenExpirationMinutes
   How many minutes should issued JWT access token be valid.
 
-Security:RefreshTokenExpirationDays
+Security:JWT:RefreshTokenExpirationDays
   How many days should issued JWT refresh token be valid. Refresh tokens are used for requesting new
   access tokens and are invalidated on password change. After expiring, new tokens can be obtained
   by authenticating via email and p
 
-Security:WorkerTokenExpirationMinutes
+Security:JWT:WorkerTokenExpirationMinutes
   How many minutes should access tokens issued to workers be valid. These tokens allow workers to
   download/upload files necessary for the task execution.
 
+.. _password-strength-config:
+
+Password Strength Configuration
+===============================
+
+Following options configure minimal requirements for account passwords.
+
+Security:Password:RequireDigit
+  If true, password must contain a digit, default ``false``.
+
+Security:Password:RequireLowercase
+  If true, password must contain a lowercase ASCII character, default ``false``.
+
+Security:Password:RequireUppercase
+  If true, password must contain an uppercase ASCII character, default ``false``.
+
+Security:Password:RequireNonAlphanumeric
+  If true, password must contain a non-alphanumeric character, default ``false``.
+
+Security:Password:RequiredUniqueChars
+  Minimum number of unique characters which password must contain. Must be greater than zero,
+  default ``1``.
+
+Security:Password:RequiredLength
+  Minimum number of total characters which password must contain. Must be at least 8, default ``8``.
 
 *******
 Storage
 *******
 
 Storage:Directory
-  Path to directory used as general file storage. Submissions, additional files and result files will be stored there.
-
+  Path to directory used as general file storage. Submissions, additional files and result files
+  will be stored there.
 
 ******
 Emails

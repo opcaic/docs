@@ -111,13 +111,13 @@ database and the location of the storage folder. These can be provided either by
 into the ``appsettings.json`` configuration file, or through environment variables. Names of
 variable names are case insensitive. The environment variables take precedence over the
 configuration file, and their name is obtained by taking the JSON path and replacing any colons with
-two underscores (e.g. ``Security:Key`` becomes ``Security__Key``). The list of required variables
+two underscores (e.g. ``Security:JWT:Key`` becomes ``Security__JWT__Key``). The list of required variables
 are:
 
 FrontendUrl
   Url of the frontend application (to be used when generating links)
 
-Security:Key
+Security:JWT:Key
   Key for signing JWT tokens provided by the web server.
 
 ConnectionStrings:DataContext
@@ -162,7 +162,7 @@ Seed:AdminEmail
   The email address used for admin login. This needs to be a valid email.
 
 Seed:AdminPassword
-  Password which should be used for login.
+  Password which should be used for login. The password must conform to the minimum strength requirements, which by default is at least 8 characters. See also :ref:`password-strength-config` for detail how to configure the minimum password strength.
 
 We recommend using command line parameters for the admin account credentials. Supposing that correct
 values for other variables have been provided either in ``appconfig.json`` or environment variables,
@@ -208,7 +208,7 @@ be found below:
     WorkingDirectory=/var/opcaic/server
     ExecStart=/usr/bin/dotnet /var/opcaic/server/OPCAIC.ApiService.dll
 
-    Environment=SECURITY__KEY=insert_security_key_here
+    Environment=SECURITY__JWT__KEY=insert_security_key_here
     Environment='CONNECTIONSTRINGS__DATACONTEXT=Server=127.0.0.1;Port=5432;Database=opcaic_server_db;User Id=opcaic;Password=long_live_opcaic;'
     Environment=STORAGE__DIRECTORY=/var/opcaic/server_storage
     Environment=BROKER__LISTENINGADDRESS=tcp://168.192.0.0:6000
