@@ -18,6 +18,7 @@ Welcome to OPCAIC documentation!
    intro/installation-instructions
    intro/server-configuration
    intro/worker-configuration
+   intro/webapp-configuration
    intro/adding-new-game-modules
 
 .. toctree::
@@ -26,5 +27,13 @@ Welcome to OPCAIC documentation!
 
    dev/architecture
    dev/server-arch
+   dev/frontend-arch
+
+.. toctree::
+   :maxdepth: 2
+   :caption: User Documentation:
+
+   user/user
+   user/admin-organizer
 
 .. todolist::
