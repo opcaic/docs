@@ -2,8 +2,6 @@
  User documentation
 ################################
 
-.. todo:: Možná spojit User a Admin dokumentaci do jednoho souboru, ale pro psaní dokumentace bude jednodušší to mít odděleně
-
 **************************
  General basics
 **************************
@@ -28,7 +26,7 @@ The last step is to click the link in the confirmation email that redirects user
 Login
 ==========================
 
-Users can log in by clicking the *Login* link in the top menu of the website.
+Users can log in by clicking the *Login* link in the top menu of the website. 
 
 Logout
 ==========================
@@ -68,12 +66,31 @@ The website language can be changed by clicking the *Language* button located in
  Tournaments
 **************************
 
+Tournament properties
+==========================
+
+Scope
+--------------------------
+
+Format
+--------------------------
+
 Tournament list
 ==========================
 
-On the tournament list page, users can browse tournaments that were published on the platform. 
+On the tournament list page, users can browse tournaments that were published on the platform.
 
-.. todo:: TODO
+The page contains a filter with various options:
+
+- *State* - *running* (accepts submission) or *finished* (finished or evaluating submissions)
+- *Game* - filter by tournament game
+- *Format* - filter by tournament format
+- *Scope* - filter by tournament scope
+- *Sort by* - either by deadline date (for runnig tournaments) or by finished date (for finished tournaments)
+
+The list contains only tournaments that are visible to the currently logged in user which means that users cannot see tournaments that were created but not yet published. Organizers may also choose to make tournaments only available to invited users, in which case such a tournament does not appear in the list if the user is not invited.
+
+By clicking on the tournament, a user is redirected to the tournament detail page. 
 
 Tournament detail
 ==========================
@@ -90,7 +107,7 @@ Leaderboard
 
 The *Leaderboard* tab displays the overall standings of the players in the tournament. For ongoing tournaments, leaderboards are provided right after the first match is played. Whereas for tournaments with deadline, leaderboards are displayed only after all the matches are played. 
 
-.. todo:: Zmínit vizualizaci?
+Some tournaments also provide visualization of the whole tournament - brackets for single and double elimination tournaments, table visualizaton for table tournaments. 
 
 Matches
 --------------------------
@@ -112,26 +129,32 @@ The *Match detail* page can be accessed either from the *Matches* tab or from th
 Submit solution
 --------------------------
 
+The *Submit solution* button opens a modal windows that lets users submit their solutions. If the user is not logged in, the windows contains a login link and the users is redirected back after they log in.
+
+There are currently two ways of submitting solutions:
+
+- **multiple files** - Users can upload multiple files by either dragging them to the upload area or clicking the area and choosing the files in the dialog window. This approach is good if the solution consist of only a few files and there are no folders in the solution.
+- **single zip file** - For more complex solutions, users can upload a single zip file with the whole solution. The main advantage of such an approach is that these submissions can also contain folders.
+
+After submitting a solution, the user is redirected to the detail of that submission.
+
 My submissions
 --------------------------
 
-
+The *My submissions* tab is only visible to logged in users and displays all their submissions.
 
 Submission detail
 --------------------------
 
+The *Submission detail* page can be accessed either from the *My submissions* tab by clicking the *Detail* button on correspoing row in the list. It contains detailed information about the submissions - date of submissions, its validation state and whether the submission is currently active.
 
+The most important information is the **validation state** of a submission. Each submission must pass several validation steps to be considered valid. Only after that can the solution be used in the tournament.
 
+- *Checker* - checks if all required files are present in the submission
+- *Compiler* - tries to compile the submission
+- *Validator* - smoke tests the compiled submission
 
-
-Tournament properties
-==========================
-
-Scope
---------------------------
-
-Format
---------------------------
+**Active** submission is such a submission that is used when executing matches for the tournament. It is currently not possible for a user to choose which submission is active in the tournament. The rule is that the last valid submission is made active.
 
 **************************
  Games
@@ -140,5 +163,9 @@ Format
 Game list
 ==========================
 
+On the *Game list* page, users can browse games that are implemented on the platform. By clicking on a game, the user is redirected to the game detail page. 
+
 Game detail
 ==========================
+
+The *Game detail* page contains a short description of the game (if it is provided by the administrators) and also a list of all running tournaments in that game.
