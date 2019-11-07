@@ -244,6 +244,13 @@ available for customization. It also generates a preview of the form which will 
 of the page when creating a new tournament in the given game. We recommend using tools like
 https://jsonschema.net which can gereate a JSON schema from example JSON file.
 
+.. tip::
+    You can use features of JSON schema to constrain the allowed inputs for the genereated form, as
+    well as specifying default values to be filled in the form. Several examples of different json
+    schemata used to generate forms can be found at `live playground
+    <https://rjsf-team.github.io/react-jsonschema-form/>`_ of the library used to generate the said
+    forms.
+
 Using the custom configuration
 ------------------------------
 
