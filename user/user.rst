@@ -74,15 +74,19 @@ Tournament properties
 
 Scope
 --------------------------
-Tournament *scope* defines the time the tournament is opened for submissions, and when will the tournament be evaluated. First of the scope type is **deadline**, which means that
-there is a certain date, until when the tournament is opened for submissions. After that date, all the matches of the tournament are planned and executed.
-The other type is an **ongoing** tournament. Such tournament is opened for submissions all the time, and its matches are planned and executed continuously.
+Tournament *scope* defines the time the tournament is opened for submissions, and when will the tournament be evaluated. 
+
+First of the scopes is **deadline**, which means that there is a certain date, until when the tournament is opened for competitors. 
+After that date, all the matches of the tournament are planned and executed. The other type is an **ongoing** tournament. 
+Such tournament is opened for submissions all the time, and its matches are planned and executed continuously.
 
 Format
 --------------------------
 Tournament *format* defines the way how to plan matches and also how to determine tournament's leaderboards.
+
 The first format is **single player**, where there is only one way how to plan matches. In that format, players are ranked
 directly based on the points they obtain in the matches.
+
 For games of two players, there are three formats available. First one is **Elo** (https://en.wikipedia.org/wiki/Elo_rating_system), the most usual system of ongoing tournaments. 
 Players in ELO are rated based on their relative skill, which is expressed by their "Elo points". These points determine both the leaderboard of the tournament and also serve for 
 planning matches, so that they can be planned continuously. The other two formats are **single** and **double elimination** (https://en.wikipedia.org/wiki/Tournament#Knockout) tournaments. 
@@ -92,6 +96,7 @@ The terms single/double elimination refer to the number of matches a player has 
 Ranking strategy
 --------------------------
 The final tournament property is *ranking strategy*, which determines how will be the players ranked based on the points they obtained in the tournament.
+
 The two implemented ranking strategies are **maximum** and **minimum**, and their meaning is self-explanatory.
 
 Tournament list
