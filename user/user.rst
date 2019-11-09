@@ -87,7 +87,7 @@ Tournament *format* defines the way how to plan matches and also how to determin
 The first format is **single player**, where there is only one way how to plan matches. In that format, players are ranked
 directly based on the points they obtain in the matches.
 
-For games of two players, there are three formats available. First one is **Elo** (https://en.wikipedia.org/wiki/Elo_rating_system), the most usual system of ongoing tournaments. 
+For games of two players, there are three formats available. First one is **Elo**, the most usual system of ongoing tournaments (https://en.wikipedia.org/wiki/Elo_rating_system). 
 Players in ELO are rated based on their relative skill, which is expressed by their "Elo points". These points determine both the leaderboard of the tournament and also serve for 
 planning matches, so that they can be planned continuously. The other two formats are **single** and **double elimination** (https://en.wikipedia.org/wiki/Tournament#Knockout) tournaments. 
 In such tournaments, the matches are all planned at once, forming an elimination bracket, where the losers are gradually knocked out of the tournament, until there is only the winner left. 
