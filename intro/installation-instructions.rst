@@ -263,6 +263,13 @@ The server also needs to communicate with workers. If worker(s) are deployed on 
 make sure they can make connection to the address specified by the ``Broker.ListeningAddress``
 config variable.
 
+*****************************
+Building the web application
+*****************************
+
+First ensure that you have `Node.js v8.15.1 <https://nodejs.org/>`_ and npm v5 or above installed. By default, the application is configured to have the API server on the same domain as the application. To change the configuration, see :ref:`webapp-configuration`.
+
+To build the web application, navigate to the root folder of web application source files and first run ``npm install`` to install all dependencies and then tun ``npm run build`` to build the application. The resulting files can be then found in the ``build`` folder.
 
 *****************************
 Deploying the web application
