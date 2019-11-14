@@ -76,10 +76,10 @@ latex_documents = [
 ]
 
 latex_elements = {
-    'preamble': r'
+    'preamble': r'''
         \usepackage{styleoverrides}
         \addto\captionsenglish{\renewcommand{\contentsname}{Table of contents}}
-    '
+    '''
 }
 
 todo_include_todos = True
