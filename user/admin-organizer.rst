@@ -6,6 +6,7 @@
  Basics
 **************************
 
+==========================
  Availability
 ==========================
 
@@ -13,6 +14,7 @@ Apart from the public part of the web, there is also an administration part (mod
 This module is only accessible to users which were granted a sufficient role - organizer or admin. If the user does not have one of these roles, he sees only "forbidden" error page.
 Normal users can be promoted to both of these roles by admins.
 
+==========================
  Features
 ==========================
 
@@ -25,6 +27,7 @@ and thus cannot have access to all of the admininstration features. The submodul
  - Email templates
  - System
 
+==========================
 Roles
 ==========================
 
@@ -39,6 +42,7 @@ The second role is *admin*. This role is supposed to suit for administrating the
 There are few submodules (the ones which are available to organizers as well) which manage current games and tournaments of the platform and also submodules intended to serve
 for administrating the application itself, that is for example managing its users, work currently being processed on the server and so on.
 
+==========================
 Getting to admininstration module
 ==========================
 
@@ -49,16 +53,19 @@ All submodules are reachable from sidebar on the left side. On the bottom of thi
  Administration module
 **************************
 
+==========================
  Dashboard
 ==========================
 
 The main
 
+==========================
  Tournaments
 ==========================
 
 The second is the *Tournament* submodule, which provides functionality to manage tournaments running on the platform. This part of the administration is available both to organizers and admins.
 
+--------------------------
  Creating a tournament
 --------------------------
 
@@ -77,6 +84,7 @@ The last two parts handle the tournament's detail page. Organizer of a tournamen
 choosing a title image and theme color for the tournament's page. Finally, tournament's description can be written in a text box on the bottom of the form. The text box supports markdown formatting, and the
 user can preview the final look of the text.
 
+--------------------------
  Tournaments list
 --------------------------
 
@@ -90,6 +98,7 @@ The *Clone* button suits for copying a tournament - it leads to a *Create new to
 
 This part of the administration is available both to organizers and admins
 
+--------------------------
  Tournaments detail
 --------------------------
 
@@ -127,15 +136,19 @@ People who do not have the account yet will have to register first (with the spe
 
 *Leaderboard*, the last tab, shows only just the leaderboard of the tournament, as seen in the public part of the web.
 
+==========================
  Games
 ==========================
 
+==========================
  Users
 ==========================
 
+==========================
  Email templates
 ==========================
 
+==========================
  System
 ==========================
 
