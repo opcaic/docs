@@ -74,7 +74,10 @@ latex_show_pagerefs = True
 
 latex_documents = [
     (master_doc, 'doc.tex', project,
-      r'Radek Zikmund \and Ondřej Nepožitek \and Michal Lehončák \and Šimon Stachura', 'howto') 
+      r'''Radek Zikmund \and
+      Ondřej Nepožitek \and
+      Michal Lehončák \and
+      Šimon Stachura''', 'manual') 
 ]
 
 latex_elements = {
