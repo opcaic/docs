@@ -11,6 +11,10 @@
 Welcome to OPCAIC documentation!
 ================================
 
+.. raw:: latex
+
+   \part{Getting Started}
+
 .. toctree::
    :maxdepth: 2
    :caption: Getting Started:
@@ -21,6 +25,10 @@ Welcome to OPCAIC documentation!
    intro/webapp-configuration
    intro/adding-new-game-modules
 
+.. raw:: latex
+
+   \part{Developer Documentation}
+   
 .. toctree::
    :maxdepth: 2
    :caption: Developer Documentation:
@@ -29,6 +37,10 @@ Welcome to OPCAIC documentation!
    dev/server-arch
    dev/frontend-arch
 
+.. raw:: latex
+
+   \part{User Documentation}
+   
 .. toctree::
    :maxdepth: 2
    :caption: User Documentation:

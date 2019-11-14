@@ -363,8 +363,9 @@ For other configuration options, see :ref:`worker-configuration`. Example system
     ExecStart=/usr/bin/dotnet /var/opcaic/worker/OPCAIC.Worker.dll 
 
     Environment=MODULEPATH=/var/opcaic/modules
-    Environment=EXECUTION__WORKINGDIRECTORYROOT=/var/opcaic/worker_root/work
-    Environment=EXECUTION__ARCHIVEDIRECTORYROOT=/var/opcaic/worker_root/archive
+    Environment=EXECUTION__WORKINGDIRECTORY=/var/opcaic/worker_root/work
+    Environment=EXECUTION__ERRORDIRECTORY=/var/opcaic/worker_root/work
+    Environment=EXECUTION__ARCHIVEDIRECTORY=/var/opcaic/worker_root/archive
     Environment=CONNECTORCONFIG__BROKERADDRESS=tcp://168.192.0.10:6000
 
     [Install]
