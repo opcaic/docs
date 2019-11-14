@@ -1,23 +1,23 @@
 ################################
- Admin documentation
+Admin documentation
 ################################
 
 .. todo:: Možná spojit User a Admin dokumentaci do jednoho souboru, ale pro psaní dokumentace bude
           jednodušší to mít odděleně
 
 **************************
- Organizer
+Organizer
 **************************
 
 **************************
- Admin
+Admin
 **************************
 
 
 .. todo:: Creating new games, etc...
 
 *********************
- Diagnosing problems
+Diagnosing problems
 *********************
 
 Flawless execution of tournaments requires flawless inputs from multiple users of the platform and
@@ -25,7 +25,7 @@ there are several stages of the tournament lifetime which are prone to human err
 provides a guide on how to diagnose and subsequently repair common errors when using the OPCAIC
 platform.
 
- Searching the log files
+Searching the log files
 =========================
 
 In case the problem is not evident from diagnostics visible in the administration section of the web
@@ -48,8 +48,8 @@ regarding to some tournament will be annotated by the tournament id etc.
 
 Following sections list the most useful variables grouped by topic.
 
- General variables
--------------------
+General variables
+-----------------
 
 StatusCode
   Status code returned from http request on the server's web API.
@@ -63,8 +63,8 @@ HttpRequestMethod
 ElapsedMilliseconds
   Time spent processing given request in milliseconds. 
 
- User information
-------------------
+User information
+----------------
   
 UserId
   Id of the author of the request.
@@ -78,8 +78,8 @@ Username
 UserRole
   Id of the author of the request.
 
- Ids of the relevant entities
-------------------------------
+Ids of the relevant entities
+----------------------------
  
 In administration section of the web application, it is possible to see the unique ids of the
 individual entities. These can used to filter out desired logs.
@@ -109,8 +109,8 @@ TournamentState
 GameId
   Id of the game.
 
- Task execution on a worker
-----------------------------
+Task execution on a worker
+--------------------------
 
 Game
   Name of the game module servicing the match execution or submission validation. This corresponds
