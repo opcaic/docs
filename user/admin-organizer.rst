@@ -39,7 +39,7 @@ messages are annotated with structured contextual data. It means e.g. that each 
 while processing a user request is annotated with a user id, username, email; each log message
 regarding to some tournament will be annotated by the tournament id etc.
 
-.. note:
+.. note::
 
    In default configuration, standard output of the server processes does not dump all variables
    listed below. The format of printed log messages can be configured in ``appsettings.json`` by
