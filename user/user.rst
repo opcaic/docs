@@ -209,7 +209,9 @@ There are currently two ways of submitting solutions:
 - **multiple files** - Users can upload multiple files by either dragging them to the upload area or
   clicking the area and choosing the files in the dialog window. This approach is good if the
   solution consist of only a few files and there are no folders in the solution.
-- **single zip file** - For more complex solutions, users can upload a single zip file with the whole solution. The main advantage of such an approach is that these submissions can also contain folders.
+- **single zip file** - For more complex solutions, users can upload a single zip file with the
+  whole solution. The main advantage of such an approach is that these submissions can also contain
+  folders.
 
 After submitting a solution, the user is redirected to the detail of that submission.
 
@@ -235,8 +237,8 @@ the tournament.
 - *Validator* - smoke tests the compiled submission
 
 **Active** submission is such a submission that is used when executing matches for the
- tournament. It is currently not possible for a user to choose which submission is active in the
- tournament. The rule is that the last valid submission is made active.
+tournament. It is currently not possible for a user to choose which submission is active in the
+tournament. The rule is that the last valid submission is made active.
 
 **************************
  Games
