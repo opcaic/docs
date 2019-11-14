@@ -386,9 +386,10 @@ The output should now display both server and worker logs.
 
 For information how to create your own game modules and deploy them, see :ref:`adding-new-games`.
 
+.. _graylog-installation:
 
 *************************************************
-(Optional) Installing Graylog for log aggregation
+Installing Graylog for log aggregation
 *************************************************
 
 Searching though the logs using ``journalctl`` is not very user friendly for inexperienced

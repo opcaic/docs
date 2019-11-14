@@ -152,6 +152,66 @@ Limits:MaxSubmissionFileSize
 Limits:MaxResultFileSize
   Maximum total size of task result files received from workers.
 
+******************
+ Request limiting
+******************
+
+This section contains configuration of the _`AspNetCoreRateLimit
+<https://github.com/stefanprodan/AspNetCoreRateLimit>` library used to protect the server against
+DoS attacks. It allows specifying rules for individual endpoints. More detailed information about
+the library can be found at the library's github repository.
+
+IpRateLimiting:EnableEndpointRateLimiting
+  If set to false, then only the rules with ``*`` endpoint are applied.
+
+IpRateLimiting:StackBlockedRequests
+  If true, blocked requests will contribute to limits in other other rules.
+  
+IpRateLimiting:RealIpHeader
+  Name of the HTTP header used to extract the IP address of the client when the application is
+  hosted behind a reverse proxy.
+
+.. todo: What header does nginx use?
+
+IpRateLimiting:HttpStatusCode
+  Status code returned by requests over the limit. Recommended value is 429 Too Many Requests
+
+IpRateLimiting:IpWhitelist
+  An array of Ip addresses (as strings) which should not be affected by rate limiting. You may
+  specify a mask by using values such as ``192.168.0.0/24``.
+  
+IpRateLimiting:EndpointWhitelist
+  List of endpoints which should not be affected by rate limiting. These can be used to exclude
+  specific endpoints from general rules. format is ``{Method}:{Endpoint}``. For example to
+  explicitly disable request limiting for GET requests to ``/api/users`` endpoint, use
+  ``get:/api/users`` value.
+
+IpRateLimiting:GeneralRules
+  Array of individual request limiting rules. To set individual items from command line or
+  environment variables, use ``IpRateLimiting:GeneralRules:``\ *index* or
+  ``IPRATELIMITING__GENERALRULES__``\ *index* prefix, respectively, for properties of array items.
+  
+IpRateLimiting:GeneralRules:*i*:Endpoint
+  The endpoint for which the rule is defined, if ``IpRateLimiting:EnableEndpointRateLimiting`` is
+  true, then use syntax ``{Method}:{Endpoint}`` to specify the endpoint. Otherwise use ``*``.
+
+IpRateLimiting:GeneralRules:*i*:Period
+  Duration of the time window which in which requests should be limited. The value should be a
+  natural number. You can use sufixes s, m, h, d to specify that the duration is in seconds,
+  minutes, hours or days.
+
+IpRateLimiting:GeneralRules:*i*:Limit
+  How many requests are permited during the specified time windows.
+
+IpRateLimiting:IpRules
+  Array of specialized rules for specific IP addresses.
+
+IpRateLimiting:IpRules:*i*:Ip
+  Ip address for which additional rules are specified.
+
+IpRateLimiting:IpRules:*i*:Rules
+  Rules for the specified IP address. The format is same as in ``IpRateLimiting:GeneralRules``
+  array.
 
 *******
 Serilog
