@@ -6,6 +6,20 @@
  General basics
 **************************
 
+Homepage
+==========================
+
+The *Homepage* contains a list of featured tournaments and games and provides links to corresponding list pages.
+
+User dashboard
+==========================
+
+The *User dashboard* page replaces the *Homepage* for logged in users. It contains the most important about recent matches and submissions:
+
+- *My recent matches* - Displays all the recent matches of the current user across all the tournaments
+- *My recent submissions* - Displays all the recent submissions of the current user across all the tournaments
+- *My running tournaments* - Displays all the running tournaments where the current user participated
+
 Registration
 ==========================
 
@@ -73,6 +87,7 @@ Language
 
 The website language can be changed by clicking the *Language* button located in the top menu and
 then choosing a language from the list.
+
 
 **************************
  Tournaments

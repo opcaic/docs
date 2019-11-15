@@ -41,20 +41,17 @@ The whole application is divided into three different modules:
 - *pages* - indvidual web pages of the module
 - *selectors* (optional) - store selectors
 - *utils* (optional) - utility functions
-- *PublicApp*/*AdminApp* component - entry point of the module
+- *PublicApp*/*AdminApp* component - entry point of the module, routing
 
 Components and containers
 ==========================
 
-In the React ecosystem, we often distinguish between *(presentational) components* and *containers*. *Components* are concerned with *how things look*, while *containers*
-
-.. todo:: TODO
+In the React ecosystem, we often distinguish between `(presentational) components and containers <https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0>`_ . *Components* are concerned with *how things look*, while *containers* are concerned with *how things work*. We follow this pattern and put components and containers to their respective folders. In practice, it often means that containers are connected to the redux store and pass data to components that render tables, forms, etc.
 
 Ducks
 ==========================
 
-Pages
-==========================
+We follow the `Ducks <https://github.com/erikras/ducks-modular-redux>`_ proposal to structure our code. That means that if we, for example, implement functionality regarding users, we create a ``users.js`` file in the ``ducks`` directory and put all actions, action types, reducers and sagas into that file.
 
 **************************
 API resources
@@ -228,3 +225,59 @@ For such situations, we can use the lower level api:
 .. code-block:: js
 
   <Input placeholder={intl.formatMessage(intlMessages.username)} />
+
+**************************
+ Enums
+**************************
+
+It is often needed to map server enums to web app enums together with their localizations. Because all the other translations are done in the web app, we decided to do the same with the enums. We provide ``createEnum()`` function to make working with enums easier.
+
+Creating new enum
+=========================
+
+To make a new enum, first create and export new variable in the ``shared/helpers/enumHelpers.js`` file:
+
+.. code-block:: js
+
+  export const userRoleEnum = {
+    USER: 1,
+    ORGANIZER: 2,
+    ADMIN: 3,
+  };
+
+.. note::
+
+  If the enum is mapped from a server enum, make sure that the id of each item corresponds to the id on the server.
+
+Then call the ``createEnum(enum, translations)`` on the enum variable:
+
+.. code-block:: js
+
+  userRoleEnum.helpers = createEnum(
+    userRoleEnum,
+    defineMessages({
+      1: { id: 'app.enums.userRole.user' },
+      2: { id: 'app.enums.userRole.organizer' },
+      3: { id: 'app.enums.userRole.admin' },
+    }),
+  );
+
+The function currently creates these helpers:
+
+- ``idToText(id)`` - gets translated name of the enum
+- ``getFilterOptions()`` - gets <value, text> tuples for usage in filters
+- ``getValues()`` - gets <id, text> tuples
+
+**************************
+ Higher-order components
+**************************
+
+`Higher-order component <https://reactjs.org/docs/higher-order-components.html>`_ (HOC) is a React technique for reusing component logic. We provide several HOCs for functionality that is repeated in multiple places in the codebase. All HOCs are located in the ``shared/helpers/hocs`` folder.
+
+- ``withAjax()`` - enhances Ant tables with Ajax loading, sorting, pagination, filtering
+- ``withCurrentUser()`` - provides the ``currentUser`` prop
+- ``withEnhancedForm()`` - provides isSubmitting and error props to Ant forms
+- ``withLoadMore()`` - provides the loadMore functionality to Ant lists 
+- ``withMenuSync()`` - is used to dispatch a menu sync action on componentWillMount()
+- ``withPasswordConfirmation()`` - provides function to compare passwords
+- ``withSyncedActiveItems()`` - provides activeItems props that contain active items for a given menu
