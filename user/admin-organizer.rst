@@ -2,12 +2,12 @@
  Admin documentation
 ################################
 
-**************************
- Basics
-**************************
+******
+Basics
+******
 
- Availability
-==========================
+Availability
+============
 
 Apart from the public part of the web, there is also an administration part (module), which provides
 support for managing tournaments, games and users in system and basic monitoring and maintenance of
@@ -15,8 +15,8 @@ application.  This module is only accessible to users which were granted a suffi
 organizer or admin. If the user does not have one of these roles, he sees only "forbidden" error
 page.  Normal users can be promoted to both of these roles by admins.
 
- Features
-==========================
+Features
+========
 
 The administration module is divided into several submodules. Not all of the submodules are
 available to both organizers and admins, as the organizers are not meant to manage the application
@@ -30,7 +30,7 @@ itself, and thus cannot have access to all of the admininstration features. The 
     - System
 
 Roles
-==========================
+=====
 
 The first of these roles is *organizer*. As the name suggests, these are users who are meant to
 conduct the tournaments.  They are granted access to submodules which serve for that purpose and not
@@ -48,29 +48,29 @@ submodules intended to serve for administrating the application itself, that is 
 its users, work currently being processed on the server and so on.
 
 Getting to admininstration module
-==========================
+=================================
 
 The admininstration module can be reached by clicking on the tab Administration on the main page.
 All submodules are reachable from sidebar on the left side. On the bottom of this sidebar there is a
 link which leads back to root page of public module.
 
-**************************
+***********************
  Administration module
-**************************
+***********************
 
- Dashboard
-==========================
+Dashboard
+=========
 
 The main
 
- Tournaments
-==========================
+Tournaments
+===========
 
 The second is the *Tournament* submodule, which provides functionality to manage tournaments running
 on the platform. This part of the administration is available both to organizers and admins.
 
- Creating a tournament
---------------------------
+Creating a tournament
+---------------------
 
 On the top of the page, there is a *Create new tournament* button, which redirects to a form used to
 that matter.  The form has both mandatory and optional fields, where the optional fields are usually
@@ -95,8 +95,8 @@ design* by choosing a title image and theme color for the tournament's page. Fin
 description can be written in a text box on the bottom of the form. The text box supports markdown
 formatting, and the user can preview the final look of the text.
 
- Tournaments list
---------------------------
+Tournaments list
+----------------
 
 The main part features a table with a list of tournaments to manage - for organizers there are only
 tournaments they have manager rights to, while the admins see all the tournaments.
@@ -111,8 +111,8 @@ section Tournament detail page, which is decribed in the next section.
 
 This part of the administration is available both to organizers and admins
 
- Tournaments detail
---------------------------
+Tournaments detail
+------------------
 
 Administration tournament's detail page serves for managing the tournament itself. It contains
 several tabs.
@@ -161,17 +161,17 @@ will have to register first (with the specified email) to be able to join the to
 
 *Leaderboard*, the last tab, shows only just the leaderboard of the tournament, as seen in the public part of the web.
 
- Games
-==========================
+Games
+=====
 
- Users
-==========================
+Users
+=====
 
- Email templates
-==========================
+Email templates
+===============
 
- System
-==========================
+System
+======
 
 *********************
 Diagnosing problems
