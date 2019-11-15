@@ -73,15 +73,55 @@ latex_show_urls = 'footnote'
 latex_show_pagerefs = True
 
 latex_documents = [
-    (master_doc, 'doc.tex', project,
-      r'''Radek Zikmund \and
-      Ondřej Nepožitek \and
-      Michal Lehončák \and
+    (master_doc, 'doc.tex', 'Online Platform for Conducting AI Tournaments',
+      r'''Radek Zikmund \and \\
+      Ondřej Nepožitek \and \\
+      Michal Lehončák \and \\
       Šimon Stachura''', 'manual') 
 ]
 
 latex_elements = {
+    'maketitle': r'''
+        \pagenumbering{Roman} %%% to avoid page 1 conflict with actual page 1
+
+        \begin{titlepage}
+            \centering
+
+            \vspace*{60mm} %%% * is used to give space from top
+            \textbf{\Huge {OPCAIC}}
+
+            \vspace{20mm}
+
+            \textbf{\huge {Online Platform for Conducting AI Tournaments}}
+
+            \vspace{60mm}
+            {\Large
+                Radek Zikmund
+
+                Ondřej Nepožitek
+
+                Michal Lehončák
+
+                Šimon Stachura
+            }
+
+
+            \vspace*{20mm}
+            \small  \MonthYearFormat\today
+
+
+            %% \vfill adds at the bottom
+            %% \vfill
+        \end{titlepage}
+
+        \clearpage
+        \pagenumbering{roman}
+    ''',
+
     'preamble': r'''
+        \usepackage[ddmmyy]{datetime}
+        \newdateformat{MonthYearFormat}{%
+                    \monthname[\THEMONTH], \THEYEAR}
         \usepackage{styleoverrides}
         \addto\captionsenglish{\renewcommand{\contentsname}{Table of contents}}
     '''
