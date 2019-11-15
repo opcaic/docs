@@ -6,129 +6,154 @@
  Basics
 **************************
 
-==========================
  Availability
 ==========================
 
-Apart from the public part of the web, there is also an administration part (module), which provides support for managing tournaments, games and users in system and basic monitoring and maintenance of application.
-This module is only accessible to users which were granted a sufficient role - organizer or admin. If the user does not have one of these roles, he sees only "forbidden" error page.
-Normal users can be promoted to both of these roles by admins.
+Apart from the public part of the web, there is also an administration part (module), which provides
+support for managing tournaments, games and users in system and basic monitoring and maintenance of
+application.  This module is only accessible to users which were granted a sufficient role -
+organizer or admin. If the user does not have one of these roles, he sees only "forbidden" error
+page.  Normal users can be promoted to both of these roles by admins.
 
-==========================
  Features
 ==========================
 
-The administration module is divided into several submodules. Not all of the submodules are available to both organizers and admins, as the organizers are not meant to manage the application itself,
-and thus cannot have access to all of the admininstration features. The submodules are:
- - Dashboard 
- - Tournaments
- - Games
- - Users
- - Email templates
- - System
+The administration module is divided into several submodules. Not all of the submodules are
+available to both organizers and admins, as the organizers are not meant to manage the application
+itself, and thus cannot have access to all of the admininstration features. The submodules are:
 
-==========================
+    - Dashboard 
+    - Tournaments
+    - Games
+    - Users
+    - Email templates
+    - System
+
 Roles
 ==========================
 
-The first of these roles is *organizer*. As the name suggests, these are users who are meant to conduct the tournaments.
-They are granted access to submodules which serve for that purpose and not to anything else regarding the administration of the application itself.
-Specifically, the following submodules are available to them:
- - Dashboard
- - Tournaments
- - Games
+The first of these roles is *organizer*. As the name suggests, these are users who are meant to
+conduct the tournaments.  They are granted access to submodules which serve for that purpose and not
+to anything else regarding the administration of the application itself.  Specifically, the
+following submodules are available to them:
 
-The second role is *admin*. This role is supposed to suit for administrating the whole application, so all of the submodules are available to these users.
-There are few submodules (the ones which are available to organizers as well) which manage current games and tournaments of the platform and also submodules intended to serve
-for administrating the application itself, that is for example managing its users, work currently being processed on the server and so on.
+    - Dashboard
+    - Tournaments
+    - Games
 
-==========================
+The second role is *admin*. This role is supposed to suit for administrating the whole application,
+so all of the submodules are available to these users.  There are few submodules (the ones which are
+available to organizers as well) which manage current games and tournaments of the platform and also
+submodules intended to serve for administrating the application itself, that is for example managing
+its users, work currently being processed on the server and so on.
+
 Getting to admininstration module
 ==========================
 
 The admininstration module can be reached by clicking on the tab Administration on the main page.
-All submodules are reachable from sidebar on the left side. On the bottom of this sidebar there is a link which leads back to root page of public module.
+All submodules are reachable from sidebar on the left side. On the bottom of this sidebar there is a
+link which leads back to root page of public module.
 
 **************************
  Administration module
 **************************
 
-==========================
  Dashboard
 ==========================
 
 The main
 
-==========================
  Tournaments
 ==========================
 
-The second is the *Tournament* submodule, which provides functionality to manage tournaments running on the platform. This part of the administration is available both to organizers and admins.
+The second is the *Tournament* submodule, which provides functionality to manage tournaments running
+on the platform. This part of the administration is available both to organizers and admins.
 
---------------------------
  Creating a tournament
 --------------------------
 
-On the top of the page, there is a *Create new tournament* button, which redirects to a form used to that matter.
-The form has both mandatory and optional fields, where the optional fields are usually prefilled with some default values.
+On the top of the page, there is a *Create new tournament* button, which redirects to a form used to
+that matter.  The form has both mandatory and optional fields, where the optional fields are usually
+prefilled with some default values.
 
-In the first part of the form, the user has to specify the *Name* and the *Game* of the tournament. If the game chosen has a custom configuration (more on that in the Games section),
-another part of the form will appear, containing default game configuration. These values can be changed accordingly to the schema of the game.
+In the first part of the form, the user has to specify the *Name* and the *Game* of the
+tournament. If the game chosen has a custom configuration (more on that in the Games section),
+another part of the form will appear, containing default game configuration. These values can be
+changed accordingly to the schema of the game.
 
-Availability of the tournament is subject of the second part of the form. It's possible to specify the whole tournament's *availability* (public or private), as well as the *visibility of its match logs*.
-The tournament can also by *anonymized*, which means that the users of the tournament will be presented on the tournament's page under anonymous nicknames generated by the app.
+Availability of the tournament is subject of the second part of the form. It's possible to specify
+the whole tournament's *availability* (public or private), as well as the *visibility of its match
+logs*.  The tournament can also by *anonymized*, which means that the users of the tournament will
+be presented on the tournament's page under anonymous nicknames generated by the app.
 
-The next part specifies tournament's basic properties, that is its *scope*, *format* and *ranking strategy*. Also, the *size of the submissions* can be limited through there.
+The next part specifies tournament's basic properties, that is its *scope*, *format* and *ranking
+strategy*. Also, the *size of the submissions* can be limited through there.
 
-The last two parts handle the tournament's detail page. Organizer of a tournament can choose either *game design* (meaning that the page will use game's default design), or he can *specify his own design* by
-choosing a title image and theme color for the tournament's page. Finally, tournament's description can be written in a text box on the bottom of the form. The text box supports markdown formatting, and the
-user can preview the final look of the text.
+The last two parts handle the tournament's detail page. Organizer of a tournament can choose either
+*game design* (meaning that the page will use game's default design), or he can *specify his own
+design* by choosing a title image and theme color for the tournament's page. Finally, tournament's
+description can be written in a text box on the bottom of the form. The text box supports markdown
+formatting, and the user can preview the final look of the text.
 
---------------------------
  Tournaments list
 --------------------------
 
-The main part features a table with a list of tournaments to manage - for organizers there are only tournaments they have manager rights to, while the admins see all the tournaments.
+The main part features a table with a list of tournaments to manage - for organizers there are only
+tournaments they have manager rights to, while the admins see all the tournaments.
 
-The table displays basic properties of each tournament, that is its name, game, when it was created, whether it's published, its state, format and scope, and optionally also the deadline. 
-In the last two columns, there are also two buttons, *Clone* and *Detail*
+The table displays basic properties of each tournament, that is its name, game, when it was created,
+whether it's published, its state, format and scope, and optionally also the deadline.  In the last
+two columns, there are also two buttons, *Clone* and *Detail*
 
-The *Clone* button suits for copying a tournament - it leads to a *Create new tournament* form, prefilled with values copied from the original tournament.
-*Detail* button redirects to admin section Tournament detail page, which is decribed in the next section.
+The *Clone* button suits for copying a tournament - it leads to a *Create new tournament* form,
+prefilled with values copied from the original tournament.  *Detail* button redirects to admin
+section Tournament detail page, which is decribed in the next section.
 
 This part of the administration is available both to organizers and admins
 
---------------------------
  Tournaments detail
 --------------------------
 
-Administration tournament's detail page serves for managing the tournament itself. It contains several tabs.
+Administration tournament's detail page serves for managing the tournament itself. It contains
+several tabs.
 
-First tab is *Basic info*. A small table with number of *participating players, submissions, all submissions* and tournament *state* can be seen on the top of the page.
-Depending on the tournament state, there are different control buttons in the right top part. These buttons serve for changing tournament's state:
-- Publish - make the tournament available for users
-- Start - start the evaluation
-- Pause/Unpause - pause/unpause the evaluation
-- Stop (for ongoing tournaments) - end the tournament
-In the central part, there is a same form as on the Create new tournament page, where organizers can edit the tournament's properties.
-For tournaments in the state created, almost all of the properties can be further edited (apart from game of the tournament), while for published tournaments, some properties
-are immutable in order to mantain correct working of the app. 
-On the very bottom of the page, there is a table with *Menu items*. These menu items are shown on the left sidebar of the tournament detail on the public part of the web.
-New items can be added through dedicated button. There are two types of menu items. First one is an *External menu item* - a named link to a web page outside OPCAIC. 
-Second type is a *Document menu item*, and it's basically a named link to a document created on the *Documents* tab, which is described in the following section.
-Finally, there is a *Save* button to save the edited tournament.
+First tab is *Basic info*. A small table with number of *participating players, submissions, all
+submissions* and tournament *state* can be seen on the top of the page.  Depending on the tournament
+state, there are different control buttons in the right top part. These buttons serve for changing
+tournament's state:
 
-*Documents* is a tab for managing tournament documents, describing for example game's rules, API and so on.
-All of the tournament's documents are listed there, with *Detail* buttons leading to their detail pages. There is also *Create new document* button, leading to a new document detail page.
-The detail page of document features field for specifying the tournament's name, and there is also a text box with the contents of the document.
-The text box supports markdown formatting, and the preview of the formatted text can be seen by clicking the appropriate button.
+    - Publish - make the tournament available for users
+    - Start - start the evaluation
+    - Pause/Unpause - pause/unpause the evaluation
+    - Stop (for ongoing tournaments) - end the tournament
 
-Next tab is called *Managers*, and it serves for making other users managers of the tournament. Organizers can add any other organizer by choosing their email from the listbox.
-These users can be also deleted from the list by clicking the *Delete* button.
+In the central part, there is a same form as on the Create new tournament page, where organizers can
+edit the tournament's properties.  For tournaments in the state created, almost all of the
+properties can be further edited (apart from game of the tournament), while for published
+tournaments, some properties are immutable in order to mantain correct working of the app.  On the
+very bottom of the page, there is a table with *Menu items*. These menu items are shown on the left
+sidebar of the tournament detail on the public part of the web.  New items can be added through
+dedicated button. There are two types of menu items. First one is an *External menu item* - a named
+link to a web page outside OPCAIC.  Second type is a *Document menu item*, and it's basically a
+named link to a document created on the *Documents* tab, which is described in the following
+section.  Finally, there is a *Save* button to save the edited tournament.
 
-Through the *Participants* tab, you can invite people to join your tournament. This is intended mainly for private tournaments, as they cannot be seen otherwise.
-Anyone can be added, even someone who is not a user of the platform, by writing down their email. An invitation mail will be sent to the given addresses, together with a link to the tournament.
-People who do not have the account yet will have to register first (with the specified email) to be able to join the tournament.
+*Documents* is a tab for managing tournament documents, describing for example game's rules, API and
+so on.  All of the tournament's documents are listed there, with *Detail* buttons leading to their
+detail pages. There is also *Create new document* button, leading to a new document detail page.
+The detail page of document features field for specifying the tournament's name, and there is also a
+text box with the contents of the document.  The text box supports markdown formatting, and the
+preview of the formatted text can be seen by clicking the appropriate button.
+
+Next tab is called *Managers*, and it serves for making other users managers of the
+tournament. Organizers can add any other organizer by choosing their email from the listbox.  These
+users can be also deleted from the list by clicking the *Delete* button.
+
+Through the *Participants* tab, you can invite people to join your tournament. This is intended
+mainly for private tournaments, as they cannot be seen otherwise.  Anyone can be added, even someone
+who is not a user of the platform, by writing down their email. An invitation mail will be sent to
+the given addresses, together with a link to the tournament.  People who do not have the account yet
+will have to register first (with the specified email) to be able to join the tournament.
 
 *Matches*
 
@@ -136,19 +161,15 @@ People who do not have the account yet will have to register first (with the spe
 
 *Leaderboard*, the last tab, shows only just the leaderboard of the tournament, as seen in the public part of the web.
 
-==========================
  Games
 ==========================
 
-==========================
  Users
 ==========================
 
-==========================
  Email templates
 ==========================
 
-==========================
  System
 ==========================
 
@@ -162,7 +183,7 @@ provides a guide on how to diagnose and subsequently repair common errors when u
 platform.
 
 Searching the log files
-=========================
+=======================
 
 In case the problem is not evident from diagnostics visible in the administration section of the web
 application, additional information can be retrieved from logs generated by the platform. Since the
@@ -199,6 +220,7 @@ HttpRequestMethod
 ElapsedMilliseconds
   Time spent processing given request in milliseconds. 
 
+
 User information
 ----------------
   
@@ -213,6 +235,7 @@ Username
 
 UserRole
   Id of the author of the request.
+
 
 Ids of the relevant entities
 ----------------------------
@@ -244,6 +267,7 @@ TournamentState
 
 GameId
   Id of the game.
+
 
 Task execution on a worker
 --------------------------
