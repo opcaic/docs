@@ -61,7 +61,38 @@ link which leads back to root page of public module.
 Dashboard
 =========
 
-The main
+The first submodule of the administration part of the web, and the landing page of it, is the *Dashboard* submodule. This submodule is available to both organizers and admins (with the exception of one sub-table).
+It shows the most important information about whats going on on the platform regarding the user and also serves as a 'crossroad' of links to different detailed pages in the administration module.
+
+--------------------------
+ Recent tournaments
+--------------------------
+
+First table shows *recent tournaments* - for organizers, only the ones they have the manager rights to, for admins, any recent tournaments. Each tournament has its basic properties listed in table, along with a *Detail*
+button, leading to tournament's administration detail page. This page is descripted in the subsection Tournaments - Tournament detail.
+
+--------------------------
+ Failed matches
+--------------------------
+
+This table shows a list of matches in tournaments organized by the user, whose execution failed. The basic information about each match is given, and there is also a *Detail* button, leading to the specific matches detail page,
+as described in the following sections.
+
+--------------------------------
+ Failed and invalid submissions
+--------------------------------
+
+Following two tables shows lists of submissions that were not validated correctly. The difference between Failed and Invalid submissions tables is that in the Failed submissions table, there are submission for which the validation failed at one of its stages.
+The invalid submissions shows submissions which did not even entered the validation. 
+
+Both the tables show submissions' *Date*, *User*, *State* and the *Tournament* they were submitted to. For each of them, there is also a detail button, leading to submission detail page, as described in the following sections. 
+
+---------------------------------
+ Games without implemented module
+---------------------------------
+
+The last table of the Dashboard module is available only to admins. It shows a list of games, which does not have a game module implemented. Each game has an entry specifying basic information about the game and again, there is a *Detail* button,
+leading to game's detail page.
 
 Tournaments
 ===========
@@ -145,33 +176,84 @@ The detail page of document features field for specifying the tournament's name,
 text box with the contents of the document.  The text box supports markdown formatting, and the
 preview of the formatted text can be seen by clicking the appropriate button.
 
-Next tab is called *Managers*, and it serves for making other users managers of the
-tournament. Organizers can add any other organizer by choosing their email from the listbox.  These
-users can be also deleted from the list by clicking the *Delete* button.
+Next tab is called *Managers*, and it serves for making other users managers of the tournament. Organizers can add any other organizer by choosing their email from the listbox. These users can be also deleted from the list by clicking the *Delete* button.
 
-Through the *Participants* tab, you can invite people to join your tournament. This is intended
-mainly for private tournaments, as they cannot be seen otherwise.  Anyone can be added, even someone
-who is not a user of the platform, by writing down their email. An invitation mail will be sent to
-the given addresses, together with a link to the tournament.  People who do not have the account yet
-will have to register first (with the specified email) to be able to join the tournament.
+Through the *Participants* tab, you can invite people to join your tournament. This is intended mainly for private tournaments, as they cannot be seen otherwise. Anyone can be added, even someone who is not a user of the platform, by writing down their email. An invitation mail will be sent to the given addresses, together with a link to the tournament. People who do not have the account yet will have to register first (with the specified email) to be able to join the tournament.
 
-*Matches*
+*Matches* tab serves for managing tournament's matches. All matches are listed here in a table, together with some basic information about the match's execution. These information are: *queue time, execution time, players and theirs score* and also match's *state*. In the last two columns, there are also two buttons. *Queue rematch execution* serves for forcing app to try to execute the match again. This button is available only for matches in state Failed. Button *Detail* leads to matches detail page. On the detail page, there is there is a list with one or two tables (depending on match's state) for each of the executions. First table is *Basic info*, and it shows *id* of the match, its *job id* (more on that in the System submodule section), dates of *creation* and *execution*, *players* with links to their *submissions*, and the result of the execution along with its log (shown by clicking the button *Show log*). If the match was executed succesfully. If the result of execution is successful, there is also a button *Download additional files* along with a second table, *Players data*, which shows detailed results of the match. The values of the fields in this table are game dependent, except for the field *score*, which determines the match's result. Button *Download additional files* serves for downloading all files produced by game when executing the match. The number and meaning of these files is again game dependent, except for the file *match-results.json*, which contains the source data for *Players data* table.
 
-*Submissions*
+Next tab of the tournament's detail is called *Submissions*. It shows a table with all of the tournamenet's submissions, along with their *Date*, *User*, *State*, flag showing whether they are *Active* in the tournament, and a button *Detail* leading to their detail page. On the detail page, there a few tables similar to these on the match's detail page. First one is *Basic info*, and it shows the same fields as seen in the table on the main Submissions tab. Then, there are two buttons. *Download submission* is self-explanatory, and the *Run validation again* forces app to try to validate the submission again. Under these buttons, there is a list of all 
+submission's validations, along with their *date*, *checker*, *compiler* and *executor* result (along with the appropriate logs) and optionally *Exception* field, if something went wrong during the validation. Lastly, there is also a list *Played matches*, showing the same table as on the matches tab, just filtered by the currently shown submission.
 
 *Leaderboard*, the last tab, shows only just the leaderboard of the tournament, as seen in the public part of the web.
 
 Games
 =====
 
-Users
-=====
+*Games* tab serves for managing games on the platform. This submodule is available to both organizers and admins.
 
-Email templates
-===============
+ Creating a game
+--------------------------
 
-System
-======
+On the top of the page, there is a *Create new game* button, leading to a page with a form for filling the game information. The first three fields are mandatory, that is game's *Name*, *Key* (specifies game module, which will be used for validating submissions and executing matches) and the *Type* of the game - either single player or two players game. Then, there is a part which suits for picking game public page design. Game's *logo*, *tournament default logo* and the default *tournament color* can be chosen. User can also specify size limit of additional game files for the tournaments to be played. Finally, the text box *Description* contains description of the game, and supports markdown formatting, same as other text boxes mentioned in previous sections.
+
+ Games list
+--------------------------
+
+Table with a list of all created games fills the central part of the page. Note that *created* game does not mean it has got an appropriate game module and thus for these games, no matches can be executed. The table contains columns with few basic game properties, such as *Name*, *Key* (specifying the module used for the game) and the *Number of active tournaments*. There is also a *Detail* button in the last column of the table, leading to the game's administration detail page.
+
+ Game detail
+--------------------------
+
+The administration game detail page contains two tabs, *Basic info* and *Configuration*. Basic info serves for viewing/editing the game, and it shows a same form as on the *Create new game* page, prefilled with game's information. The second tab, *Configuration* allows to specify the format of game configuration file, which will be needed to execute the matches. The game configuration may specify for example timeout for bot's turns, initial resources and so on, depending on the specific game. The format of the configuration file is determined by a JSONSchema (see https://json-schema.org/understanding-json-schema/), which the admin has to write in the *Schema of configuration* box. After filling this window, a *Sample form* for specifying a configuration following the given schema will be shown in the left part of the page. There are quite a few web tools which can be used to create a JSONSchema from an example Json file, for example https://jsonschema.net/. Specifying game configuration schema obviously makes sense only in case the organizer knows how the specific game module works, so that it uses it correctly.
+
+ Users
+=======
+
+Next module serves for managing platform's *users* is available solely for admins. 
+
+ Users list
+--------------------------
+
+The submodule's main page again shows a list, this time the list of all users on the platform. Each user has a few basic characteristics shown there, such as *Username*, *Email*, *Role* and the *Date of creation*. Last column again contains button *Detail* leading to users' detail page.
+
+ User detail
+--------------------------
+
+User detail page serves for managing the individual users. The *username* and the *email* cannot be edited. For the email, information about whether the email is verified or not is shown. The *role* of the user (user, organizer or admin) can be changed, and also the *organization*, which the user belongs to can be specified. It's also possible to enable or disable *email notifications* for the user.
+
+ Email templates
+==========================
+
+Using *Email templates* submodule, admins can edit the templates for the emails send to users at various occasions, such as verifying of the email, resetting password and so on.
+
+ Templates list
+--------------------------
+
+The main table shows a list of email templates, their *name* and *localization* (language of the template) and *Edit* button, leading to the *Edit template* page.
+
+ Edit template
+--------------------------
+
+On the edit template page, there is a form defining the email template. Some of the properties are immutable - that is the *name*, *localization* and the *variables* of the template. Appropriate values are substituted into the variables when sending the email. For example, for ResetPassword template, the ResetURL is a variable, filled with the appropriate link when sent to the user. 
+
+The *subject* and the *body* of the template can be edited. For the body, html can be used. The *preview* window then displays preview of the final template. 
+
+ System
+==========================
+
+Submodule *system* is used for 'low level' administration of the platform, such as managing current processes - 'jobs', being executed on the servers. It's thus available only to admins.
+
+ Workers
+--------------------------
+
+The table *Workers* shows a list of current 'workers' - machines which run the validations and executions. Each worker has an entry in the table specifying the worker's *identity* (unique name), *current job id* (id of the job currently being processed on the machine) and *available games* (keys of implemented game modules).
+
+ Work items
+--------------------------
+
+The table *Work items* serves for managing the actual jobs planned on the workers. It shows a queue of currently planned jobs. For each of those jobs, the table shows its *id*, *game* and *how long it is queued*. Then, there are two control buttons. *Prirotize* serves for prioritizing the job in the queue, so that it will be processed earlier than other jobs queued. The other button, *Cancel*, cancels the job (removes it from the queue).
+
 
 *********************
 Diagnosing problems
