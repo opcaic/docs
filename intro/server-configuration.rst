@@ -14,6 +14,10 @@ in a tree of configuration variables, with ``:`` character as segment separator.
 variables may not contain ``:`` character, the corresponding environment variable can be obtained by
 replacing them by **double** underscores (``__``), e.g. ``Emails:Port`` becomes ``Emails__Port``.
 
+.. note::
+
+   To apply changes made in ``appsettings.json`` file, the server process needs to be restarted.
+
 
 *******
 General
@@ -22,6 +26,13 @@ General
 FrontendUrl
   Address where the web application is accessible. Used for generating links for emails.
 
+ConnectionStrings:DataContext
+  Connection string to the PostgreSQL database. The connection string should be similar to::
+
+      Host=127.0.0.1;Port=5432;Database=opcaic_server_db;User Id=opcaic;Password=pa$sw0rd;
+
+  For available options, see `Npsql documentation
+  <https://www.npgsql.org/doc/connection-string-parameters.html>`_.
 
 ******
 Broker
@@ -29,18 +40,25 @@ Broker
 
 Broker:Identity
   String identifier of the server used when communicating with workers. The identifier must be
-  different from the one used by all w
+  different from the one used by all workers
 
 Broker:ListeningAddress
-  Address used for listening for workers. Must be in form ``tcp://[host]:[port]``. For example, to
-  allow connections from the ``168.192.*.*`` subnet on port ``6000``, use ``tcp://168.192.0.0:6000``
+  Address on which the server will listen for worker connections. The address format is
+  ``tcp://{interface}:{port}``, where ``interface`` can be either:
+
+    - The wild-card ``*``, meaning all available interfaces
+    - The primary IPv4 or IPv6 address assigned to the interface, in it's numeric representation
+    - The non-portable interface name as defined by the operating system.
+
+  For example you can use ``tcp://localhost:6000`` to listen for connection only on from the same
+  machine. Or e.g. ``tcp://*:6000`` for listening on for both local or remote connections.
 
 Broker:TaskRetentionSeconds
   How many seconds to keep tasks for a certain game in a working queue when last worker who was
   capable of running given game disconnected. There is generally no need to change this setting.
 
 Broker:HeartbeatConfig:HeartBeatInterval
-  How many milliseconds between individual heartbeats between worker and broker.
+  How many milliseconds should be between individual heartbeats between worker and broker.
 
 Broker:HeartbeatConfig:Liveness
   How many heartbeats is a worker allowed to miss before being considered dead by the broker.
@@ -52,7 +70,6 @@ Broker:HeartbeatConfig:ReconnectIntervalInit
 Broker:HeartbeatConfig:ReconnectIntervalMax
   Upper bound for the exponential back off time for workers between reconnect attempts after
   disconnecting.
-
   
 ********
 Security

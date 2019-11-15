@@ -94,6 +94,12 @@ Grant user privileges to the created database ::
 
     grant all privileges on database opcaic_server_db to opcaic;
 
+After that, you can exit ``psql`` by::
+
+    \q
+
+.. _building-from-source:
+    
 *******************************************
  Building the application from source code
 *******************************************
@@ -113,28 +119,40 @@ Building the web application from sources requires `Node.js v8.15.1 <https://nod
 v5 or above installed. By default, the application is configured to have the API server on the same
 domain as the application. To change the configuration, see :ref:`webapp-configuration`.
 
-To build the web application, navigate to the root folder of web application source files and first
-run ``npm install`` to install all dependencies and then tun ``npm run build`` to build the
-application. The resulting files can be then found in the ``build`` folder.
+To build the web application, navigate to the root folder of web application source files and run::
+
+    npm install
+    npm run build
+
+The first command will download all necessary dependencies, the second will compile the application and put result to the ``build`` folder inside the root folder of the repository.
 
 ********************
 Deploying the server
 ********************
 
-Create ``/var/opcaic/server`` directory and copy the server files there. The server also needs a
-directory for storing user submissions. For this we recommend creating directory
-``/var/opcaic/server_storage``. Make sure that the ``opcaic`` user has access to these directories.
+Create ``/var/opcaic/server`` directory and copy the server files there. If you built the
+application from source, these files will be in the ``bin/server`` produced by the ``dotnet
+publish`` command. The server also needs a directory for storing user submissions. For this we
+recommend creating directory ``/var/opcaic/server_storage``. Make sure that the ``opcaic`` user has
+access to these directories::
+
+    mkdir /var/opcaic
+    mkdir /var/opcaic/server
+    mkdir /var/opcaic/server_storage
+
+    chown -R opcaic:opcaic /var/opcaic
 
 Configuring the server
 ======================
 
 The server requires additional configuration before starting. Namely the connection string to the
 database and the location of the storage folder. These can be provided either by writing their value
-into the ``appsettings.json`` configuration file, or through environment variables. Names of
-variable names are case insensitive. The environment variables take precedence over the
-configuration file, and their name is obtained by taking the JSON path and replacing any colons with
-two underscores (e.g. ``Security:JWT:Key`` becomes ``Security__JWT__Key``). The list of required variables
-are:
+into the ``/var/opciac/server/appsettings.json`` configuration file, or through environment
+variables. Names of variable names are case insensitive. The environment variables take precedence
+over the configuration file, and their name is obtained by taking the JSON path and replacing all
+colons with two underscores (e.g. ``Security:JWT:Key`` becomes ``Security__JWT__Key``). We recommend
+using environment variables for sensitive information, set e.g. inside systemd unit file (see
+below). The list of required variables are:
 
 FrontendUrl
   Url of the frontend application (to be used when generating links)
@@ -143,19 +161,32 @@ Security:JWT:Key
   Key for signing JWT tokens provided by the web server.
 
 ConnectionStrings:DataContext
-  Connection string to the PostgreSQL d
+  Connection string to the PostgreSQL database. The connection string should be similar to::
+
+      Host=127.0.0.1;Port=5432;Database=opcaic_server_db;User Id=opcaic;Password=pa$sw0rd;
+
+  For available options, see `Npsql documentation
+  <https://www.npgsql.org/doc/connection-string-parameters.html>`_.
 
 Storage:Directory
   Path to the storage folder, recomended ``/var/opcaic/server_storage``
 
 Broker:ListeningAddress
-  Address to which worker processes will connect. Default is ``tcp://localhost:6000``
+  Address on which the server will listen for worker connections. The address format is
+  ``tcp://{interface}:{port}``, where ``interface`` can be either:
 
+    - The wild-card ``*``, meaning all available interfaces
+    - The primary IPv4 or IPv6 address assigned to the interface, in it's numeric representation
+    - The non-portable interface name as defined by the operating system.
+
+  For example you can use ``tcp://localhost:6000`` to listen for connection only on from the same
+  machine. Or e.g. ``tcp://*:6000`` for listening on for both local or remote connections.
+  
 Emails:SmtpServerurl
   Url (without port) of the server used for sending emails.
 
 Emails:Port
-  Port on smtp server to connect to.
+  Port on the SMTP server to connect to.
 
 Emails:Username
   Username used to authenticate to the smtp server.
@@ -174,7 +205,7 @@ For other configuration options, see :ref:`server-configuration`.
 First run of the server
 -----------------------
 
-On the very first startup, it is needed to provide additional configuration variables for creating
+On the very first startup, it is also needed to provide additional configuration variables for creating
 the first admin account.
 
 Seed:AdminUsername
@@ -184,11 +215,13 @@ Seed:AdminEmail
   The email address used for admin login. This needs to be a valid email.
 
 Seed:AdminPassword
-  Password which should be used for login. The password must conform to the minimum strength requirements, which by default is at least 8 characters. See also :ref:`password-strength-config` for detail how to configure the minimum password strength.
+  Password which should be used for login. The password must conform to the minimum strength
+  requirements, which by default is at least 8 characters. See also :ref:`password-strength-config`
+  for detail how to configure the minimum password strength.
 
 We recommend using command line parameters for the admin account credentials. Supposing that correct
 values for other variables have been provided either in ``appconfig.json`` or environment variables,
-you can use following command line command: ::
+you can use following command::
 
     dotnet OPCAIC.ApiService.dll \
         --Seed:AdminUsername=admin \
@@ -200,9 +233,9 @@ verification link to it. Once the email is sent, you may terminate the applicati
 section for how to setup the server as an OS service.
 
 .. note::
-   Confirming the email address requires working ``web-app`` to be deployed. You don't have to
-   confirm the email address straight away. You can do that once all platform components are
-   deployed and running.
+   Confirming the email address requires working ``web-app`` to be deployed on the configured
+   FrontendUrl address. You don't have to confirm the email address immediatly. You can do that
+   once all platform components are deployed and running.
 
 .. warning::
    If the application has been misconfigured (e.g. invalid frontend address in the configuration,
@@ -231,7 +264,7 @@ be found below:
     ExecStart=/usr/bin/dotnet /var/opcaic/server/OPCAIC.ApiService.dll
 
     Environment=SECURITY__JWT__KEY=insert_security_key_here
-    Environment='CONNECTIONSTRINGS__DATACONTEXT=Server=127.0.0.1;Port=5432;Database=opcaic_server_db;User Id=opcaic;Password=long_live_opcaic;'
+    Environment='CONNECTIONSTRINGS__DATACONTEXT=Host=127.0.0.1;Port=5432;Database=opcaic_server_db;User Id=opcaic;Password=pa$sw0rd;'
     Environment=STORAGE__DIRECTORY=/var/opcaic/server_storage
     Environment=BROKER__LISTENINGADDRESS=tcp://168.192.0.0:6000
     Environment=FRONTENDURL=https://www.opcaic.org
@@ -324,10 +357,20 @@ inside ``/var/opcaic``:
  - ``worker_storage/error`` - archive of failed tasks for diagnostic purposes
  - ``modules`` - game modules handling execution of individual games.
 
-Copy the worker binaries to ``/var/opcaic/worker`` directory and wanted game modules to the
-``/var/opcaic/modules`` directory. Give appropriate access rights to the ``opcaic`` user for all
-above directories. Worker also needs to be configured, following table describes variables which
-need to be configured eithre via ``appsettings.json`` or environment variables
+Again, make sure the ``opcaic`` user has appropriate access::
+
+    mkdir /var/opcaic
+    mkdir /var/opcaic/worker
+    mkdir /var/opcaic/worker_storage
+    mkdir /var/opcaic/modules
+
+    chown opcaic:opcaic -R /var/opcaic
+  
+Copy the worker binaries to ``/var/opcaic/worker`` directory. If you built the worker from source
+code following the guide at :ref:`building-from-source`, these files will be located in
+``bin/worker`` directory inside the source code repository. Worker also needs to be configured,
+see following list of variables which need to be configured either via
+``/var/opcaic/worker/appsettings.json`` file or environment variables.
 
 ModulePath
   Path to directory with game modules, recomended ``/var/opcaic/modules``
@@ -343,9 +386,9 @@ Execution:ErrorDirectory
 
 ConnectorConfig:BrokerAddress
   Address to which the worker should connect. Corresponds to ``Broker:ListeningAddress`` variable on
-  server
+  server. Format of the address is ``tcp://{host}:{port}``.
 
-For other configuration options, see :ref:`worker-configuration`. Example systemd unit file follows:
+For other configuration options, see :ref:`worker-configuration`. All these variables can be easily set by environment variables inside a systemd unit file like the following:
 
 .. code-block:: cfg
 
@@ -383,9 +426,16 @@ As with server, you can see debug output by running ::
 
     journalctl -fu *opcaic*
 
-The output should now display both server and worker logs.
+If worker was deployed on the same machine as the server, the output should now display logs from
+both server and worker. Either way, you should be able to see logs indicating that the worker
+successfully connected to the worker.
 
-For information how to create your own game modules and deploy them, see :ref:`adding-new-games`.
+Deploying game modules
+======================
+
+Deployment of game modules for the worker to use is straightforward copying the directory with
+module files into the ``/var/opcaic/modules`` directory. For information how to create your own game
+modules and deploy them, see :ref:`adding-new-games`.
 
 .. _graylog-installation:
 
@@ -393,16 +443,16 @@ For information how to create your own game modules and deploy them, see :ref:`a
 Installing Graylog for log aggregation
 *************************************************
 
-Searching though the logs using ``journalctl`` is not very user friendly for inexperienced
-users. The OPCAIC platform can be configured to use `Graylog <https://www.graylog.org>`_ which is a
-tool supporting log aggregation, structured log searching and even monitoring capabilities. Install
-graylog by following the `official installation guide
+Searching though the logs using ``journalctl`` is not very user friendly for inexperienced users and
+is impractical for distributed systems. The OPCAIC platform can be configured to use `Graylog
+<https://www.graylog.org>`_ which is a tool supporting log aggregation, structured log searching and
+even monitoring capabilities. Install graylog by following the `official installation guide
 <https://docs.graylog.org/en/3.1/pages/installation.html>`_.
 
 For the actual Graylog setup for consuming OPCAIC platform logs, we recommend setting up an GELF
 HTTP input. Both opcaic server and worker binaries can be configured by editing the ``Serilog``
-configuration section in ``appsettings.json`` file. It is also good idea to raise the minimum level
-for console logger when using Graylog. Example configuration follows:
+configuration section in ``appsettings.json`` file (this has to be done separately for both worker
+and server components). Example configuration follows:
 
 .. code-block:: js
 
@@ -429,5 +479,12 @@ for console logger when using Graylog. Example configuration follows:
                     // ... rest of the section omitted for brevity
             }
     }
+
+
+.. note::
+
+    It is also good idea to raise the minimum level for console logger when using Graylog in order
+    to improve throughput of the platform.
+
 
 Refer to the official documentation on how to use Graylog for querying the aggregated logs.

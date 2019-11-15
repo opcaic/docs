@@ -14,6 +14,9 @@ in a tree of configuration variables, with ``:`` character as segment separator.
 variables may not contain ``:`` character, the corresponding environment variable can be obtained by
 replacing them by **double** underscores (``__``), e.g. ``Emails:Port`` becomes ``Emails__Port``.
 
+.. note::
+
+   To apply changes made in ``appsettings.json`` file, the worker process needs to be restarted.
 
 *******
 General
