@@ -47,12 +47,16 @@ worker component.
 
     - OPCAIC.ApiService
 
-Following image illustrates the relationship between the parts, with arrows depicting dependencies
+Figure :ref:`clean-arch-fig` illustrates the relationship between the parts, with arrows depicting dependencies
 between them.
 
-.. todo::
-   Clean architecture image, concentric rings, from inside: Core, application, (persistence,
-   infrastructure, presentation)
+.. _clean-arch-fig:
+
+.. figure:: img/clean-arch.svg
+   :align: center
+   :scale: 80%
+
+   Structure and dependencies of projects in the server component.
 
 The important part is the direction of the arrows. For example: ``OPCAIC.Application`` project does
 not depend on the ``OPCAIC.Persistence`` project, even though the application logic needs to
@@ -84,15 +88,19 @@ multiple projects.
 
    - OPCAIC.Messaging
 
-Following image puts the projects listed above into context, including shared dependencies with the
-main server component.
+Figure :ref:`worker-arch-fig` puts the projects listed above into context, including shared
+dependencies with the main server component.
 
-.. todo::
-   Worker projects with arrows to the main server components
+.. _worker-arch-fig:
 
+.. figure:: img/worker-arch.svg
+   :align: center
+   :scale: 80%
+
+   Dependency diagram of worker component's projects
+           
 Following sections will describe these projects in more details.
    
-
 *******************
  Server component
 *******************
@@ -142,9 +150,7 @@ OPCAIC.Common
 =============
 
 This small project contains cross-cutting concerns and definitions of ``EventId``\s and tag names
-for logging purposes.
-
-.. todo:: logging link in paragraph above
+for structured logging purposes.
 
 OPCAIC.Persistence
 ==================
@@ -220,3 +226,18 @@ other criterias in the form of ``Expression<Fun<TEntity,...>>`` types. There is 
 allow selecting only parts of the object. This way, the details of database queries are still stored
 inside the application project and there is no need to modify interfaces between application and
 persistence projects when the query changes.
+
+************
+ Unit tests 
+************
+
+The solution contains comprehensive set of unit tests. Each project in the solution has a dedicated
+test project under the ``test`` folder, with the exception of ``OCPAIC.Common``, which does not
+contain any testable logic. The unit tests make heavy use of the `Moq
+<https://github.com/moq/moq4>`_ library for mocking dependencies of the class under
+test.
+
+In addition to regular unit tests which concentrate on functionality of a single class, there is the
+``OPCAIC.FunctionalTest`` project. Tests in this project are targeted on the server as a
+whole. These tests start the server and test it's functionalit by sending HTTP requests analyzing
+the server's responses.

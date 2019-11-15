@@ -11,6 +11,10 @@
 Welcome to OPCAIC documentation!
 ================================
 
+.. only:: html
+
+    .. include:: intro/introduction.rst
+
 .. raw:: latex
 
    \part{Getting Started}
@@ -18,6 +22,7 @@ Welcome to OPCAIC documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Getting Started:
+
 
    intro/installation-instructions
    intro/server-configuration

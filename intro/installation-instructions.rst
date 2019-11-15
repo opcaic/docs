@@ -318,6 +318,7 @@ server handles start with ``/api/`` or ``/swagger/``, so we need to map only tho
                     $proxy_add_x_forwarded_for;
             proxy_set_header
                     X-Forwarded-Proto $scheme;
+            proxy_set_header X-Real-IP $remote_addr;
 
             # add other settings as required
     }
@@ -487,4 +488,5 @@ and server components). Example configuration follows:
     to improve throughput of the platform.
 
 
-Refer to the official documentation on how to use Graylog for querying the aggregated logs.
+Refer to the `official documentation <https://docs.graylog.org/en/3.1/pages/queries.html>`_ on how
+to use Graylog for querying the aggregated logs.

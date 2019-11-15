@@ -10,10 +10,16 @@ The OPCAIC platform consists of several components:
   written in .NET Core 3.0
 
 These components can be developed/deployed independently. Additionally, the platforms requires a SQL
-database (currently `PostgreSQL <https://www.postgresql.org>`_). The following diagram shows how the
-individual components should interact.
+database (currently `PostgreSQL <https://www.postgresql.org>`_). Figure :ref:`platform-arch-fig`
+shows overall architecture of the platform and how individual components interact with each other.
 
-.. todo:: Architecture diagram
+.. _platform-arch-fig:
+
+.. figure:: img/platform-arch.svg
+   :align: center
+   :scale: 70%
+
+   The overal architecture of the platform.
 
 The ``webapp`` repository resides in its own `GitHub repository
 <https://github.com/opcaic/web-app>`_, ``server`` and ``worker`` components share a `single

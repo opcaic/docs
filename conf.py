@@ -29,6 +29,7 @@ author = 'OPCAIC Team'
 extensions = [
     'recommonmark',
     'sphinx.ext.todo',
+    'sphinxcontrib.inkscapeconverter',
 ]
 
 source_suffix = ['.rst', '.md']
@@ -81,6 +82,8 @@ latex_documents = [
 ]
 
 latex_elements = {
+    'figure_align': 'H',
+    
     'maketitle': r'''
         \pagenumbering{Roman} %%% to avoid page 1 conflict with actual page 1
 
@@ -120,6 +123,7 @@ latex_elements = {
 
     'preamble': r'''
         \usepackage[ddmmyy]{datetime}
+        \usepackage{svg}
         \newdateformat{MonthYearFormat}{%
                     \monthname[\THEMONTH], \THEYEAR}
         \usepackage{styleoverrides}

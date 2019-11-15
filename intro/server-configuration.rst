@@ -188,8 +188,6 @@ IpRateLimiting:RealIpHeader
   Name of the HTTP header used to extract the IP address of the client when the application is
   hosted behind a reverse proxy.
 
-.. todo: What header does nginx use?
-
 IpRateLimiting:HttpStatusCode
   Status code returned by requests over the limit. Recommended value is 429 Too Many Requests
 
