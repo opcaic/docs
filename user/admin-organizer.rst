@@ -192,68 +192,67 @@ Games
 
 *Games* tab serves for managing games on the platform. This submodule is available to both organizers and admins.
 
- Creating a game
+Creating a game
 --------------------------
 
 On the top of the page, there is a *Create new game* button, leading to a page with a form for filling the game information. The first three fields are mandatory, that is game's *Name*, *Key* (specifies game module, which will be used for validating submissions and executing matches) and the *Type* of the game - either single player or two players game. Then, there is a part which suits for picking game public page design. Game's *logo*, *tournament default logo* and the default *tournament color* can be chosen. User can also specify size limit of additional game files for the tournaments to be played. Finally, the text box *Description* contains description of the game, and supports markdown formatting, same as other text boxes mentioned in previous sections.
 
- Games list
+Games list
 --------------------------
 
 Table with a list of all created games fills the central part of the page. Note that *created* game does not mean it has got an appropriate game module and thus for these games, no matches can be executed. The table contains columns with few basic game properties, such as *Name*, *Key* (specifying the module used for the game) and the *Number of active tournaments*. There is also a *Detail* button in the last column of the table, leading to the game's administration detail page.
 
- Game detail
+Game detail
 --------------------------
 
 The administration game detail page contains two tabs, *Basic info* and *Configuration*. Basic info serves for viewing/editing the game, and it shows a same form as on the *Create new game* page, prefilled with game's information. The second tab, *Configuration* allows to specify the format of game configuration file, which will be needed to execute the matches. The game configuration may specify for example timeout for bot's turns, initial resources and so on, depending on the specific game. The format of the configuration file is determined by a JSONSchema (see https://json-schema.org/understanding-json-schema/), which the admin has to write in the *Schema of configuration* box. After filling this window, a *Sample form* for specifying a configuration following the given schema will be shown in the left part of the page. There are quite a few web tools which can be used to create a JSONSchema from an example Json file, for example https://jsonschema.net/. Specifying game configuration schema obviously makes sense only in case the organizer knows how the specific game module works, so that it uses it correctly.
 
- Users
+Users
 =======
 
 Next module serves for managing platform's *users* is available solely for admins. 
 
- Users list
+Users list
 --------------------------
 
 The submodule's main page again shows a list, this time the list of all users on the platform. Each user has a few basic characteristics shown there, such as *Username*, *Email*, *Role* and the *Date of creation*. Last column again contains button *Detail* leading to users' detail page.
 
- User detail
+User detail
 --------------------------
 
 User detail page serves for managing the individual users. The *username* and the *email* cannot be edited. For the email, information about whether the email is verified or not is shown. The *role* of the user (user, organizer or admin) can be changed, and also the *organization*, which the user belongs to can be specified. It's also possible to enable or disable *email notifications* for the user.
 
- Email templates
+Email templates
 ==========================
 
 Using *Email templates* submodule, admins can edit the templates for the emails send to users at various occasions, such as verifying of the email, resetting password and so on.
 
- Templates list
+Templates list
 --------------------------
 
 The main table shows a list of email templates, their *name* and *localization* (language of the template) and *Edit* button, leading to the *Edit template* page.
 
- Edit template
+Edit template
 --------------------------
 
 On the edit template page, there is a form defining the email template. Some of the properties are immutable - that is the *name*, *localization* and the *variables* of the template. Appropriate values are substituted into the variables when sending the email. For example, for ResetPassword template, the ResetURL is a variable, filled with the appropriate link when sent to the user. 
 
 The *subject* and the *body* of the template can be edited. For the body, html can be used. The *preview* window then displays preview of the final template. 
 
- System
+System
 ==========================
 
 Submodule *system* is used for 'low level' administration of the platform, such as managing current processes - 'jobs', being executed on the servers. It's thus available only to admins.
 
- Workers
+Workers
 --------------------------
 
 The table *Workers* shows a list of current 'workers' - machines which run the validations and executions. Each worker has an entry in the table specifying the worker's *identity* (unique name), *current job id* (id of the job currently being processed on the machine) and *available games* (keys of implemented game modules).
 
- Work items
+Work items
 --------------------------
 
 The table *Work items* serves for managing the actual jobs planned on the workers. It shows a queue of currently planned jobs. For each of those jobs, the table shows its *id*, *game* and *how long it is queued*. Then, there are two control buttons. *Prirotize* serves for prioritizing the job in the queue, so that it will be processed earlier than other jobs queued. The other button, *Cancel*, cancels the job (removes it from the queue).
-
 
 *********************
 Diagnosing problems
