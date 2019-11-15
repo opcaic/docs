@@ -70,8 +70,21 @@ latex_additional_files = [
 
 latex_show_urls = 'footnote'
 
+latex_show_pagerefs = True
+
+latex_documents = [
+    (master_doc, 'doc.tex', project,
+      r'''Radek Zikmund \and
+      Ondřej Nepožitek \and
+      Michal Lehončák \and
+      Šimon Stachura''', 'manual') 
+]
+
 latex_elements = {
-    'preamble': r'\usepackage{styleoverrides}'
+    'preamble': r'''
+        \usepackage{styleoverrides}
+        \addto\captionsenglish{\renewcommand{\contentsname}{Table of contents}}
+    '''
 }
 
 todo_include_todos = True

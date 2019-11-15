@@ -54,18 +54,28 @@ Task execution configuration
 
 Configuration related to the performing submission validations and match executions.
 
-Execution:WorkingDirectoryRoot
+Execution:WorkingDirectory
   Root directory where temporary files of currently executed job will be stored.
 
-Execution:ArchiveDirectoryRoot
-  Root directory where temporary files of finished jobs will be stored for diagnostic purposes. Note
-  that the platform does not provide automatic deletion of old directories, so make sure that old
-  directories are deleted regularly to prevent disk space shortage.
+Execution:ArchiveDirectory
+  Root directory where all files generated during execution of successfull tasks will be stored for diagnostic
+  purposes.
+
+Execution:ArchiveRetentionDays
+  How many days should files in the archive directory be kept. default is 30 days.
+
+Execution:ErrorDirectory
+  Root directory where all files generated during execution of failed tasks will be stored for diagnostic
+  purposes.
+
+Execution:ErrorRetentionDays
+  How many days should files in the error directory be kept. default is 30 days.
 
 Execution:MaxTaskTimeoutSeconds
   Global upper limit on the duration of any task (submission validation or match execution). Game
   modules should take care of task-specific timeouts. This setting should be used to protect worker
-  against game module freezes.
+  against game module freezes. It is expected that each game module will keep it's own timeout
+  specific to the particular game. Default value is 300 seconds (5 minutes).
 
   
 *******

@@ -94,6 +94,28 @@ Grant user privileges to the created database ::
 
     grant all privileges on database opcaic_server_db to opcaic;
 
+*******************************************
+ Building the application from source code
+*******************************************
+
+The application can be easily built locally, but requires additional dependencies. For building the
+``server`` and ``worker`` components from sources, you will need .NET Core 3.0 SDK (version 3.0.100)
+available at the `official website <https://dotnet.microsoft.com/download/>`_.
+
+The actual build process is straightforward, run following commands inside the source code repository::
+
+    dotnet publish -c Release ./src/OPCAIC.ApiService -o bin/server
+    dotnet publish -c Release ./src/OPCAIC.Worker -o bin/worker
+
+The above commands will produce appropriate folders in the ``bin`` directory.
+
+Building the web application from sources requires `Node.js v8.15.1 <https://nodejs.org/>`_ and npm
+v5 or above installed. By default, the application is configured to have the API server on the same
+domain as the application. To change the configuration, see :ref:`webapp-configuration`.
+
+To build the web application, navigate to the root folder of web application source files and first
+run ``npm install`` to install all dependencies and then tun ``npm run build`` to build the
+application. The resulting files can be then found in the ``build`` folder.
 
 ********************
 Deploying the server
@@ -212,6 +234,14 @@ be found below:
     Environment='CONNECTIONSTRINGS__DATACONTEXT=Server=127.0.0.1;Port=5432;Database=opcaic_server_db;User Id=opcaic;Password=long_live_opcaic;'
     Environment=STORAGE__DIRECTORY=/var/opcaic/server_storage
     Environment=BROKER__LISTENINGADDRESS=tcp://168.192.0.0:6000
+    Environment=FRONTENDURL=https://www.opcaic.org
+
+    Environment=EMAILS__SMTPSERVERURL=smtp.gmail.com
+    Environment=EMAILS__PORT=587
+    Environment=EMAILS__USESSL=587
+    Environment=EMAILS__USERNAME=opcaic@gmail.com
+    Environment=EMAILS__PASSWORD=pa$sw0rd123456
+    Environment=EMAILS__SENDERADDRESS=noreply@opcaic.org
 
     [Install]
     WantedBy=multi-user.target
@@ -264,14 +294,6 @@ make sure they can make connection to the address specified by the ``Broker.List
 config variable.
 
 *****************************
-Building the web application
-*****************************
-
-First ensure that you have `Node.js v8.15.1 <https://nodejs.org/>`_ and npm v5 or above installed. By default, the application is configured to have the API server on the same domain as the application. To change the configuration, see :ref:`webapp-configuration`.
-
-To build the web application, navigate to the root folder of web application source files and first run ``npm install`` to install all dependencies and then tun ``npm run build`` to build the application. The resulting files can be then found in the ``build`` folder.
-
-*****************************
 Deploying the web application
 *****************************
 
@@ -289,7 +311,6 @@ Nginx. We will show how to serve the application using Nginx. Copy the web-app f
             root /var/opcaic/web-app;
     }
 
-
 ********************
 Deploying the worker
 ********************
@@ -299,7 +320,8 @@ inside ``/var/opcaic``:
 
  - ``worker`` - worker binaries
  - ``worker_storage/work`` - storing temporary data during match execution
- - ``worker_storage/archive`` - archive of executed matches for diagnostic purposes
+ - ``worker_storage/archive`` - archive of executed tasks for diagnostic purposes
+ - ``worker_storage/error`` - archive of failed tasks for diagnostic purposes
  - ``modules`` - game modules handling execution of individual games.
 
 Copy the worker binaries to ``/var/opcaic/worker`` directory and wanted game modules to the
@@ -310,11 +332,14 @@ need to be configured eithre via ``appsettings.json`` or environment variables
 ModulePath
   Path to directory with game modules, recomended ``/var/opcaic/modules``
  
-Execution:WorkingDirectoryRoot
-  Path to dedicated working directory for in-process tasks
+Execution:WorkingDirectory
+  Path to dedicated working directory for tasks currently being processed
 
-Execution:ArchiveDirectoryRoot
+Execution:ArchiveDirectory
   Path to dedicated archiving directory for executed tasks
+
+Execution:ErrorDirectory
+  Path to dedicated archiving directory for failed tasks
 
 ConnectorConfig:BrokerAddress
   Address to which the worker should connect. Corresponds to ``Broker:ListeningAddress`` variable on
@@ -332,14 +357,15 @@ For other configuration options, see :ref:`worker-configuration`. Example system
     [Service]
     Type=simple
     Restart=always
-    RestartSec=1
+    RestartSec=5
     User=opcaic
     WorkingDirectory=/var/opcaic/worker
     ExecStart=/usr/bin/dotnet /var/opcaic/worker/OPCAIC.Worker.dll 
 
     Environment=MODULEPATH=/var/opcaic/modules
-    Environment=EXECUTION__WORKINGDIRECTORYROOT=/var/opcaic/worker_root/work
-    Environment=EXECUTION__ARCHIVEDIRECTORYROOT=/var/opcaic/worker_root/archive
+    Environment=EXECUTION__WORKINGDIRECTORY=/var/opcaic/worker_root/work
+    Environment=EXECUTION__ERRORDIRECTORY=/var/opcaic/worker_root/work
+    Environment=EXECUTION__ARCHIVEDIRECTORY=/var/opcaic/worker_root/archive
     Environment=CONNECTORCONFIG__BROKERADDRESS=tcp://168.192.0.10:6000
 
     [Install]
@@ -361,9 +387,10 @@ The output should now display both server and worker logs.
 
 For information how to create your own game modules and deploy them, see :ref:`adding-new-games`.
 
+.. _graylog-installation:
 
 *************************************************
-(Optional) Installing Graylog for log aggregation
+Installing Graylog for log aggregation
 *************************************************
 
 Searching though the logs using ``journalctl`` is not very user friendly for inexperienced
