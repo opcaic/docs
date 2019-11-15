@@ -33,6 +33,7 @@ Welcome to OPCAIC documentation!
    :maxdepth: 2
    :caption: Developer Documentation:
 
+   dev/dev-environment
    dev/architecture
    dev/server-arch
    dev/frontend-arch
