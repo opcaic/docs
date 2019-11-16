@@ -19,13 +19,17 @@ The main features are:
 
     - Single-player games (puzzles) and two-player games support
     - Multiple supported tournament formats
+      
         - single/double elimination brackets
         - table (round robin)
         - ELO
+
     - Multiple visibility settings per tournament:
+
         - public and private (invitation-only) tournaments
         - hiding user names (anonymizng) of authors of competing bots
         - showing all matches vs only matches in which user's bot participates
+
     - Accepting solutions in source code or compiled form.
     - Granular game configuration for each tournament
     - Ability to add new custom games
@@ -104,3 +108,5 @@ There are some features and posible improvements for future development
     - N-player games - ability to host e.g. deathmatch tournaments between groups of bots.
     - login using social network accounts - Google, Facebook, etc.
     - Ability to interpret additional match data in web application: e.g. replays of matches.
+    - live feedback on the submission validaiton process when given window is opened in web
+      application

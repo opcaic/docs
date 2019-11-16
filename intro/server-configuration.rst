@@ -80,18 +80,22 @@ Contains important configuration regarding platform security.
 JWT Configuration
 =================
 
-Configuration of JWT bearer security mechanism used for user authentication.
+Configuration of JWT bearer security mechanism used for user authentication. For more information
+about platform security, see :ref:`security`.
 
 Security:JWT:Key
-  Symetric key used for creating the JWT Bearer tokens for authentication.
+  Key for signing JWT tokens provided by the web server. This should be a sufficiently long and
+  random string to prevent guessing attacks.
 
 Security:JWT:AccessTokenExpirationMinutes
-  How many minutes should issued JWT access token be valid.
+  How many minutes should issued JWT access token be valid. Shorter intervals are more secure, but
+  require refreshing more frequently. Also, this is the time interval needed before
+  operations such as password change or user role change come into effect.
 
 Security:JWT:RefreshTokenExpirationDays
   How many days should issued JWT refresh token be valid. Refresh tokens are used for requesting new
   access tokens and are invalidated on password change. After expiring, new tokens can be obtained
-  by authenticating via email and p
+  by authenticating via user credentials (email and password).
 
 Security:JWT:WorkerTokenExpirationMinutes
   How many minutes should access tokens issued to workers be valid. These tokens allow workers to

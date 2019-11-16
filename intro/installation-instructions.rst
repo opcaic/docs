@@ -126,7 +126,8 @@ To build the web application, navigate to the root folder of web application sou
     npm install
     npm run build
 
-The first command will download all necessary dependencies, the second will compile the application and put result to the ``build`` folder inside the root folder of the repository.
+The first command will download all necessary dependencies, the second will compile the application
+and put result to the ``build`` folder inside the root folder of the repository.
 
 ********************
 Deploying the server
@@ -160,7 +161,9 @@ FrontendUrl
   Url of the frontend application (to be used when generating links)
 
 Security:JWT:Key
-  Key for signing JWT tokens provided by the web server.
+  Key for signing JWT tokens provided by the web server. This should be a sufficiently long and
+  random string to prevent guessing attacks. For more information about platform security, see
+  :ref:`security`.
 
 ConnectionStrings:DataContext
   Connection string to the PostgreSQL database. The connection string should be similar to::
