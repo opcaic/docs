@@ -46,8 +46,8 @@ explicitly to be able to provide meaningful error messages to users when there i
 with the submission.
 
 :Arguments:
-   - Path to additional files (specific for given tournament).
-   - Path to the folder with submission files.
+   - Path to additional files directory (specific for given tournament).
+   - Path to the directory with submission files.
 :Exit codes:
    - 0 - Submission is correct and may proceed to the next stage
    - 200 - There is a problem with user's submission (user's fault)
@@ -60,9 +60,9 @@ Compile the submission files to a form which executor can accept. The most promi
 compiling the submission files into an executable.
 
 :Arguments:
-   - Path to additional files (specific for given tournament).
-   - Path to the folder with submission files.
-   - Path to the output folder where results of the compilation should be stored.
+   - Path to additional files directory (specific for given tournament).
+   - Path to the directory with submission files.
+   - Path to the output directory where results of the compilation should be stored.
 :Exit codes:
    - 0 - Compilation was successful
    - 200 - Submission cannot be compiled (user's fault)
@@ -75,8 +75,8 @@ Smoke tests the compiled submission, e.g. execute a testing match between to che
 crash.
 
 :Arguments:
-   - Path to additional files (specific for given tournament).
-   - Path to the folder with compiled submission (output folder from the compiler entry point)
+   - Path to additional files directory (specific for given tournament).
+   - Path to the directory with compiled submission (output directory from the compiler entry point)
 :Exit codes:
    - 0 - Submission is valid and may participate in the tournament
    - 200 - Submission is considered invalid (user's fault)
@@ -88,15 +88,15 @@ Executor entry point
 Executes a match between submissions.
 
 :Arguments:
-   - Path to additional files (specific for given tournament).
-   - [1 - N] Paths to folders with compiled submissions (products of the compile entry point)
-   - Path to folder where additional output can be stored
+   - Path to additional files directory (specific for given tournament).
+   - [1 - N] Paths to directorys with compiled submissions (products of the compile entry point)
+   - Path to directory where additional output can be stored
 :Exit codes:
    - 0 - Match executed successfully
    - other - General error (module's fault)
 
 Additionally, the executor entry point must store match results in a ``match-results.json`` file
-inside the provided output folder. The output must have an array property 'results' containing
+inside the provided output directory. The output must have an array property 'results' containing
 objects with numeric 'score' property This property is used to determine the relative ordering
 between the submissions which participated in the match (and hence the winner). The result file can
 contain also additional statistics from the match. Example ``match-results.json`` file contents can
@@ -126,7 +126,7 @@ Performs cleanup of resources not controlled by the platform. For example killin
 a game after failed match execution
 
 :Arguments:
-   - Path to additional files (specific for given tournament).
+   - Path to additional files directory (specific for given tournament).
 :Exit codes:
    - 0 - Success
    - other - General error (module's fault)

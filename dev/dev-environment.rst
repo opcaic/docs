@@ -53,14 +53,20 @@ stream and displayed on the applications standard output.
 
 The database is also optional when developing locally. In the absence of
 ``ConnectionStrings:DataContext`` variable, the server uses `SQLite
-<https://www.sqlite.org/index.html>`_ in an in-memory mode to allow development. The database is
-then seeded with random data upon server startup. However, it is highly recommended to develop
-against real PostgreSQL database to eliminate possible differences in behavior between development
-and production environments. To avoid having to commit credentials to local PostgreSQL database,
-development environment uses additional source of configuration called *user secrets*. The
-configuration set via user secrets overrides the configuration set in environment variables and
-``appsettings.json``. To set the connection string for the application to use, run following
-command inside the ``src/OPCAIC.ApiService`` folder ::
+<https://www.sqlite.org/index.html>`_ database in an in-memory mode to allow development. Upon
+startup, the in-memory database is seeded with random data. However, it is highly recommended to
+develop against real PostgreSQL database to eliminate possible differences in behavior between
+development and production environments.
+
+Setting up PostgreSQL database for development
+----------------------------------------------
+
+If you have PostgreSQL installed, all you need to do is set the ``ConnectionStrings:DataContext``
+config variable.  To avoid committing local development configurations such as credentials to local
+PostgreSQL database, development environment uses additional source of configuration called *user
+secrets*. The configuration set via user secrets overrides the configuration set in environment
+variables and ``appsettings.json``. To set the connection string for the application to use, run
+following command inside the ``src/OPCAIC.ApiService`` folder ::
 
     dotnet user-secretes set "ConnectionStrings:DataContext" "Host=127.0.0.1; ..."
     

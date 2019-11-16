@@ -82,13 +82,31 @@ all team members were satisfied with the refactor results and consider it a grea
  Web app development
 ******************************
 
-In the React ecosystem, it is quite common to base a new project on an already existing boilerplate project, because setting up tools like Webpack, static code anylysis etc. can be quite complext and time-consuming. We decided to use the `react boilerplate <https://github.com/react-boilerplate/react-boilerplate>`_ project because we had some previous experience with it and it looked like it should provide most of the functionality that we needed. 
+In the React ecosystem, it is quite common to base a new project on an already existing boilerplate
+project, because setting up tools like Webpack, static code anylysis etc. can be quite complex and
+time-consuming. We decided to use the `react boilerplate
+<https://github.com/react-boilerplate/react-boilerplate>`_ project because we had some previous
+experience with it and it looked like it should provide most of the functionality that we needed.
 
-The next step was to choose a UI component library that would provide at least basic UI components like tables, lists, menus, forms, etc. We decided to use the `Ant Design <https://ant.design/>`_ library because it provides most of the components that we needed and is very popular in the React community. We ended up building almost the whole administration area with these UI components, which saved us a lot of time. The public part of the application is a combination of premade components and our own design.
+The next step was to choose a UI component library that would provide at least basic UI components
+like tables, lists, menus, forms, etc. We decided to use the `Ant Design <https://ant.design/>`_
+library because it provides most of the components that we needed and is very popular in the React
+community. We ended up building almost the whole administration area with these UI components, which
+saved us a lot of time. The public part of the application is a combination of premade components
+and our own design.
 
-As we were not very experienced with creating applications in React, it took us some time to setup the whole project and decide how should we approach the whole task. One of the first decisions was to divide the whole project into two different modules - the public module and the admin module - because we would often have logic that needed to be implemented differently for users and admins. We also had to setup things like authorization, localization, etc. The next big step was to implement a functionality that would allow us to easily call the API server and handle CRUD operations. To handle that, we created a basic resource manager which was later often improved as we needed to support more complex use cases. 
+As we were not very experienced with creating applications in React, it took us some time to setup
+the whole project and decide how should we approach the whole task. One of the first decisions was
+to divide the whole project into two different modules - the public module and the admin module -
+because we would often have logic that needed to be implemented differently for users and admins. We
+also had to setup things like authorization, localization, etc. The next big step was to implement a
+functionality that would allow us to easily call the API server and handle CRUD operations. To
+handle that, we created a basic resource manager which was later often improved as we needed to
+support more complex use cases.
 
-At the end of the development process, we were able to easily implement all the frequently needed functionalities like tables with AJAX pagination and sorting/filtering, forms with both client and server error messages, new pages with routing, etc.
+At the end of the development process, we were able to easily implement all the frequently needed
+functionalities like tables with AJAX pagination and sorting/filtering, forms with both client and
+server error messages, new pages with routing, etc.
 
 ******************************
  Dropped features

@@ -66,3 +66,32 @@ Users with the admin role have implicitly all permissions in the platform, rules
 permissions of other users are grouped by the entity type in classes such as
 ``TournamentPermissionHandler``. The platform contains a unit test that explicitly tests that all
 permission types have a rule in the corresponding handler.
+
+
+************************
+Communication Encryption
+************************
+
+The server component **does not** implement any communication encryption when communicating with
+clients, nor enforces HSTS or other security mechanism. The reason for that is that the server is
+expected to be hosted behind a *reverse proxy* and receive only requests forwarded by the
+proxy. SSL encryption of the communication can be then provided by the reverse proxy.
+
+This arrangement allows the backend to use unencrypted communication between server and
+worker. These components are expected to be connected in an otherwise isolated LAN network and thus
+no communication encryption is supported.
+
+
+******************************
+Protection against DoS attacks
+******************************
+
+The server component implements only limited protection against DoS (Denial of service) attacks by
+using the `AspNetCoreRateLimit <https://github.com/stefanprodan/AspNetCoreRateLimit>`_ library. This
+library is able to do rule-based filtering based on the IP of the client and limiting specification
+on the endpoints and automatically adds standard response headers such as *Retry-After*. All
+configuration of the library is done via configuration variables, list of which can be found at
+:ref:`request-limiting-config`.
+
+If level of protection provided by the above mentioned library is not sufficient, then additional
+measures are expected to be provided at the level of reverse proxy.

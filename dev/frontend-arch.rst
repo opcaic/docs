@@ -166,13 +166,13 @@ In these situations, we call the API directly using the ``callApi`` function. Th
  Localization
 **************************
 
-Localization is done using the `React Intl <https://github.com/formatjs/react-intl>`_ library. No text that is visible to the users should be hardoceded in the source code. The basic component for localization is the ``FormattedMessage`` component that takes the id of the message that should be translated:
+Localization is done using the `React Intl <https://github.com/formatjs/react-intl>`_ library. No text that is visible to the users should be hardcoded in the source code. The basic component for localization is the ``FormattedMessage`` component which takes the id of the message that should be translated:
 
 .. code-block:: js
 
   <FormattedMessage id="app.public.registrationForm.username" />
 
-The id of the message should somehow correspond to where is the translation used.
+The id of the message should somehow correspond to where is the translation used for easier orientation when managing translations.
 
 Translation
 =========================

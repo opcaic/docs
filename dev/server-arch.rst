@@ -16,9 +16,9 @@ components, and the communication layer between those two components.
 Server component
 ================
 
-The overall architecture of the server component is divided into following parts, with listing of
-the source code projects which belong to it. Some projects contain logic that is shared with the
-worker component.
+The overall architecture of the server component follows the *clean architecture* practice. Projects
+are grouped by purpose into several groups with clearly defined allowed dependencies. The groups are
+listed below. Note that some of the projects are shared with the worker component.
 
 :Domain:
    Defines types and classes which are used throughout the server component.
@@ -35,7 +35,7 @@ worker component.
    Implements communication services outisde of the application scope (sending emails).
 
     - OPCAIC.Infrastructure
-    - OPCAIC.Broker
+    - OPCAIC.Broker (depends on OPCAIC.Messaging shared with worker)
 
 :Persistence:
    Implements persistence of the domain objects into a database.
@@ -47,8 +47,8 @@ worker component.
 
     - OPCAIC.ApiService
 
-Figure :ref:`clean-arch-fig` illustrates the relationship between the parts, with arrows depicting dependencies
-between them.
+Figure :ref:`clean-arch-fig` illustrates the relationship between the parts of the architecture,
+with arrows depicting allowed dependencies.
 
 .. _clean-arch-fig:
 
@@ -58,11 +58,11 @@ between them.
 
    Structure and dependencies of projects in the server component.
 
-The important part is the direction of the arrows. For example: ``OPCAIC.Application`` project does
-not depend on the ``OPCAIC.Persistence`` project, even though the application logic needs to
-communicate with database. This is achieved using *Dependency Inversion*. The ``OPCAIC.Application``
-project defines (via C# interfaces) what logic it needs from the database, and
-``OPCAIC.Persistence`` provides implementation of these interfaces.
+Direction of the arrows is very important aspect of the clean architecture. For example:
+``OPCAIC.Application`` project does not depend on the ``OPCAIC.Persistence`` project, even though
+the application logic needs to communicate with database. This is achieved using *Dependency
+Inversion* principle. The ``OPCAIC.Application`` project defines required functionality using C#
+interfaces, and ``OPCAIC.Persistence`` provides implementation of these interfaces.
 
 Worker component
 ================
@@ -101,6 +101,7 @@ dependencies with the main server component.
            
 Following sections will describe these projects in more details.
    
+
 *******************
  Server component
 *******************
@@ -116,7 +117,6 @@ This project contains enums and classes which describe the individual entities i
 design, this project does not contain any application specific logic, or any logic concerning
 persistence or serialization of the entities. Also, this project contains ``Enumeration`` and
 ``ValueObject`` classes to be used throughout the project.
-
 
 Enumerations
 ------------
@@ -149,7 +149,7 @@ components. This also automatically works with inheritance hierarchies. For exam
 OPCAIC.Common
 =============
 
-This small project contains cross-cutting concerns and definitions of ``EventId``\s and tag names
+This small project contains cross-cutting concerns and definitions of ``EventId``\ s and tag names
 for structured logging purposes.
 
 OPCAIC.Persistence
@@ -166,7 +166,6 @@ OPCAIC.Infrastructure
 This project implements communication with services outside of the application. Currently, there is
 only logic concerning sending email notifications.
 
-
 OPCAIC.Application
 ==================
 
@@ -178,9 +177,10 @@ create a new tournament. then there is a corresponding ``CreateTournamentCommand
 wich is able to carry out this request and encapsulates all needed logic.
 
 In *Vertical Slices Architecture*, adding a new feature should not require modifying existing code,
-since the new logic should be encapsulated in the new use case. The individual *handlers* for each
-use case are organized based on the entity on which operates, and then categorized based on whether
-it is a *command* (request which modifies data) or *query*.
+since the new logic should be encapsulated in new request and handler classes.
+
+The individual *handlers* for each use case are organized based on the entity on which operates, and
+then categorized based on whether it is a *command* (request which modifies data) or *query*.
 
 MediatR
 -------
@@ -213,19 +213,34 @@ interfaces are then examined on startup and appropriate mappings created in the
 Database query specifications
 -----------------------------
 
-Because the ``OPCAIC.Persistence`` is dependent on the ``OPCAIC.Application`` project, it is not
-possible (nor desirable) to the logic directly. To make the direction of dependency work, the
-application project defines interfaces which are then implemented in the persistence
-project. However, this could lead to some very specialized methods on the given interface to be used
-only by a particular use-case handler.
+As we noted earlier, the ``OPCAIC.Persistence`` is refernces (is dependent) on the ``OPCAIC.Application``
+project. The application project therefore defines interface for accessing the database and
+persistence project provides the implementation.
 
-To avoid this, there are ``ISpecification<TEntity>`` objects which encapsulate queries for obtaining
-entities from database. On these specifications, it is possible to specify filtering, ordering and
-other criterias in the form of ``Expression<Fun<TEntity,...>>`` types. There is also
-``IProjectingSpecification<TEntity, TDestination>``, which adds projecting capabilities to query to
-allow selecting only parts of the object. This way, the details of database queries are still stored
-inside the application project and there is no need to modify interfaces between application and
-persistence projects when the query changes.
+However, The straightforward implementation of this idea could lead to many single-purpose methods
+on the interface, like *GetTournamentsForUseCaseX*, *GetTournamentsForUseCaseY*, and adding new
+functionality would ultimately require extending the said interface.
+
+The above problem was solved using the *specification pattern*. The application defines
+``ISpecification<TEntity>`` interfaces used to describe the query. The description includes:
+
+    - filtering criteria on the database table
+    - ordering specification (to get results sorted),
+    - and offset and number of items to fetch (to support paginated requests)
+
+The communication with database happens via ``IRepository<TEntity>`` interface which accepts the
+specification objects. The underlying ``IRepositoryTEntity>`` implementation then uses the
+information from specification object to query the database and return the results back to the
+caller.
+
+ There is also ``IProjectingSpecification<TEntity, TDestination>``, which is a variant of the
+ ``ISpecification<TEntity>`` interface which adds projecting specification and allows for some
+ transformation of the queried data, like fetching only subset of database columns.
+ 
+This way, the details of database queries like filtering criteria still reside inside the
+application project and there is no need to modify interfaces between application and persistence
+projects when the query changes.
+
 
 ************
  Unit tests 

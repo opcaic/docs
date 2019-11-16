@@ -453,7 +453,7 @@ commands (as root)
 
 As with server, you can see debug output by running ::
 
-    journalctl -fu *opcaic*
+    journalctl -fu opcaic*
 
 If worker was deployed on the same machine as the server, the output should now display logs from
 both server and worker. Either way, you should be able to see logs indicating that the worker

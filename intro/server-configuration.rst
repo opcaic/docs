@@ -173,6 +173,8 @@ Limits:MaxSubmissionFileSize
 Limits:MaxResultFileSize
   Maximum total size of task result files received from workers.
 
+.. _request-limiting-config:
+  
 ******************
  Request limiting
 ******************
