@@ -56,8 +56,10 @@ authorize an operation is generally done with regards to:
 
     - User role - admin, organizer, user or none (not logged in)
     - Parent tournament entity, if the resource is e.g. match or submission
-          - being an owner or manager,
-          - Visibility settings of the tournament
+
+        - being an owner or manager,
+        - Visibility settings of the tournament
+
     - Author/ownership of the resource
 
 Users with the admin role have implicitly all permissions in the platform, rules determining
