@@ -42,6 +42,7 @@ Welcome to OPCAIC documentation!
    dev/architecture
    dev/server-arch
    dev/frontend-arch
+   dev/project-doc
 
 .. raw:: latex
 
