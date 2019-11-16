@@ -108,3 +108,5 @@ There are some features and posible improvements for future development
     - N-player games - ability to host e.g. deathmatch tournaments between groups of bots.
     - login using social network accounts - Google, Facebook, etc.
     - Ability to interpret additional match data in web application: e.g. replays of matches.
+    - live feedback on the submission validaiton process when given window is opened in web
+      application
