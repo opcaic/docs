@@ -41,6 +41,7 @@ Welcome to OPCAIC documentation!
    dev/dev-environment
    dev/architecture
    dev/server-arch
+   dev/security
    dev/frontend-arch
    dev/project-doc
 
