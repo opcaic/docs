@@ -95,7 +95,7 @@ dependencies with the main server component.
 
 .. figure:: img/worker-arch.svg
    :align: center
-   :scale: 80%
+   :scale: 50%
 
    Dependency diagram of worker component's projects
            

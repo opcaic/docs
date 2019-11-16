@@ -23,7 +23,7 @@ Welcome to OPCAIC documentation!
    :maxdepth: 2
    :caption: Getting Started:
 
-
+   intro/introduction.rst
    intro/installation-instructions
    intro/server-configuration
    intro/worker-configuration

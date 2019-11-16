@@ -5,7 +5,9 @@
 ###########################
 
 This article describes how to install the OPCAIC platform on a new machine. This text assumes a
-Linux based hosts, however, it should be possible to adapt it for Windows hosts.
+Linux based hosts, however, it should be possible to adapt it for Windows hosts. The machine should
+have at least 4 GB of RAM and 2 Core CPU, and 20GB of disk space. Additional requirements on the
+machine(s) depend on the games that the platform should be able to support.
 
 The OPCAIC platform consists of three main components:
 
