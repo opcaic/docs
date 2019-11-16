@@ -3,13 +3,13 @@
 ##############
 
 OPCAIC is an abbreviation of **O**\ nline **P**\ latform for **C**\ onducting **AI** **C**\
-ompetitions. It is a complex solution for hosting and fully automatic execution of tournaments
-between artificial agents in a multitude of games. The platform features a modern web interface and
-distributed computing capability suitable for conducting multiple tournaments simultaneously. It's
-primary goal is to serve as an automated tool for conducting tournaments held during various
-lectures at our university (such as Artificial Intelligence or Multi-Agent systems), however, on a
-broader scale, it can be employed in the context of AI competitions held at various academic
-conferences (such as CIG, AIIDE or IJCAI).
+ompetitions. It is a complex solution for automated execution of tournaments between artificial
+agents in a multitude of games. The platform features a modern web interface and distributed
+computing capability suitable for conducting multiple tournaments simultaneously. It's primary goal
+is to serve as an automated tool for conducting tournaments held during various lectures at our
+university (such as Artificial Intelligence or Multi-Agent systems), however, on a broader scale, it
+can be employed in the context of AI competitions held at various academic conferences (such as CIG,
+AIIDE or IJCAI).
 
 *************
 Main Features
@@ -27,12 +27,13 @@ The main features are:
     - Multiple visibility settings per tournament:
 
         - public and private (invitation-only) tournaments
-        - hiding user names (anonymizng) of authors of competing bots
+        - optionally hiding usernames of authors of competing bots
         - showing all matches vs only matches in which user's bot participates
 
     - Accepting solutions in source code or compiled form.
     - Granular game configuration for each tournament
-    - Ability to add new custom games
+    - Ability to add custom games
+
 
 ***********
 Terminology
@@ -43,14 +44,16 @@ most important features of the platform.
 
     - *Game* - a game/puzzle to organize the tournaments in 
     - *Match* - a match/round of a game, played by users' bots
-    - *Bot* - any bot/solution participating in the matches
+    - *Bot* - user's implementation of an artificial agent participating in the matches
     - *Submission* - a source code of the bot, submitted by the competitor
     - *Tournament* - a contest of bots, in a specific game, with specific properties 
     - *Guest* - anyone visiting our website, who is not logged in
-    - *Competitor/User* - a logged in user, someone who contests in the tournaments 
+    - *Competitor/User* - a logged in user, someone who participates in the tournaments 
     - *Organizer* - user with permission to create and manage tournaments
     - *Admin* - administrator of the web, manages the platform
-    - *Game module* - a “blackbox” which runs the game itself and produces appropriate results
+    - *Game module* - a blackbox component implementing the execution of matches in a particular
+      game
+
 
 ****************
 Example use-case
@@ -66,29 +69,30 @@ Creating a tournament
 At the beginning of the pipeline, there is an organizer with intention to conduct a tournament. He
 has to fill some basic information about it, such as name, visibility (public or private - only for
 invited users) and so on. Then, the web app provides him a list of currently implemented games and
-tournament types (formats, scopes etc.), which he chooses from. After filling all this, the
-tournament can be published, making it available for competitors.  Organizer can also invite other
-users to his tournament by specifying their emails.
+tournament types (formats, scopes etc.) to choose from. After filling all required information, the
+organizer publishes the tournament, making it available for competitors. Organizer can also invite
+other users to his tournament by specifying their email addresses.
 
 Submitting a solution
 =====================
 
-To join a tournament, users of the platform has to create an account first, and log in. After that,
-they can browse through available tournaments (public or private they are invited to), and
-eventually submit solutions. These solutions has to follow rules specific for different
-games/tournaments, such as number of files, language of the source code and so on. The specific
-rules for each tournament are listed on tournament's page. Upon submitting, the bot is validated by
-the server checking whether it follows game's rules and API. If the validation is successful, the
-user has joined the tournament with his bot.
+Users are able to browse through available tournaments on the platform. In order to participate,
+they need to create a user account on our platform. After logging in, they are able to submit their
+implementation. The format of the submission: allowed implementation languages, libraries and the
+structure of the submitted files are subject to the rules for the given tournament.
+
+Upon submission, the platform validates that the user's implementation is able to participate in the
+given tournament and provides feedback to the user. If the validation is successful, then this
+submission will participate in the tournament.
 
 Evaluating a tournament
 =======================
 
-This stage of the pipeline happes completely automatically. Depending on the tournament's format and
-scope, the server plans matches for the tournament and picks the bots for them from the available
-pool of submitted solutions. Then, the server runs the matches and evaluates their results, which
-also become available to the users through the website. Until the tournament is finished, this cycle
-happens again. Tournament's leaderboards are then published on the website.
+Evaluation of the tournament is completely automated. The matches between bots are planned according
+to the selected tournament format and their execution is scheduled on the platform backend. The
+results of the matches are available to users in accordance to the tournament visibility settings. A
+leaderboard of the tournament is accessible through the website listing relative order of the
+competitor's submission.
 
 
 *************

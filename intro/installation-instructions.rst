@@ -4,19 +4,22 @@
  Installation instructions
 ###########################
 
-This article describes how to install the OPCAIC platform on a new machine. This text assumes a
-Linux based hosts, however, it should be possible to adapt it for Windows hosts. The machine should
-have at least 4 GB of RAM and 2 Core CPU, and 20GB of disk space. Additional requirements on the
-machine(s) depend on the games that the platform should be able to support.
-
-The OPCAIC platform consists of three main components:
+This article describes how to install the OPCAIC platform. The OPCAIC platform consists of three
+main components:
 
  - *Web application* written in JavaScript
  - *Application server* hosting main applicaton logic
  - *Worker service* for tournament execution
 
-In this text, we will refer to these components simply as webapp, server and worker. It is
-recommended to deploy server and worker(s) on separate machines for performance reasons.
+In this text, we will refer to these components simply as webapp, server and worker. All the above
+components can be installed on a single machine. However, we recommend installing server and worker
+components on separate machines, potentially installing worker on multiple machines if more
+throughput is desired.
+
+This text assumes a Linux based hosts, however, it should be possible to adapt it for Windows
+hosts. The target machine should have at least 4 GB of RAM, 2 Core CPU, and 20GB of disk
+space. Additional requirements on the machine(s) depend on the games that the platform should be
+able to support.
 
 
 **************
@@ -47,11 +50,11 @@ Install PostgreSQL
 ------------------
 
 Download and install PostgreSQL database. For Linux distributions using ``apt``, run following
-command as root: ::
+command as root::
 
     apt-get install postgresql postgresql-contrib
 
-After installation, start it by: ::
+After installation, start it by::
 
     systemctl enable postgresql
     systemctl start postgresql
@@ -59,7 +62,7 @@ After installation, start it by: ::
 Change default user password
 ----------------------------
 
-Issue command: ::
+Issue command::
 
     passwd postgres
 
@@ -73,11 +76,11 @@ Run ``psql`` as ``postgres`` user, and run ::
 Create a database for the server
 --------------------------------
 
-Still in ``psql`` prompt, run: ::
+Still in ``psql`` prompt, run::
 
     create database opcaic_server_db;
 
-Check that the database was created by: ::
+Check that the database was created by::
 
     \l
 
@@ -96,12 +99,13 @@ Grant user privileges to the created database ::
 
     grant all privileges on database opcaic_server_db to opcaic;
 
-After that, you can exit ``psql`` by::
+After that, you can exit ``psql`` using ::
 
     \q
 
 .. _building-from-source:
     
+
 *******************************************
  Building the application from source code
 *******************************************
@@ -127,7 +131,8 @@ To build the web application, navigate to the root folder of web application sou
     npm run build
 
 The first command will download all necessary dependencies, the second will compile the application
-and put result to the ``build`` folder inside the root folder of the repository.
+and put result into the ``build`` folder inside the repository.
+
 
 ********************
 Deploying the server
@@ -154,8 +159,8 @@ into the ``/var/opciac/server/appsettings.json`` configuration file, or through 
 variables. Names of variable names are case insensitive. The environment variables take precedence
 over the configuration file, and their name is obtained by taking the JSON path and replacing all
 colons with two underscores (e.g. ``Security:JWT:Key`` becomes ``Security__JWT__Key``). We recommend
-using environment variables for sensitive information, set e.g. inside systemd unit file (see
-below). The list of required variables are:
+using environment variables for sensitive information and set them inside a systemd unit file
+(example unit file is listed in next section). The list of required variables are:
 
 FrontendUrl
   Url of the frontend application (to be used when generating links)
@@ -217,16 +222,16 @@ Seed:AdminUsername
   The username under which the admin will be visible.
 
 Seed:AdminEmail
-  The email address used for admin login. This needs to be a valid email.
+  The email address used for admin login. This must be an existing email address.
 
 Seed:AdminPassword
   Password which should be used for login. The password must conform to the minimum strength
   requirements, which by default is at least 8 characters. See also :ref:`password-strength-config`
-  for detail how to configure the minimum password strength.
+  for detail how to configure the password strength requirements.
 
-We recommend using command line parameters for the admin account credentials. Supposing that correct
-values for other variables have been provided either in ``appconfig.json`` or environment variables,
-you can use following command::
+We recommend using command line parameters for the admin account credentials. Assuming that correct
+values for the other variables have been provided either in ``appconfig.json`` or via environment
+variables, you can use following command to bootstrap the server::
 
     dotnet OPCAIC.ApiService.dll \
         --Seed:AdminUsername=admin \
@@ -234,13 +239,13 @@ you can use following command::
         --Seed:AdminPassword='P4$$w0rd'
 
 The application will immediately try to verify the email address by sending an email with
-verification link to it. Once the email is sent, you may terminate the application. Proceed to next
+verification url to it. Once the email is sent, you may terminate the application. Proceed to next
 section for how to setup the server as an OS service.
 
 .. note::
    Confirming the email address requires working ``web-app`` to be deployed on the configured
-   FrontendUrl address. You don't have to confirm the email address immediatly. You can do that
-   once all platform components are deployed and running.
+   ``FrontendUrl`` address. You don't have to confirm the email address immediatly, you can do that
+   later once all platform components are deployed.
 
 .. warning::
    If the application has been misconfigured (e.g. invalid frontend address in the configuration,
@@ -289,7 +294,7 @@ Save this file as ``/etc/systemd/system/opcaic.server.service`` and issue follow
     systemctl enable opcaic.server.service
     systemctl start opcaic.server.service
 
-You can use  ::
+You can use ::
 
     sudo journalctl -fu opcaic.*
 
@@ -303,14 +308,16 @@ The server component does not provide support for HTTPS, nor accepts HTTP connec
 hosts by default. The expected scenario is exposing the server through a *reverse proxy* like Nginx
 or Apache, which will handle HTTPS redirection and other security measures. The server by default
 listens on ``http://localhost:5000/`` so the reverse proxy should be pointed there. All routes that
-server handles start with ``/api/`` or ``/swagger/``, so we need to map only those. Example
-``nginx.conf`` excerpt follows:
+server handles start with ``/api/`` or ``/swagger/``, so we need to map only those. Minimal
+configuration to be put in ``nginx.conf`` excerpt follows:
 
 .. code-block:: nginx
 
     location ~* /(api|swagger)/
     {
             # configure client_max_body_size to allow larger submission uploads
+            # you should setup this limit separately for the /api/submissions location only to
+            # reduce the attack surface
             client_max_body_size 50m;
 
             proxy_pass         http://localhost:5000;
@@ -332,6 +339,7 @@ The server also needs to communicate with workers. If worker(s) are deployed on 
 make sure they can make connection to the address specified by the ``Broker.ListeningAddress``
 config variable.
 
+
 *****************************
 Deploying the web application
 *****************************
@@ -349,6 +357,20 @@ Nginx. We will show how to serve the application using Nginx. Copy the web-app f
             try_files $uri /index.html =404;
             root /var/opcaic/web-app;
     }
+
+.. warning::
+
+   This tutorial assumes that both server and web application will be exposed on the http domain. If
+   the server and web application are hosted on *different* domains (including on different ports),
+   then browsers will treat all requests to the server's api as *Cross-Origin HTTP requests*. Since
+   *Cross-Origin resource sharing* (CORS) is not enabled on the server, the browser will deny allow
+   web application access to the response data.
+
+   You can solve this by configuring Apache or Nginx to add appropriate
+   *Access-Control-Allow-Origin*, *Access-Control-Allow-Methods* and *Access-control-Allow-Headers*
+   HTTP headers to all responses. For more information see e.g. `MDN article on
+   CORS<https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_. 
+
 
 ********************
 Deploying the worker
@@ -394,7 +416,8 @@ ConnectorConfig:BrokerAddress
   Address to which the worker should connect. Corresponds to ``Broker:ListeningAddress`` variable on
   server. Format of the address is ``tcp://{host}:{port}``.
 
-For other configuration options, see :ref:`worker-configuration`. All these variables can be easily set by environment variables inside a systemd unit file like the following:
+For other configuration options, see :ref:`worker-configuration`. All these variables can be easily
+set by environment variables inside a systemd unit file like the following:
 
 .. code-block:: cfg
 
