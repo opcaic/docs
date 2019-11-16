@@ -7,10 +7,10 @@ right after detailed specification defense (June 7th) by setting in place rules 
 between the members of the team, like how often the team will meet and discus further development,
 which development tools we will use etc. We decided to use `Azure DevOps
 <https://azure.microsoft.com/en-us/services/devops/>`_ for task management, and `Slack
-<https://slack.com/intl/en-cz/>`_ for communication. After setting up mentioned tool, we continued
+<https://slack.com/intl/en-cz/>`_ for communication. After setting up mentioned tools, we continued
 by creating git repositories, setting up *Continuous integration* using `Azure Pipelines
 <https://azure.microsoft.com/en-us/services/devops/pipelines/>`_ from Azure DevOps to automatically
-check if the submitted code builds and all unit tests pass. We also configured Azure DevOps to omit
+check if the submitted code builds and all unit tests pass. We also configured Azure DevOps to emit
 events into dedicated slack channels so team members would be alerted on events like failing build.
 
 We also set rules on how the contribution to the codebase should be done. As a rule, no code could
@@ -73,8 +73,8 @@ query into appropriate query language (in our case PSQL via EntityFramework).
 At the time of writing this text, there are still small parts of code which were not refactored, but
 all team members were satisfied with the refactor results and consider it a great improvement.
 
-As the prototype was was slowly transforming to full product and we started to work on implementing
-concrete tournament formats and types. We discovered that some of features specified in the projects
+As the prototype was slowly transforming to a full product and we started to work on implementing
+concrete tournament formats and types. We discovered that some of the features specified in the project's
 formal requirements were badly designed and did not make much sense in the resulting program. One
 such feature was *Average ranking*. The other two types of ranking - *Maximum* and *Minimum*
 determined the winner of a match based on which player had higher/lower score. The avereage ranking
