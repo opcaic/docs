@@ -110,11 +110,23 @@ After that, you can exit ``psql`` using ::
  Building the application from source code
 *******************************************
 
+.. only:: latex
+
+    .. tip::
+        You can skip this step by using provided compiled binaries inside the *bin* directory on the
+        attached USB key. The USB key also contains all source code files inside the *src*
+        directory.
+
 The application can be easily built locally, but requires additional dependencies. For building the
 ``server`` and ``worker`` components from sources, you will need .NET Core 3.0 SDK (version 3.0.100)
 available at the `official website <https://dotnet.microsoft.com/download/>`_.
 
-The actual build process is straightforward, run following commands inside the source code repository::
+You can obtain the source code from the github repository::
+  
+    git clone https://github.com/opcaic/server
+    cd server
+
+To build the worker and server components, run following commands inside the source code repository::
 
     dotnet publish -c Release ./src/OPCAIC.ApiService -o bin/server
     dotnet publish -c Release ./src/OPCAIC.Worker -o bin/worker
@@ -122,16 +134,29 @@ The actual build process is straightforward, run following commands inside the s
 The above commands will produce appropriate folders in the ``bin`` directory.
 
 Building the web application from sources requires `Node.js v8.15.1 <https://nodejs.org/>`_ and npm
-v5 or above installed. By default, the application is configured to have the API server on the same
-domain as the application. To change the configuration, see :ref:`webapp-configuration`.
+v5 or above installed.
 
-To build the web application, navigate to the root folder of web application source files and run::
+Clone the web application repository by running::
+
+    git clone https://github.com/opcaic/web-app
+    cd web-app
+
+By default, the application is configured to access the API server on the same
+domain as the application. To change the configuration, see :ref:`webapp-configuration`. Build the
+sources by running ::
 
     npm install
     npm run build
 
 The first command will download all necessary dependencies, the second will compile the application
 and put result into the ``build`` folder inside the repository.
+
+.. warning::
+    If you configure different url for the web API backend in the web application configuration,
+    additional actions are needed to deal with *Cross-Origin resource sharing* (CORS). If you don't
+    have enough knowledge about CORS, we recommend hosting the web application and server on the
+    same domain. For more information see e.g. `MDN article on CORS
+    <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_.
 
 
 ********************
@@ -290,6 +315,12 @@ be found below:
     [Install]
     WantedBy=multi-user.target
 
+.. only:: latex
+
+    .. tip::
+       Above example and other configuration files can be found on the attached USB key under
+       *config* directory.
+    
 Save this file as ``/etc/systemd/system/opcaic.server.service`` and issue following commands as root::
 
     systemctl enable opcaic.server.service
@@ -306,20 +337,24 @@ Exposing the server
 ===================
 
 The server component does not provide support for HTTPS, nor accepts HTTP connections from remote
-hosts by default. The expected scenario is exposing the server through a *reverse proxy* like Nginx
-or Apache, which will handle HTTPS redirection and other security measures. The server by default
-listens on ``http://localhost:5000/`` so the reverse proxy should be pointed there. All routes that
-server handles start with ``/api/`` or ``/swagger/``, so we need to map only those. Minimal
-configuration to be put in ``nginx.conf`` excerpt follows:
+hosts by default. The expected scenario is exposing the server through a *reverse proxy* like `Nginx
+<https://www.nginx.com>`_ or `Apache <https://httpd.apache.org>`_, which will handle HTTPS and other
+security measures. In this tutorial, we will use Nginx. The server by default listens on
+``http://localhost:5000/`` so nginx should redirect all request for the server there. All routes
+that server handles start with ``/api/`` or ``/swagger/``, so we need to map only those. You can
+achieve this by adding following location block to ``/etc/nginx/sites-available/default``
 
 .. code-block:: nginx
     :caption: Nginx reverse-proxy configuration for server api
 
     location ~* /(api|swagger)/
     {
-            # configure client_max_body_size to allow larger submission uploads
-            # you should setup this limit separately for the /api/submissions location only to
-            # reduce the attack surface
+            # configure client_max_body_size to allow larger file uploads
+            # more secure way would be configuring limits only for
+            # /api/submissions
+            # /api/tournaments/{id}/files
+            # /api/validation/{id}/result
+            # /api/match-execution/{id}/result
             client_max_body_size 50m;
 
             proxy_pass         http://localhost:5000;
@@ -341,6 +376,12 @@ The server also needs to communicate with workers. If worker(s) are deployed on 
 make sure they can make connection to the address specified by the ``Broker.ListeningAddress``
 config variable.
 
+.. note::
+   If you need to enable CORS on the server, you have to configure the reverse proxy to add
+   appropriate *Access-Control-Allow-Origin*, *Access-Control-Allow-Methods* and
+   *Access-control-Allow-Headers* HTTP headers to all responses. This is only needed when hosting
+   web application and server on different domains.
+
 
 *****************************
 Deploying the web application
@@ -348,8 +389,8 @@ Deploying the web application
 
 The web-app component is a typical javascript SPA application and can be deployed e.g. by Apache or
 Nginx. We will show how to serve the application using Nginx. Copy the web-app files to
-``/var/opcaic/web-app`` directory. Minimal configuration which needs to be added to ``nginx.conf``
-follows:
+``/var/opcaic/web-app`` directory. Minimal configuration which needs to be added to nginx
+configuration  at ``/etc/nginx/sites-available/default`` follows:
 
 .. code-block:: nginx
     :caption: Nginx configuration for hosting the web application
@@ -361,18 +402,6 @@ follows:
             try_files $uri /index.html =404;
             root /var/opcaic/web-app;
     }
-
-.. warning::
-
-   This tutorial assumes that both server and web application will be exposed on the http domain. If
-   the server and web application are hosted on *different* domains (including on different ports),
-   then browsers will treat all requests to the server's api as *Cross-Origin HTTP requests*. Since
-   *Cross-Origin resource sharing* (CORS) is not enabled on the server, the browser will deny allow
-   web application access to the response data.
-
-   You can solve this by configuring Apache or Nginx to add appropriate
-   *Access-Control-Allow-Origin*, *Access-Control-Allow-Methods* and *Access-control-Allow-Headers*
-   HTTP headers to all responses. For more information see e.g. `MDN article on CORS <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_. 
 
 
 ********************

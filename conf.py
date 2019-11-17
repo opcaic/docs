@@ -99,13 +99,13 @@ latex_elements = {
 
             \vspace{60mm}
             {\Large
-                Radek Zikmund
+                Bc. Radek Zikmund,
 
-                Ondřej Nepožitek
+                Bc. Ondřej Nepožitek,
 
-                Michal Lehončák
+                Bc. Michal Lehončák,
 
-                Šimon Stachura
+                Bc. Šimon Stachura
             }
 
 
@@ -132,6 +132,11 @@ latex_elements = {
         % make counters behave sanely
         \counterwithin{figure}{chapter}
         \counterwithin{literalblock}{chapter}
+
+        \def\chapwithtoc#1{
+        \chapter*{#1}
+        \addcontentsline{toc}{chapter}{#1}
+        }
     '''
 }
 
