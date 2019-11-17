@@ -67,7 +67,7 @@ html_context = {
 
 latex_additional_files = [
     '_templates/styleoverrides.sty',
-    '_templates/title.tex'
+    '_templates/title.tex.txt'
 ]
 
 latex_show_urls = 'footnote'
@@ -123,7 +123,7 @@ latex_elements = {
         \cleardoublepage
         \pagenumbering{roman}
 
-        \include{title}
+        \include{title.tex.txt}
     ''',
 
     'preamble': r'''
