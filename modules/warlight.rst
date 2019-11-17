@@ -31,7 +31,7 @@ Dependencies
 Apart from several dependencies inside the project, some of the modules are aslo dependent on libraries *jsap.jar* and *json.jar* (package org.json).
 We also edited the game itself, so that it's needs a configuration file, named *config.json*. This file specifies basic properties of the game to be run, and it's structure and example values are as follows:
 
-.. code block:: json
+  .. code block:: js
 
     {
     "seed": "42",
@@ -112,7 +112,7 @@ bots in the specified *compiled bot* folders. If everything works correctly, the
 The results of the game are produced to the *result folder*. The most important of them is *match-results.json*, which determines the actual results of the match.
 Its format is as follows.
 
-.. code block:: json
+ .. code block:: js
 
     {
         "results":
