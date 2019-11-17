@@ -91,7 +91,6 @@ Conquest-Validator
 --------------------------
 
 This entrypoint is dependent on library *Conquest-Tournament.jar*, which must be present in working directory when calling the entrypoint.
-The *config.json* file containing the configuration of the game must also be present.
 Validator entrypoint can be invoked by calling::
 
     java -jar Conquest-Validator.jar <path to config> <path to the compiled bot>
