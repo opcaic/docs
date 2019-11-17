@@ -55,6 +55,7 @@ Welcome to OPCAIC documentation!
    dev/security
    dev/worker-backend
    dev/frontend-arch
+   modules/warlight
    dev/project-doc
 
 .. only:: latex
