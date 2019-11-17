@@ -64,7 +64,7 @@ Welcome to OPCAIC documentation!
 
 .. raw:: latex
 
-    \chapwithtoc{List of attachments}
+    \chapwithtoc{List of Attachments}
     \section*{USB key with files}
 
 .. only:: latex
