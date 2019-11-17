@@ -1,5 +1,5 @@
 ####################################
- Setting up development envrionment
+ Setting up development environment
 ####################################
 
 The OPCAIC platform components can be developed both on Linux and Windows machines. We recommend

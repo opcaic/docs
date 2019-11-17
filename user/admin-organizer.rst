@@ -137,12 +137,7 @@ The main part features a table with a list of tournaments to manage - for organi
 tournaments they own or have manager rights to, while the admins see all the tournaments.
 
 The table displays basic properties of each tournament, that is its name, game, when it was created,
-whether it's published, its state, format and scope, and optionally also the deadline.  In the last
-two columns, there are also two buttons, *Clone* and *Detail*
-
-The *Clone* button suits for copying a tournament - it leads to a *Create new tournament* form,
-prefilled with values copied from the original tournament.  *Detail* button redirects to admin
-section Tournament detail page, which is decribed in the next section.
+whether it's published, its state, format and scope, and optionally also the deadline.
 
 This part of the administration is available both to organizers and admins
 
@@ -153,14 +148,18 @@ Administration tournament's detail page serves for managing the tournament itsel
 several tabs.
 
 First tab is *Basic info*. A small table with number of *participating players, submissions, all
-submissions* and tournament *state* can be seen on the top of the page.  Depending on the tournament
-state, there are different control buttons in the right top part. These buttons serve for changing
-tournament's state:
+submissions* and tournament *state* can be seen on the top of the page. 
 
-    - Publish - make the tournament available for users
-    - Start - start the evaluation
+On top right side of page there are action buttons. The *Clone* button suits for copying a tournament - it leads to a *Create new tournament* form,
+prefilled with values copied from the original tournament. The *Delete* button can be used to delete tournament, its match history, submissions and all connected files. If tournament is in *running* state, all matches are also removed from scheduling queue. 
+
+Depending on the tournament
+state, there are another control buttons, which serve for changing tournament's state:
+
+    - Publish - make the tournament available for users, for *ongoing* tournaments also start the evaluation
+    - Start (for *deadline* tournaments)- start the evaluation
     - Pause/Unpause - pause/unpause the evaluation
-    - Stop (for ongoing tournaments) - end the tournament
+    - Stop (for *ongoing* tournaments) - end the tournament
 
 In the central part, there is a same form as on the Create new tournament page, where organizers can
 edit the tournament's properties.  For tournaments in the state created, almost all of the
@@ -184,16 +183,15 @@ Next tab is called *Managers*, and it serves for making other users managers of 
 
 Through the *Participants* tab, you can invite people to join your tournament. This is intended
 mainly for private tournaments, as they cannot be seen otherwise. Anyone can be added, even someone
-who is not a user of the platform, by writing down their email. An invitation mail will be sent to
+who is not a user of the platform, by writing down their email. Text field also allows pasting list of emails sparated by comma, semicolon or space. An invitation mail will be sent to
 the given addresses, together with a link to the tournament. People who do not have the account yet
 will have to register first (with the specified email) to be able to join the tournament.
 
 *Matches* tab serves for managing tournament's matches. All matches are listed here in a table,
 together with some basic information about the match's execution. These information are: *queue
-time, execution time, players and theirs score* and also match's *state*. In the last two columns,
-there are also two buttons. *Queue rematch execution* serves for forcing app to try to execute the
-match again. This button is available only for matches in state Failed. Button *Detail* leads to
-matches detail page. On the detail page, there is there is a list with one or two tables (depending
+time, execution time, players and theirs score* and also match's *state*.
+
+On the detail page, there is there is a list with one or two tables (depending
 on match's state) for each of the executions. First table is *Basic info*, and it shows *id* of the
 match, its *job id* (more on that in the System submodule section), dates of *creation* and
 *execution*, *players* with links to their *submissions*, and the result of the execution along with
@@ -205,12 +203,16 @@ result. Button *Download additional files* serves for downloading all files prod
 executing the match. The number and meaning of these files is again game dependent, except for the
 file *match-results.json*, which contains the source data for *Players data* table.
 
+*Queue rematch execution* button in both list and detail serves for forcing app to try to execute the
+match again. This button is available only for matches in state Failed and tournaments in *running* state. Button *Detail* leads to
+matches detail page. 
+
 Next tab of the tournament's detail is called *Submissions*. It shows a table with all of the
-tournamenet's submissions, along with their *Date*, *User*, *State*, flag showing whether they are
+tournament's submissions, along with their *Date*, *User*, *State*, flag showing whether they are
 *Active* in the tournament, and a button *Detail* leading to their detail page. On the detail page,
 there a few tables similar to these on the match's detail page. First one is *Basic info*, and it
 shows the same fields as seen in the table on the main Submissions tab. Then, there are two
-buttons. *Download submission* is self-explanatory, and the *Run validation again* forces app to try
+buttons. *Download submission* downloads all submitted files in one zip archive, the *Run validation again* forces app to try
 to validate the submission again. Under these buttons, there is a list of all submission's
 validations, along with their *date*, *checker*, *compiler* and *executor* result (along with the
 appropriate logs) and optionally *Exception* field, if something went wrong during the
@@ -230,9 +232,7 @@ Creating a game
 ---------------
 
 On the top of the page, there is a *Create new game* button, leading to a page with a form for
-filling the game information. The first three fields are mandatory, that is game's *Name*, *Key*
-(specifies game module, which will be used for validating submissions and executing matches) and the
-*Type* of the game - either single player or two players game. Then, there is a part which suits for
+filling the game information. *Name* is used for referencing game in entire application and must be unique in system. *Key* specifies game module, which will be used for validating submissions and executing matches, when there is no game module according to key. *Type* determines available tournament formats - single player or two players game. Then, there is a part which suits for
 picking game public page design. Game's *logo*, *tournament default logo* and the default
 *tournament color* can be chosen. User can also specify size limit of additional game files for the
 tournaments to be played. Finally, the text box *Description* contains description of the game, and
@@ -258,7 +258,7 @@ specify for example timeout for bot's turns, initial resources and so on, depend
 game. The format of the configuration file is determined by a JSONSchema (see
 https://json-schema.org/understanding-json-schema/), which the admin has to write in the *Schema of
 configuration* box. After filling this window, a *Sample form* for specifying a configuration
-following the given schema will be shown in the left part of the page. There are quite a few web
+following the given schema will be shown in the right part of the page. There are quite a few web
 tools which can be used to create a JSONSchema from an example Json file, for example
 https://jsonschema.net/. Specifying game configuration schema obviously makes sense only in case the
 organizer knows how the specific game module works, so that it uses it correctly.
@@ -302,7 +302,7 @@ Edit template
 On the edit template page, there is a form defining the email template. Some of the properties are
 immutable - that is the *name*, *localization* and the *variables* of the template. Appropriate
 values are substituted into the variables when sending the email. For example, for ResetPassword
-template, the ResetURL is a variable, filled with the appropriate link when sent to the user.
+template the ResetURL is a variable, which will be replaced with the appropriate link when sent to the user.
 
 The *subject* and the *body* of the template can be edited. For the body, html can be used. The
 *preview* window then displays preview of the final template.
