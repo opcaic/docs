@@ -200,3 +200,54 @@ regions
 
 armies
     Sum of the number of armies posessed at the and of each round.
+
+
+Entry-points configuration
+--------------------------
+
+To finish the integration of the warlight game to the platform, The commands to invoke the
+individual entry points must be specified in an ``entrypoints.json`` file. Since each entry point is
+implemented using a wrapper in java, the configuration must specify how to invoke the respective
+java *.jar* module:
+
+.. code-block:: js
+   :caption: *entrypoints.json* file for the warlight game module.
+
+    {
+        "Checker": {
+            "Executable": "java",
+            "Arguments": [
+                "-jar",
+                "./checker/Conquest-Checker.jar"
+            ]
+        },
+        "Compiler": {
+            "Executable": "java",
+            "Arguments": [
+                "-jar",
+                "./compiler/Conquest-Compiler.jar"
+            ]
+        },
+        "Validator": {
+            "Executable": "java",
+            "Arguments": [
+                "-jar",
+                "./validator/Conquest-Validator.jar"
+            ]
+        },
+        "Executor": {
+            "Executable": "java",
+            "Arguments": [
+                "-jar",
+                "./executor/Conquest-Executor.jar"
+            ]
+        },
+        "Cleanup": {
+            "Executable": "echo",
+            "Arguments": [
+                "0"
+            ]
+        }
+    }
+
+The warlight module does not utilize the Cleanup entry point, so a no-op command is used instead.

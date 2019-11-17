@@ -499,6 +499,17 @@ Deployment of game modules for the worker to use is straightforward copying the 
 module files into the ``/var/opcaic/modules`` directory. For information how to create your own game
 modules and deploy them, see :ref:`adding-new-games`.
 
+.. only:: latex
+
+   The attached USB key contains an example game module for the game `Warlight
+   <https://github.com/medovina/Warlight>`_ in both source code and compiled form. The prepared game
+   module for deployment can be found at *bin/modules/warlight*.
+
+   After copying it to the modules folder, you need to follow the above mentioned guide to configure
+   the platform to use the game. The warlight game module utilizes the additional configuration
+   feature, the JSON schema needed to setup the game correclty can be found at
+   *src/warlight/configSchema.json*.
+
 .. _graylog-installation:
 
 *************************************************
