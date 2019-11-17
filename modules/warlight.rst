@@ -80,7 +80,7 @@ games-count
 
 Example configuration file follows:
 
-.. code-block:: json
+.. code-block:: js
 
     {
         "seed": 42,
@@ -143,9 +143,8 @@ everything works correctly, the compiler exits with code 0, else with code 200.
 Conquest-Validator
 --------------------------
 
-This entrypoint is dependent on library *Conquest-Tournament.jar*, which must be present in working
-directory when calling the entrypoint.  The *config.json* file containing the configuration of the
-game must also be present.  Validator entrypoint can be invoked by calling::
+This entrypoint is dependent on library *Conquest-Tournament.jar*, which must be present in working directory when calling the entrypoint.
+Validator entrypoint can be invoked by calling::
 
     java -jar Conquest-Validator.jar <path to config> <path to the compiled bot>
 
@@ -168,7 +167,7 @@ folders. If everything works correctly, the program ends with code 0, with code 
 results of the game are produced to the *result folder*. The most important of them is
 *match-results.json*, which determines the actual results of the match.  Its format is as follows.
 
-.. code-block:: json
+.. code-block:: js
 
     {
         "results":
