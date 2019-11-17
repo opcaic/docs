@@ -32,6 +32,7 @@ Apart from several dependencies inside the project, some of the modules are aslo
 We also edited the game itself, so that it's needs a configuration file, named *config.json*. This file specifies basic properties of the game to be run, and it's structure and example values are as follows:
 
 .. code block:: json
+
     {
     "seed": "42",
     "botCommandTimeoutMillis": "5000",
@@ -112,6 +113,7 @@ The results of the game are produced to the *result folder*. The most important 
 Its format is as follows.
 
 .. code block:: json
+
     {
         "results":
             [
