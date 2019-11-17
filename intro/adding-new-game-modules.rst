@@ -103,6 +103,7 @@ contain also additional statistics from the match. Example ``match-results.json`
 be seen below:
 
 .. code-block:: js
+   :caption: Example *match-results.json* file produced by the executor entry point.
 
     { 
         'results': [
@@ -138,6 +139,7 @@ Commands for individual entry points are specified in ``entrypoints.json`` file 
 located in module directory. Example file contents follow:
 
 .. code-block:: js
+   :caption: Example *entrypoins.json* file contents for specifying game module's entry points
 
     {
         "Checker": {

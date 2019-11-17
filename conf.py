@@ -128,6 +128,10 @@ latex_elements = {
                     \monthname[\THEMONTH], \THEYEAR}
         \usepackage{styleoverrides}
         \addto\captionsenglish{\renewcommand{\contentsname}{Table of contents}}
+        
+        % make counters behave sanely
+        \counterwithin{figure}{chapter}
+        \counterwithin{literalblock}{chapter}
     '''
 }
 

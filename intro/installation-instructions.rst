@@ -259,6 +259,7 @@ We recommend using some service management tool such as ``systemd``. Example sys
 be found below:
 
 .. code-block:: cfg
+    :caption: Example systemd unit file for OPACIC.ApiService service
 
     [Unit]
     Description=OPCAIC.Web service
@@ -312,6 +313,7 @@ server handles start with ``/api/`` or ``/swagger/``, so we need to map only tho
 configuration to be put in ``nginx.conf`` excerpt follows:
 
 .. code-block:: nginx
+    :caption: Nginx reverse-proxy configuration for server api
 
     location ~* /(api|swagger)/
     {
@@ -346,9 +348,11 @@ Deploying the web application
 
 The web-app component is a typical javascript SPA application and can be deployed e.g. by Apache or
 Nginx. We will show how to serve the application using Nginx. Copy the web-app files to
-``/var/opcaic/web-app`` folder and add following configuration to ``nginx.conf``:
+``/var/opcaic/web-app`` directory. Minimal configuration which needs to be added to ``nginx.conf``
+follows:
 
 .. code-block:: nginx
+    :caption: Nginx configuration for hosting the web application
 
     location / {
             # First attempt to serve request as file
@@ -368,8 +372,7 @@ Nginx. We will show how to serve the application using Nginx. Copy the web-app f
 
    You can solve this by configuring Apache or Nginx to add appropriate
    *Access-Control-Allow-Origin*, *Access-Control-Allow-Methods* and *Access-control-Allow-Headers*
-   HTTP headers to all responses. For more information see e.g. `MDN article on
-   CORS<https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_. 
+   HTTP headers to all responses. For more information see e.g. `MDN article on CORS <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_. 
 
 
 ********************
@@ -420,6 +423,7 @@ For other configuration options, see :ref:`worker-configuration`. All these vari
 set by environment variables inside a systemd unit file like the following:
 
 .. code-block:: cfg
+    :caption: Example systemd unit file for OPACIC.Worker service
 
     [Unit]
     Description=OPCAIC.Worker service
@@ -484,6 +488,7 @@ configuration section in ``appsettings.json`` file (this has to be done separate
 and server components). Example configuration follows:
 
 .. code-block:: js
+    :caption: Serilog configuration section using Graylog
 
     {
             "Serilog": {

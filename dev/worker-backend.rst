@@ -10,7 +10,7 @@ worker executable which communicates with the broker
 
 The broker and worker communication is implemented using `NetMQ
 <https://netmq.readthedocs.io/en/latest/>`_ library, which is a native implementation of the `ZeroMQ
-<https://github.com/zeromq/netmq`_ messaging framework for .NET. Unlike other messaging frameworks,
+<https://github.com/zeromq/netmq>`_ messaging framework for .NET. Unlike other messaging frameworks,
 like ActiveMQ or RabbitMQ, this messaging framework does not require standalon broker process, and
 since the NetMQ implementation distributed with the platform, there is no requirement for ZeroMQ to
 be installed on the target machines.
@@ -65,7 +65,7 @@ message from a broker to a worker:
 
 .. figure:: img/connector-example.svg
    :align: center
-   :scale: 60%
+   :scale: 90%
 
    Interaction between threads and sockets
    
@@ -73,8 +73,8 @@ Heartbeat
 =========
 
 In order for the communication to be robust and be able to detect failure and crash of either broker
-or (any) worker. The communicators implement a scheme called `Paranoid Pirate Pattern <
-http://zguide.zeromq.org/php:chapter4#Robust-Reliable-Queuing-Paranoid-Pirate-Pattern>`_. In this
+or (any) worker. The communicators implement a scheme called `Paranoid Pirate Pattern
+<http://zguide.zeromq.org/php:chapter4#Robust-Reliable-Queuing-Paranoid-Pirate-Pattern>`_. In this
 communication pattern, both sides periodically send messages back and forth essentially saying "I am
 alive" (these are generally called *heartbeat* messages). If one side does not receive such message
 for a certain period of time, e.g. three times the beat interval, then the other side is considered

@@ -32,6 +32,17 @@ Welcome to OPCAIC documentation!
 
 .. raw:: latex
 
+   \part{User Documentation}
+   
+.. toctree::
+   :maxdepth: 2
+   :caption: User Documentation:
+
+   user/user
+   user/admin-organizer
+
+.. raw:: latex
+
    \part{Developer Documentation}
    
 .. toctree::
@@ -45,16 +56,18 @@ Welcome to OPCAIC documentation!
    dev/worker-backend
    dev/frontend-arch
    dev/project-doc
+   dev/conclusion
 
 .. raw:: latex
 
-   \part{User Documentation}
-   
-.. toctree::
-   :maxdepth: 2
-   :caption: User Documentation:
-
-   user/user
-   user/admin-organizer
-
-.. todolist::
+    %% addtional lists
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \addcontentsline{toc}{chapter}{List of Figures}%
+    \listoffigures
+    %
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \addcontentsline{toc}{chapter}{List of Code Blocks}%
+    \listof{literalblock}{List of Code Blocks}%
+    %
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \pagenumbering{arabic}%
