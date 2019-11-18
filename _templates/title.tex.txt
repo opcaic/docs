@@ -1,0 +1,44 @@
+
+\def\ProjectName{Online Platform for Conducting AI Competitions}
+
+\def\TeamMembers{Bc. Radek Zikmund, Bc. Ondřej Nepožitek, Bc. Michal Lehončák, Bc. Šimon Stachura}
+
+\def\Supervisor{Mgr. Jakub Gemrot, Ph.D.}
+
+\def\Annotation{%
+An online platform for conducting game AI tournaments consisting of user frontend, administrator frontend and tournaments runner backend. As a proof of concept, the result will feature integration of a few existing AI games.}
+
+\def\ProjectScope{
+  Software engineering, Software development, Web engineering, Database systems, System programming, Performace systems, Intelligent agents, Computer games development
+}
+\pagestyle{empty}
+
+\newpage
+
+
+%%% Povinná informační strana bakalářské práce
+
+\vbox to 0.5\vsize{
+\setlength\parindent{0mm}
+\setlength\parskip{5mm}
+
+Project name:
+\ProjectName
+
+Team members:
+\TeamMembers
+
+Supervisor:
+\Supervisor
+
+Annotation:
+\Annotation
+
+Project scope:
+\ProjectScope
+
+\vss}
+
+\newpage
+
+\cleardoublepage

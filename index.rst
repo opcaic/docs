@@ -55,8 +55,45 @@ Welcome to OPCAIC documentation!
    dev/security
    dev/worker-backend
    dev/frontend-arch
+   modules/warlight
    dev/project-doc
-   dev/conclusion
+
+.. only:: latex
+
+   .. include:: dev/conclusion.rst
+
+.. raw:: latex
+
+    \chapwithtoc{List of Attachments}
+    \section*{USB key with files}
+
+.. only:: latex
+
+    - *bin* - directory with compiled programs, these can be used to install the platform by following the :ref:`installation-instructions`.
+
+        - *server* - compiled server component
+        - *worker* - compiled worker component
+        - *webapp* - compiled webapp component
+        - *modules* - compiled game modules
+
+            - *warlight* - adapted Warlight game for the platform
+
+    - *src* - directory with all platform source code files
+
+        - *server* - shared sources for both server and worker components
+        - *webapp* - source code for the web application
+        - *warlight* - adapted source code for the warlight game module
+
+    - *html-docs* - Directory with html form of the documentation, read by opening the *index.html*
+      file in browser.
+    - *config* - directory with example configuration files referenced in the installation instructions.
+
+        - *opcaic.server.service* - systemd unit file for hosting server component as a service
+        - *opcaic.worker.service* - systemd unit file for hosting worker component as a service
+        - *nginx.conf* - snippets of nginx configuration needed for hosting server and web application component
+
+    - *docs.pdf* - copy of this document
+    - *readme.txt* - description of the USB key contents.
 
 .. raw:: latex
 

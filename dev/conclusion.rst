@@ -12,4 +12,4 @@ It would be better if we were able to finish the development process earlier and
 - Most of the core features of the platform were ready quite early but we kept on improving the user experience and adding new features.
 - We could sometimes improve our time management and work harder when it was needed.
 
-Unfortunately, we were not able to test the platform with a larger number of people to simulate a school tournament being held. It is, therefore, expected that we will have to make some improvements when the platform goes live and people start to use tournaments for educational purposes.
+Despite the time restrains and quite a large scope of the project, the core functionality of the platform has been implemented in time and also tested individually by the authors of the project. Unfortunately, we were not able to test the platform with a larger number of people to simulate a school tournament being few improvements when the platform goes live and people start to use tournaments for educational purposes.

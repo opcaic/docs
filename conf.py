@@ -66,7 +66,8 @@ html_context = {
 # -- Options for LaTeX output -------------------------------------------------
 
 latex_additional_files = [
-    '_templates/styleoverrides.sty'
+    '_templates/styleoverrides.sty',
+    '_templates/title.tex.txt'
 ]
 
 latex_show_urls = 'footnote'
@@ -83,6 +84,8 @@ latex_documents = [
 
 latex_elements = {
     'figure_align': 'H',
+
+    'papersize': 'a4paper',
     
     'maketitle': r'''
         \pagenumbering{Roman} %%% to avoid page 1 conflict with actual page 1
@@ -99,13 +102,13 @@ latex_elements = {
 
             \vspace{60mm}
             {\Large
-                Radek Zikmund
+                Bc. Radek Zikmund,
 
-                Ondřej Nepožitek
+                Bc. Ondřej Nepožitek,
 
-                Michal Lehončák
+                Bc. Michal Lehončák,
 
-                Šimon Stachura
+                Bc. Šimon Stachura
             }
 
 
@@ -117,8 +120,10 @@ latex_elements = {
             %% \vfill
         \end{titlepage}
 
-        \clearpage
+        \cleardoublepage
         \pagenumbering{roman}
+
+        \include{title.tex.txt}
     ''',
 
     'preamble': r'''
@@ -132,6 +137,11 @@ latex_elements = {
         % make counters behave sanely
         \counterwithin{figure}{chapter}
         \counterwithin{literalblock}{chapter}
+
+        \def\chapwithtoc#1{
+        \chapter*{#1}
+        \addcontentsline{toc}{chapter}{#1}
+        }
     '''
 }
 
