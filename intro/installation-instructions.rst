@@ -142,7 +142,7 @@ Clone the web application repository by running::
     cd web-app
 
 By default, the application is configured to access the API server on the same
-domain as the application. To change the configuration, see :ref:`webapp-configuration`. Build the
+domain as the application. Also, the default Captcha key is set to a test key that should be changed on production environemnts. To change the configuration, see :ref:`webapp-configuration`. Build the
 sources by running ::
 
     npm install
