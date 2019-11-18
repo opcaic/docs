@@ -123,7 +123,7 @@ The above commands will produce appropriate folders in the ``bin`` directory.
 
 Building the web application from sources requires `Node.js v8.15.1 <https://nodejs.org/>`_ and npm
 v5 or above installed. By default, the application is configured to have the API server on the same
-domain as the application. To change the configuration, see :ref:`webapp-configuration`.
+domain as the application. Also, the default Captcha key is set to a test key that should be changed on production environemnts. To change the configuration, see :ref:`webapp-configuration`.
 
 To build the web application, navigate to the root folder of web application source files and run::
 
