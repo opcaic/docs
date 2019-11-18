@@ -258,7 +258,7 @@ Submissions
 Valid submissions for this game module must contain *exactly one* .java file with the agent's
 implementation. The submitted file must create a ``conquest.bot.custom`` package, and the
 implementation must extend the ``GameBot`` interface. The source code for the random bot located at
-*Conquest-Bots\src\conquest\bot\custom\RandomBot.java* in the module's repository can be used as a
+*Conquest-Bots/src/conquest/bot/custom/RandomBot.java* in the module's repository can be used as a
 starting point
 
 More information about writing the bot can be found in the `original warlight repository <https://github.com/medovina/Warlight>`_

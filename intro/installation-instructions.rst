@@ -11,7 +11,7 @@ main components:
  - *Application server* hosting main applicaton logic
  - *Worker service* for tournament execution
 
-In this text, we will refer to these components simply as webapp, server and worker. All the above
+In this text, we will refer to these components simply as web-app, server and worker. All the above
 components can be installed on a single machine. However, we recommend installing server and worker
 components on separate machines, potentially installing worker on multiple machines if more
 throughput is desired.
@@ -141,22 +141,35 @@ Clone the web application repository by running::
     git clone https://github.com/opcaic/web-app
     cd web-app
 
-By default, the application is configured to access the API server on the same
-domain as the application. Also, the default Captcha key is set to a test key that should be changed on production environemnts. To change the configuration, see :ref:`webapp-configuration`. Build the
-sources by running ::
+All configuration of the web application must be done prior to building it. The variables 
+you might want to change are:
+
+CAPTCHA_KEY
+  The site key for google `reCAPTCHA <https://www.google.com/recaptcha/intro/v3.html>`_. The default
+  value corresponds to the developer key and is unsafe to use in production. You can obtain key for
+  your domain at the official website.
+
+API_URL
+  Url under which the server component will be reachable, the value ``/`` can be used when hosting
+  both web application and the server web API on the same domain.
+
+For more about web-app configuration, see :ref:`webapp-configuration`.
+
+.. warning::
+    If you configure different url for the server web API in the web application configuration,
+    additional actions are needed to deal with *Cross-Origin resource sharing* (CORS). If you don't
+    have enough knowledge about CORS, we recommend hosting the web application and server on the
+    same domain. For more information see e.g. `MDN article on CORS
+    <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_.
+
+
+After configuring, you can build the web application sources by running ::
 
     npm install
     npm run build
 
 The first command will download all necessary dependencies, the second will compile the application
 and put result into the ``build`` folder inside the repository.
-
-.. warning::
-    If you configure different url for the web API backend in the web application configuration,
-    additional actions are needed to deal with *Cross-Origin resource sharing* (CORS). If you don't
-    have enough knowledge about CORS, we recommend hosting the web application and server on the
-    same domain. For more information see e.g. `MDN article on CORS
-    <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_.
 
 
 ********************
@@ -468,9 +481,9 @@ set by environment variables inside a systemd unit file like the following:
     ExecStart=/usr/bin/dotnet /var/opcaic/worker/OPCAIC.Worker.dll 
 
     Environment=MODULEPATH=/var/opcaic/modules
-    Environment=EXECUTION__WORKINGDIRECTORY=/var/opcaic/worker_root/work
-    Environment=EXECUTION__ERRORDIRECTORY=/var/opcaic/worker_root/work
-    Environment=EXECUTION__ARCHIVEDIRECTORY=/var/opcaic/worker_root/archive
+    Environment=EXECUTION__WORKINGDIRECTORY=/var/opcaic/worker_storage/work
+    Environment=EXECUTION__ERRORDIRECTORY=/var/opcaic/worker_storage/work
+    Environment=EXECUTION__ARCHIVEDIRECTORY=/var/opcaic/worker_storage/archive
     Environment=CONNECTORCONFIG__BROKERADDRESS=tcp://168.192.0.10:6000
 
     [Install]

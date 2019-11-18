@@ -10,6 +10,9 @@ Adding a new game consists of following 3 steps:
 2) Deploying the newly created game module
 3) Configuring the new game in the administration section
 
+The second and third steps can be done only by platform administrators (users with *admin* role), as
+it requires access to both the machine where worker components are hosted and access to
+administration section inside the web application.
 
 **************************
  Creating the game module
@@ -120,6 +123,10 @@ be seen below:
         'totalShots': 64
     }
 
+The values of the *score* property can be arbitrary numbers representable by 64-bit floating point
+number. The only requirement is that the scores produced be different for the individual bots to
+always assure clear winner.
+
 Cleanup entry point
 -------------------
 
@@ -200,16 +207,18 @@ Deploying the game module
 
 Deploying of the game module is done simply by copying the game module directory to *modules
 directory* on worker machines (the ``/var/opcaic/modules/`` directory from
-:ref:`installation-instructions`). The platform should detect existence of the new game module
-automatically.
+:ref:`installation-instructions`). The worker component will detect the addition of the new game
+module automatically. You should be able to see the newly deployed game module under *available
+games* listed for each connected worker inside *System* tab in the web application's administration
+section.
 
 If the game module requires additional software, make sure it is also installed on the worker
 machine and accessible to the user under which the worker process is running.
 
-The OPCAIC platform does not require the game module to be present on all workers in order to
+The OPCAIC platform does not require every game module to be present on all workers in order to
 function properly. It is possible to e.g. deploy the new module only on one worker during testing,
-and then deploy it on other workers later. However, it is up to the administrator to make sure that
-all workers use the same version of the game module.
+and then deploy it on other workers later. However, it is up to the platform administrators to
+ensure that all workers use the same version of the game module.
 
 
 ***************************
@@ -244,7 +253,7 @@ To allow such advanced tournament configuration, visit the Configuration tab in 
 page. There it is possible to specify JSON schema of all the configuration options which should be
 available for customization. It also generates a preview of the form which will be displayed as part
 of the page when creating a new tournament in the given game. We recommend using tools like
-https://jsonschema.net which can gereate a JSON schema from example JSON file.
+https://jsonschema.net which can generate a JSON schema from example JSON file.
 
 .. tip::
     You can use features of JSON schema to constrain the allowed inputs for the genereated form, as
@@ -256,14 +265,14 @@ https://jsonschema.net which can gereate a JSON schema from example JSON file.
 Using the custom configuration
 ------------------------------
 
-The custom data will be provided by the game module in the additional files directory (first
-argument to the entry point) in a ``config.json`` file.
+The custom configuration will be provided by the game module as ``config.json`` file inside the
+additional files directory, which is the first argument to all entry points.
 
 Security and sandboxing
 =======================
 
-The OPCAIC platform does not provide any sandboxing of the code provided by users on its own. The
-reason for this is that it would be very hard to find a solution that would fit all possible
-scenarios (launching a process per user solution vs. loading the solution as a .dll from a single
-process). However, the game module implementation may provide further security by launching the game
-and individual submissions in a sandboxed environment.
+The OPCAIC platform **does not** provide any sandboxing of the code provided by users on its
+own. The reason for this is that it would be very hard to find a solution that would fit all
+possible scenarios (launching a process per user solution vs. loading the solution as a .dll from a
+single process). However, the game module implementation may provide further security by launching
+the game and individual submissions in a sandboxed environment.
