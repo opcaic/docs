@@ -74,7 +74,7 @@ latex_show_urls = 'footnote'
 latex_show_pagerefs = True
 
 latex_documents = [
-    (master_doc, 'doc.tex', 'Online Platform for Conducting AI Tournaments',
+    (master_doc, 'doc.tex', 'Online Platform for Conducting AI Competitions',
       r'''Radek Zikmund \and \\
       Ondřej Nepožitek \and \\
       Michal Lehončák \and \\
