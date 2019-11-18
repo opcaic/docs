@@ -56,9 +56,10 @@ Welcome to OPCAIC documentation!
    dev/worker-backend
    dev/frontend-arch
    modules/warlight
-   dev/project-doc
 
 .. only:: latex
+
+   .. include:: dev/project-doc.rst
 
    .. include:: dev/conclusion.rst
 
